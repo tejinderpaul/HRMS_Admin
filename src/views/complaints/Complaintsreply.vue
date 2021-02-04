@@ -1,5 +1,44 @@
 <template>
   <div class="container">
+    <!-- first -->
+    <div v="complaint" style="background-color: white">
+      <div class="card-header" style="text-align: center">
+        <h1>Complaint Details</h1>
+      </div>
+      <table id="w0" class="table table-striped table-bordered detail-view">
+        <tbody>
+          <tr>
+            <th>Title</th>
+            <td style="text-transform: capitalize">
+              {{ complaint.title }}
+            </td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td style="text-transform: capitalize">
+              {{ complaint.description }}
+            </td>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <td style="text-transform: capitalize">{{ complaint.name }}</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>{{ complaint.email }}</td>
+          </tr>
+          <tr>
+            <th>Complaint On</th>
+            <td style="text-transform: capitalize">
+              {{ Date(complaint.created_on) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ************************ -->
+
     <div class="text-center">
       <CCard>
         <CCardHeader>
@@ -51,7 +90,9 @@
                     v-if="submitted && $v.user.body.$error"
                     class="invalid-feedback"
                   >
-                    <span v-if="!$v.user.body.required">Email Body is required</span>
+                    <span v-if="!$v.user.body.required"
+                      >Email Body is required</span
+                    >
                   </div>
                 </div>
               </CCol>
@@ -78,6 +119,7 @@ export default {
   name: "complaint-reply-view",
   data() {
     return {
+      complaint: [],
       errors: "",
       user: {
         subject: "",
@@ -94,9 +136,22 @@ export default {
   },
   created() {
     this.id = this.$route.params.id;
-    // this.getAdminUsers();
+    this.getComplaint(this.id);
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
+    getComplaint() {
+      axios
+        .get(`http://127.0.0.1:3000/query/complaintview/${this.id}`)
+        .then((response) => {
+          this.complaint = response.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     submitForm(e) {
       this.submitted = true;
       // stop here if form is invalid

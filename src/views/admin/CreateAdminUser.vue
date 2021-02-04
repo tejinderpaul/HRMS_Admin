@@ -43,17 +43,15 @@
                       'is-invalid': submitted && $v.user.email.$error,
                     }"
                   />
-                   <div
-                  v-if="submitted && $v.user.email.$error"
-                  class="invalid-feedback"
-                >
-                  <span v-if="!$v.user.email.required"
-                    >Email is required</span
+                  <div
+                    v-if="submitted && $v.user.email.$error"
+                    class="invalid-feedback"
                   >
-                  <span v-if="!$v.user.email.email"
-                    >Enter valid email</span
-                  >
-                </div>
+                    <span v-if="!$v.user.email.required"
+                      >Email is required</span
+                    >
+                    <span v-if="!$v.user.email.email">Enter valid email</span>
+                  </div>
                 </div>
               </CCol>
             </CRow>
@@ -71,17 +69,17 @@
                       'is-invalid': submitted && $v.user.password.$error,
                     }"
                   />
-                      <div
-                  v-if="submitted && $v.user.password.$error"
-                  class="invalid-feedback"
-                >
-                  <span v-if="!$v.user.password.required"
-                    >Password is required</span
+                  <div
+                    v-if="submitted && $v.user.password.$error"
+                    class="invalid-feedback"
                   >
-                  <span v-if="!$v.user.password.minLength"
-                    >Please enter min. 6 char password</span
-                  >
-                </div>
+                    <span v-if="!$v.user.password.required"
+                      >Password is required</span
+                    >
+                    <span v-if="!$v.user.password.minLength"
+                      >Please enter min. 6 char password</span
+                    >
+                  </div>
                 </div>
               </CCol>
             </CRow>
@@ -99,17 +97,17 @@
                       'is-invalid': submitted && $v.user.phone.$error,
                     }"
                   />
-                     <div
-                  v-if="submitted && $v.user.phone.$error"
-                  class="invalid-feedback"
-                >
-                  <span v-if="!$v.user.phone.required"
-                    >Phone number is required</span
+                  <div
+                    v-if="submitted && $v.user.phone.$error"
+                    class="invalid-feedback"
                   >
-                  <span v-if="!$v.user.phone.numeric"
-                    >Phone number must be integer</span
-                  >
-                </div>
+                    <span v-if="!$v.user.phone.required"
+                      >Phone number is required</span
+                    >
+                    <span v-if="!$v.user.phone.numeric"
+                      >Phone number must be integer</span
+                    >
+                  </div>
                 </div>
               </CCol>
             </CRow>
@@ -137,7 +135,7 @@
 <script>
 import axios from "axios";
 import router from "../../router";
-import { required, email, numeric , minLength } from "vuelidate/lib/validators";
+import { required, email, numeric, minLength } from "vuelidate/lib/validators";
 export default {
   name: "create-admin-user",
   data() {
@@ -164,8 +162,9 @@ export default {
     },
   },
   created() {
-    //this.id = this.$route.params.id;
-    // this.getAdminUsers();
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     submitForm(e) {
@@ -174,7 +173,7 @@ export default {
       this.$v.$touch();
 
       if (this.$v.$invalid) {
-        return
+        return;
       }
 
       let user = {

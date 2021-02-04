@@ -15,20 +15,25 @@
         </thead>
         <tbody>
           <tr v-for="earning in earning" :key="earning._id">
-            <td>{{ new Date( earning.startdate) }}</td>
-            <td>{{ new Date( earning.enddate) }}</td>
+            <td>{{ new Date(earning.startdate) }}</td>
+            <td>{{ new Date(earning.enddate) }}</td>
             <td>{{ earning.earning }}</td>
             <td>
-                      <CButton v='id'
-                          :to="{
-                            name: 'driver-weekly-earning-details',
-                            params: { driver_id: id, startdate:earning.startdate, enddate:earning.enddate },
-                          }"
-                          block
-                          variant="outline"
-                          color="dark"
-                          >View</CButton
-                        >
+              <CButton
+                v="id"
+                :to="{
+                  name: 'driver-weekly-earning-details',
+                  params: {
+                    driver_id: id,
+                    startdate: earning.startdate,
+                    enddate: earning.enddate,
+                  },
+                }"
+                block
+                variant="outline"
+                color="dark"
+                >View</CButton
+              >
             </td>
           </tr>
         </tbody>
@@ -42,26 +47,26 @@ export default {
   data() {
     return {
       earning: [],
-      showModal: false
+      showModal: false,
     };
   },
   created() {
     this.id = this.$route.params.id;
     this.fetchDriverEarning(this.id);
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     fetchDriverEarning(id) {
       axios
-        .post("http://127.0.0.1:3000/drivers/weekly_booking",
-        { id: this.id },
-        )
-        .then((res) => (
-          this.earning = res.data.data,
-          this.id = this.$route.params.id
-          ));
-            
+        .post("http://127.0.0.1:3000/drivers/weekly_booking", { id: this.id })
+        .then(
+          (res) => (
+            (this.earning = res.data.data), (this.id = this.$route.params.id)
+          )
+        );
     },
-
   },
 };
 </script>

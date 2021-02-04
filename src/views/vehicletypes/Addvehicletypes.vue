@@ -225,7 +225,7 @@
             </CCol>
           </CRow>
           <!-- ******************************************************* -->
-          <CInputFile label="File input" horizontal v-model="user.icon_image" />
+          <!-- <CInputFile label="File input" horizontal v-model="user.icon_image" /> -->
 
           <!-- ********************************************* -->
           <CRow>
@@ -327,15 +327,20 @@ export default {
     user: {
       vehicle_type: { required },
       truck_size: { required },
-      truck_sizeL: { required, numeric },
-      truck_sizeB: { required, numeric },
-      truck_sizeH: { required, numeric },
-      truck_capacity: { required, numeric },
-      basic_fare: { required, numeric },
-      basicfare_perkm: { required, numeric },
-      basic_distance: { required, numeric },
+      truck_sizeL: { required},
+      truck_sizeB: { required},
+      truck_sizeH: { required},
+      truck_capacity: { required},
+      basic_fare: { required},
+      basicfare_perkm: { required},
+      basic_distance: { required},
       details1: { required },
     },
+  },
+  created() {
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     createVehicle(e) {
@@ -350,10 +355,10 @@ export default {
         vehicle_type: this.user.vehicle_type,
         truck_size:
           this.user.truck_sizeL +
-          "ftx" +
+          "x" +
           this.user.truck_sizeB +
-          "ftx" +
-          this.user.truck_sizeH,
+          "x" +
+          this.user.truck_sizeH ,
         truck_capacity: this.user.truck_capacity,
         basicfare_perkm: this.user.basicfare_perkm,
         basic_fare: this.user.basic_fare,
@@ -377,7 +382,7 @@ export default {
         .post("http://127.0.0.1:3000/vehicle/createvehicletype", data)
         .then((res) => {
           router.go(-1);
-        })
+        });
     },
     navigate() {
       router.go(-1);

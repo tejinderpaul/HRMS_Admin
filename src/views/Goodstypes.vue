@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="background-color: white;">
+  <div class="container" style="background-color: white">
     <div class="text-center">
       <h1>Goods Type List</h1>
       <router-link
@@ -10,45 +10,31 @@
         style="float: right; margin-bottom: 10px"
         >Create Goods Type</router-link
       >
-      <!-- <div v-if="allgoodstype.length === 0">
-        <h2>No Goods found at the moment</h2>
-      </div> -->
     </div>
     <v-client-table :data="tableData" :columns="columns" :options="options">
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 20px">
             <template>
-              <CDropdown
-                color="transparent p-0"
-                placement="bottom-end"
-                :caret="false"
+              <CButton
+                class="m-1"
+                :to="{
+                  name: 'edit-goods-types',
+                  params: { id: row._id },
+                }"
+                block
+                variant="outline"
+                color="success"
+                >Edit</CButton
               >
-                <template #toggler-content>
-                  <CIcon name="cil-list" />
-                </template>
-                <CDropdownItem>
-                  <CButton
-                    :to="{
-                      name: 'edit-goods-types',
-                      params: { id: row._id },
-                    }"
-                    block
-                    variant="outline"
-                    color="dark"
-                    >Edit</CButton
-                  >
-                </CDropdownItem>
-                <CDropdownItem>
-                  <CButton
-                    block
-                    variant="outline"
-                    color="danger"
-                    v-on:click="deleteGood(row._id, 0)"
-                    >Delete</CButton
-                  ></CDropdownItem
-                >
-              </CDropdown>
+              <CButton
+                class="m-1"
+                block
+                variant="outline"
+                color="danger"
+                v-on:click="deleteGood(row._id, 0)"
+                >Delete</CButton
+              >
             </template>
           </div>
         </div>
@@ -70,29 +56,34 @@ export default {
   },
   data() {
     return {
-      columns: ["title", "description", "action"],
+      columns: ["title", "description","action"],
       tableData: [],
       options: {
         sortable: ["title", "description"],
         filterable: ["title", "description"],
+        texts: {
+          filterPlaceholder: "Enter Title/ Description",
+        },
       },
     };
   },
+  created() {
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
+  },
   mounted() {
-    this.axios
-      .post("http://127.0.0.1:3000/goodstype/allgoods")
-      .then((res) => {
-        this.tableData = res.data.data;
-      });
+    this.axios.post("http://127.0.0.1:3000/goodstype/allgoods").then((res) => {
+      this.tableData = res.data.data;
+    });
   },
   methods: {
-       
     deleteGood(id, index) {
-      if (confirm("are you sure?"))
+      if (confirm("Are you sure you want to delete this item?"))
         axios
           .delete("http://127.0.0.1:3000/goodstype/deletegoods/" + id)
           .then((resp) => {
-           window.location.reload();
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error);
@@ -150,5 +141,18 @@ th:nth-child(3) {
 }
 .VueTables__search {
   display: inline-table;
+}
+.VueTables__limit-field label {
+  margin: 0px;
+}
+.VueTables__search-field label {
+  display: none;
+}
+.VueTables__search-field::before {
+  content: "Search:";
+  display: inherit;
+}
+.VueTables__heading{
+  float: left;
 }
 </style>

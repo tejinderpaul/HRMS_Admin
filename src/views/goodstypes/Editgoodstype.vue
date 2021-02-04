@@ -72,6 +72,9 @@ export default {
   created() {
     this.id = this.$route.params.id;
     this.getgoods();
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   validations: {
     goods: {

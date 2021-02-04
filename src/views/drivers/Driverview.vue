@@ -44,9 +44,23 @@
             <a
               href="javascript:;"
               class="btn btn-md btn-danger"
-              style="margin-bottom: 5px"
+              style="margin: 5px"
               v-on:click="deleteDriverDocument(driver._id, 0)"
               >Delete Driver</a
+            >
+            <a
+              v-if="driver.is_verified == 2 || driver.is_verified == 0"
+              href="javascript:;"
+              class="btn btn-md btn-primary"
+              v-on:click="ApproveDriver(driver._id, 0)"
+              >Approve</a
+            >
+            <a
+              v-if="driver.is_verified == 1"
+              href="javascript:;"
+              class="btn btn-md btn-danger"
+              v-on:click="BlockDriver(driver._id, 0)"
+              >Block</a
             >
           </p>
         </div>
@@ -93,7 +107,8 @@
             </tr>
             <tr>
               <th>Document Verified</th>
-              <td>{{ driver.is_document_verified }}</td>
+              <td v-if="driver.is_document_verified == 1"><b>Yes</b></td>
+              <td v-else><b>No</b></td>
             </tr>
             <tr>
               <th>Last Active On</th>
@@ -163,9 +178,9 @@
               <td>{{ booking.destination_address }}</td>
               <td>{{ booking.driver_name }}</td>
               <td>{{ booking.truck_no }}</td>
-              <td>{{ booking.net_fare }}</td>
-              <td>{{ booking.distance }}</td>
-              <td>{{ new Date( booking.booking_on) }}</td>
+              <td>{{ parseFloat(booking.net_fare).toFixed(2) }}</td>
+              <td>{{ parseFloat(booking.distance).toFixed(2) }}</td>
+              <td>{{ new Date(booking.booking_on) }}</td>
             </tr>
           </tbody>
         </table>
@@ -190,13 +205,16 @@ export default {
       files: [],
       booking: [],
       images: [],
-      last_login:[],
+      last_login: [],
       index: null,
     };
   },
   created() {
     this.id = this.$route.params.id;
     this.getDriver(this.id);
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     onClick(i) {
@@ -214,6 +232,28 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    ApproveDriver(id, index) {
+      if (confirm("Are you sure you want to approve this driver?"))
+        axios
+          .get("http://127.0.0.1:3000/drivers/approveDriver/" + id)
+          .then((resp) => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    BlockDriver(id, index) {
+      if (confirm("Are you sure you want to block this driver?"))
+        axios
+          .get("http://127.0.0.1:3000/drivers/rejectDriver/" + id)
+          .then((resp) => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     navigate() {
       router.go(-1);

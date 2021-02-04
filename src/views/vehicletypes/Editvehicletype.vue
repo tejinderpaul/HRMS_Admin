@@ -16,7 +16,7 @@
         </h4>
       </CCardHeader>
       <CCardBody>
-        <CForm @submit.prevent="createVehicle">
+        <CForm v="user" @submit.prevent="createVehicle">
           <CRow>
             <CCol class="col-sm-3">Enter Vehicle Type</CCol>
             <CCol sm="9">
@@ -31,10 +31,12 @@
                   }"
                 />
                 <div
-                  v-if="submitted && !$v.user.vehicle_type.required"
+                  v-if="submitted && $v.user.vehicle_type.$error"
                   class="invalid-feedback"
                 >
-                  Vehicle Type is required
+                  <span v-if="!$v.user.vehicle_type.required"
+                    >Vehicle Type is required</span
+                  >
                 </div>
               </div>
             </CCol>
@@ -60,9 +62,6 @@
                   <span v-if="!$v.user.truck_sizeL.required"
                     >Truck length is required</span
                   >
-                  <span v-if="!$v.user.truck_sizeL.numeric"
-                    >Length must be in Numbers</span
-                  >
                 </div>
               </div>
             </CCol>
@@ -83,9 +82,6 @@
                   <span v-if="!$v.user.truck_sizeB.required"
                     >Truck breadth is required</span
                   >
-                  <span v-if="!$v.user.truck_sizeB.numeric"
-                    >Breadth must be in Numbers</span
-                  >
                 </div>
               </div>
             </CCol>
@@ -105,9 +101,6 @@
                 >
                   <span v-if="!$v.user.truck_sizeH.required"
                     >Truck height is required</span
-                  >
-                  <span v-if="!$v.user.truck_sizeH.numeric"
-                    >Height must be in Numbers</span
                   >
                 </div>
               </div>
@@ -132,9 +125,6 @@
                 >
                   <span v-if="!$v.user.truck_capacity.required"
                     >Truck capacity is required</span
-                  >
-                  <span v-if="!$v.user.truck_capacity.numeric"
-                    >Capacity must be in Numbers</span
                   >
                 </div>
               </div>
@@ -190,9 +180,6 @@
                   <span v-if="!$v.user.basic_distance.required"
                     >Basic distance is required</span
                   >
-                  <span v-if="!$v.user.basic_distance.numeric"
-                    >Basic distance must be in Numbers</span
-                  >
                 </div>
               </div>
             </CCol>
@@ -225,7 +212,7 @@
             </CCol>
           </CRow>
           <!-- ******************************************************* -->
-          <CInputFile label="File input" horizontal v-model="user.icon_image" />
+          <!-- <CInputFile label="File input" horizontal v-model="user.icon_image" /> -->
 
           <!-- ********************************************* -->
           <CRow>
@@ -234,50 +221,53 @@
               <div class="form-group">
                 <input
                   placeholder="Point1....."
-                  v-model="user.details1"
+                  v-model="user.details[0]"
                   class="form-control"
-                  :class="{
-                    'is-invalid': submitted && $v.user.details1.$error,
-                  }"
                 />
-                <div
-                  v-if="submitted && $v.user.details1.$error"
-                  class="invalid-feedback"
-                >
-                  <span v-if="!$v.user.details1.required"
-                    >Details is required</span
-                  >
-                </div>
               </div>
             </CCol>
           </CRow>
           <CRow
             ><CCol class="col-sm-3" /><CCol
-              ><CInput placeholder="point2..." v-model="user.details2" /></CCol
+              ><CInput
+                placeholder="point2..."
+                v-model="user.details[1]" /></CCol
           ></CRow>
           <CRow
             ><CCol class="col-sm-3" /><CCol
-              ><CInput placeholder="point3..." v-model="user.details3" /></CCol
+              ><CInput
+                placeholder="point3..."
+                v-model="user.details[2]" /></CCol
           ></CRow>
           <CRow
             ><CCol class="col-sm-3" /><CCol
-              ><CInput placeholder="point4..." v-model="user.details4" /></CCol
+              ><CInput
+                placeholder="point4..."
+                v-model="user.details[3]" /></CCol
           ></CRow>
           <CRow
             ><CCol class="col-sm-3" /><CCol
-              ><CInput placeholder="point5..." v-model="user.details5" /></CCol
+              ><CInput
+                placeholder="point5..."
+                v-model="user.details[4]" /></CCol
           ></CRow>
           <CRow
             ><CCol class="col-sm-3" /><CCol
-              ><CInput placeholder="point6..." v-model="user.details6" /></CCol
+              ><CInput
+                placeholder="point6..."
+                v-model="user.details[5]" /></CCol
           ></CRow>
           <CRow
             ><CCol class="col-sm-3" /><CCol
-              ><CInput placeholder="point7..." v-model="user.details7" /></CCol
+              ><CInput
+                placeholder="point7..."
+                v-model="user.details[6]" /></CCol
           ></CRow>
           <CRow
             ><CCol class="col-sm-3" /><CCol
-              ><CInput placeholder="point8..." v-model="user.details8" /></CCol
+              ><CInput
+                placeholder="point8..."
+                v-model="user.details[7]" /></CCol
           ></CRow>
 
           <CButton
@@ -311,87 +301,89 @@ export default {
         basicfare_perkm: "",
         basic_distance: "",
         icon_image: "",
-        details1: "",
-        details2: "",
-        details3: "",
-        details4: "",
-        details5: "",
-        details6: "",
-        details7: "",
-        details8: "",
+        details: [],
       },
       submitted: false,
+      size: "",
     };
   },
   validations: {
     user: {
       vehicle_type: { required },
       truck_size: { required },
-      truck_sizeL: { required, numeric },
-      truck_sizeB: { required, numeric },
-      truck_sizeH: { required, numeric },
-      truck_capacity: { required, numeric },
-      basic_fare: { required, numeric },
-      basicfare_perkm: { required, numeric },
-      basic_distance: { required, numeric },
-      details1: { required },
+      truck_sizeL: { required },
+      truck_sizeB: { required },
+      truck_sizeH: { required },
+      truck_capacity: { required },
+      basic_fare: { required },
+      basicfare_perkm: { required },
+      basic_distance: { required },
     },
   },
   created() {
     this.id = this.$route.params.id;
-    // this.getvehicletype(this.id);
+    this.getvehicletype();
+
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     createVehicle(e) {
       this.submitted = true;
-
-      console.log(this.$v.$invalid);
       // stop here if form is invalid
       this.$v.$touch();
 
       if (this.$v.$invalid) {
-
+        return;
       }
 
-      let user = {
+      let userData = {
         vehicle_type: this.user.vehicle_type,
         truck_size:
           this.user.truck_sizeL +
-          "ftx" +
+          "x" +
           this.user.truck_sizeB +
-          "ftx" +
-          this.user.truck_sizeH +
-          "ft",
-        truck_capacity: this.user.truck_capacity + " KG",
+          "x" +
+          this.user.truck_sizeH,
+        truck_capacity: this.user.truck_capacity,
         basicfare_perkm: this.user.basicfare_perkm,
         basic_fare: this.user.basic_fare,
         basic_distance: this.user.basic_distance,
         icon_image: this.user.icon_image,
         details: [
-          this.user.details1,
-          this.user.details2,
-          this.user.details3,
-          this.user.details4,
-          this.user.details5,
-          this.user.details6,
-          this.user.details7,
-          this.user.details8,
+          this.user.details[0],
+          this.user.details[1],
+          this.user.details[2],
+          this.user.details[3],
+          this.user.details[4],
+          this.user.details[5],
+          this.user.details[6],
+          this.user.details[7],
         ],
       };
       axios
-        .post(`http://localhost:3000/vehicle/editvehicletype/${this.id}`, user)
+        .post(
+          `http://localhost:3000/vehicle/editvehicletype/${this.id}`,
+          userData
+        )
         .then((res) => {
           router.go(-1);
         });
     },
-    // getvehicletype(){ 
-    //     axios
-    //     .post(`http://127.1.1.0:3000/vehicle/vehicletype/${this.id}`)
-    //     .then((data) => (
-
-
-    //       this.user = data.data.data));
-    // },
+    getvehicletype() {
+      axios
+        .post(`http://127.1.1.0:3000/vehicle/vehicletype/${this.id}`)
+        .then(
+          (data) => (
+            (this.user = data.data.data),
+            (this.size = this.user.truck_size.split("x")),
+            (this.user.truck_sizeL = this.size[0]),
+            (this.user.truck_sizeB = this.size[1]),
+            (this.user.truck_sizeH = this.size[2])
+          )
+        );
+    },
     navigate() {
       router.go(-1);
     },

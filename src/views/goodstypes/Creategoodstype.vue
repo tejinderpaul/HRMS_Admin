@@ -71,8 +71,9 @@ export default {
     };
   },
   created() {
-    //this.id = this.$route.params.id;
-    // this.getAdminUsers();
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   validations: {
     user: {

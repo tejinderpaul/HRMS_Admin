@@ -1,9 +1,9 @@
 <template>
-  <div class="container" style="background-color: white;">
+  <div class="container" style="background-color: white">
     <CRow>
       <CCol sm="6" lg="3" v="customer">
-        <CWidgetDropdown color="primary" header="Customers" >
-           <h1>{{customer}}</h1>
+        <CWidgetDropdown color="primary" header="Customers">
+          <h1>{{ customer }}</h1>
           <template #footer>
             <CChartLineSimple
               pointed
@@ -19,7 +19,7 @@
       </CCol>
       <CCol sm="6" lg="3" v="driver">
         <CWidgetDropdown color="info" header="Drivers">
-          <h1>{{driver}}</h1>
+          <h1>{{ driver }}</h1>
           <template #footer>
             <CChartLineSimple
               pointed
@@ -34,9 +34,9 @@
           </template>
         </CWidgetDropdown>
       </CCol>
-      <CCol sm="6" lg="3" v="booking" >
-        <CWidgetDropdown color="warning" header="Bookings" >
-          <h1>{{booking}}</h1>
+      <CCol sm="6" lg="3" v="booking">
+        <CWidgetDropdown color="warning" header="Bookings">
+          <h1>{{ booking }}</h1>
           <template #footer>
             <CChartLineSimple
               class="mt-3"
@@ -52,11 +52,8 @@
         </CWidgetDropdown>
       </CCol>
       <CCol sm="6" lg="3" v="complaint">
-        <CWidgetDropdown
-          color="danger"
-          header="Complaints"
-        >
-        <h1>{{complaint}}</h1>
+        <CWidgetDropdown color="danger" header="Complaints">
+          <h1>{{ complaint }}</h1>
           <template #footer>
             <CChartBarSimple
               class="mt-3 mx-3"
@@ -82,22 +79,27 @@ export default {
       customer: "",
       driver: "",
       booking: "",
-      complaint: ""
+      complaint: "",
     };
   },
   created() {
     this.fetchCustomers();
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     fetchCustomers() {
       axios
         .get("http://127.0.0.1:3000/adminuser/dashboard")
-        .then((data) => (
-          this.customer = data.data.customer,
-          this.driver = data.data.driver,
-          this.booking = data.data.booking,
-          this.complaint = data.data.complaint
-          ));
+        .then(
+          (data) => (
+            (this.customer = data.data.customer),
+            (this.driver = data.data.driver),
+            (this.booking = data.data.booking),
+            (this.complaint = data.data.complaint)
+          )
+        );
     },
   },
 };

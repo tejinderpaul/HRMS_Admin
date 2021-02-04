@@ -76,8 +76,7 @@ import {
   cilUser,
   cilUserFemale,
   cilUserFollow,
-  cilXCircle
-
+  cilXCircle,
 } from '@coreui/icons'
 import { logo } from './logo'
 

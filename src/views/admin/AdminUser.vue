@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="background-color: white;">
+  <div class="container" style="background-color: white">
     <div class="text-center">
       <h1>All Admin Users List</h1>
 
@@ -25,7 +25,8 @@
                 block
                 variant="outline"
                 color="danger"
-                >Delete</CButton>
+                >Delete</CButton
+              >
             </template>
           </div>
         </div>
@@ -51,21 +52,21 @@ export default {
   },
   data() {
     return {
-      columns: [
-        "name",
-        "email",
-        "phone",
-        "role",
-        "status",
-        "last_login",
-        "action",
-      ],
+      columns: ["name", "email", "phone", "role", "last_login", "action"],
       tableData: [],
       options: {
         sortable: ["name", "email", "phone", "role"],
         filterable: ["name", "email", "phone", "role"],
+        texts: {
+          filterPlaceholder: "Enter Name/ Number/ Email",
+        },
       },
     };
+  },
+  created() {
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   mounted() {
     this.axios
@@ -80,8 +81,9 @@ export default {
       date.toString();
       return date;
     },
+
     deleteadminuser(id, index) {
-      if (confirm("are you sure?"))
+      if (confirm("Are you sure you want to delete this admin?"))
         axios
           .get("http://127.0.0.1:3000/adminuser/deleteadminuser/" + id)
           .then((resp) => {
@@ -144,7 +146,18 @@ th:nth-child(3) {
 .VueTables__search {
   display: inline-table;
 }
-.table-hover {
-  height: 220px;
+
+.VueTables__limit-field label {
+  margin: 0px;
+}
+.VueTables__search-field label {
+  display: none;
+}
+.VueTables__search-field::before {
+  content: "Search:";
+  display: inherit;
+}
+.VueTables__heading{
+  float: left;
 }
 </style>

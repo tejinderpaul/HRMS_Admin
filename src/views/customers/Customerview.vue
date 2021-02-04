@@ -32,16 +32,20 @@
         </div>
         <div class="col-md-4">
           <p class="">
-            <button
-              class="btn btn-sm btn btn-danger"
-              data-confirm="Are you sure you want to block this Customer?"
-              data-method="post"
-              disabled
-              v-on:click="deleteCustomer(customer._id)"
-              style="vertical-align: inherit; text-transform: capitalize"
+            <a
+              v-if="customer.status == true"
+              href="javascript:;"
+              class="btn btn-sm btn-primary"
+              v-on:click="DeactivateCustomer(customer._id, 0)"
+              >Deactivate</a
             >
-              Block
-            </button>
+            <a
+              v-if="customer.status == false"
+              href="javascript:;"
+              class="btn btn-sm btn-danger"
+              v-on:click="ActivateCustomer(customer._id, 0)"
+              >Activate</a
+            >
             <button
               class="btn btn-sm btn btn-danger"
               data-confirm="Are you sure you want to delete this item?"
@@ -140,7 +144,7 @@
               <td>{{ history.driver_name }}</td>
               <td>{{ history.truck_no }}</td>
               <td>{{ history.net_fare }}</td>
-              <td>{{ history.distance }}</td>
+              <td>{{ parseFloat(history.distance).toFixed(2) }}</td>
               <td>{{ new Date(history.booking_on) }}</td>
             </tr>
           </tbody>
@@ -165,6 +169,9 @@ export default {
   created() {
     this.id = this.$route.params.id;
     this.getCustomer(this.id);
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     getCustomer() {
@@ -177,6 +184,30 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    DeactivateCustomer(id, index) {
+      if (confirm("Are you sure you want to deactivate this customer?"))
+        axios
+          .post("http://127.0.0.1:3000/adminuser/deactivatecustomer/" + id)
+          .then((resp) => {
+            console.log(resp);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    ActivateCustomer(id, index) {
+      if (confirm("Are you sure you want to activate this customer?"))
+        axios
+          .post("http://127.0.0.1:3000/adminuser/activatecustomer/" + id)
+          .then((resp) => {
+            console.log(resp);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     navigate() {
       router.go(-1);

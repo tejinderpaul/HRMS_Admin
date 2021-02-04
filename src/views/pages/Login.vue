@@ -59,8 +59,14 @@
                         >Login</CButton
                       >
                     </CCol>
+
                     <CCol col="6" class="text-right">
-                      <CButton color="link" class="px-0"
+                      <CButton
+                        color="link"
+                        class="px-0"
+                        :to="{
+                          name: 'forgot-password',
+                        }"
                         >Forgot password?</CButton
                       >
                     </CCol>
@@ -101,10 +107,9 @@ export default {
       this.submitted = true;
       // stop here if form is invalid
       this.$v.$touch();
-            
+
       if (this.$v.$invalid) {
         return;
-      
       }
 
       let user = {
@@ -113,14 +118,16 @@ export default {
       };
 
       axios
-        .post("http://localhost:3000/adminuser/login", user, {
+        .post("http://localhost:4000/user/login", user, {
           "Content-Type": "application/json",
         })
         .then((res) => {
-          if (res.data.statusCode === 200) {
-            localStorage.setItem("token", res.data.data.email);
+          if (res.data.statuscode == 200) {
+            localStorage.setItem("data", JSON.stringify(res.data.data));
+            let admin = JSON.parse(localStorage.getItem("data"));
+            console.log(admin);
             this.$router.push({ path: "/dashboard" });
-          } else if (res.data.statusCode === 404) {
+          } else if (res.data.statuscode == 404) {
             this.error = "Invalid username/password";
           }
         });

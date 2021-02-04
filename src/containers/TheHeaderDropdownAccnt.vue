@@ -10,46 +10,50 @@
         <div class="c-avatar">
           <img
             src="https://www.clipartkey.com/mpngs/m/102-1029067_student-flat-icon-www-pixshark-com-images-galleries.png"
-            class="c-avatar-img "
+            class="c-avatar-img"
           />
         </div>
       </CHeaderNavLink>
     </template>
-    <CDropdownHeader
-      tag="div"
-      class="text-center"
-      color="light"
-    >
+    <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Settings</strong>
     </CDropdownHeader>
     <CDropdownItem>
-      <CIcon name="cil-user" /> Profile
+      <CButton
+        :to="{
+          name: 'profile-view',
+        }"
+        ><CIcon name="cil-user" /> Profile</CButton
+      >
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-settings" /> Settings
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-shield-alt" /> Lock Account
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-lock-locked" /> Logout
+      <CButton v-on:click="logout()"
+        ><CIcon name="cil-lock-locked" /> Logout</CButton
+      >
     </CDropdownItem>
   </CDropdown>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: 'TheHeaderDropdownAccnt',
-  data () {
-    return { 
-      itemsCount: 42
-    }
+  name: "TheHeaderDropdownAccnt",
+  data() {
+    return {
+      itemsCount: 42,
+    };
+  },
+  methods: {
+    logout() {
+      localStorage.clear()
+      this.$router.push("/login");
+  },
   }
-}
+};
 </script>
 
 <style scoped>
-  .c-icon {
-    margin-right: 0.3rem;
-  }
+.c-icon {
+  margin-right: 0.3rem;
+}
 </style>

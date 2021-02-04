@@ -2,7 +2,10 @@
   <div v="booking">
     <div class="card">
       <div class="card-header">
-        <h1>{{booking.booking_prifix +booking.booking_trip_count}}  Booking Details</h1>
+        <h1>
+          {{ booking.booking_prifix + booking.booking_trip_count }} Booking
+          Details
+        </h1>
         <h4 class="text-right mt-20">
           <small>
             <button
@@ -27,12 +30,12 @@
           <tr>
             <th>Trip Id</th>
             <td style="text-transform: capitalize">
-              {{ booking.booking_prifix }}{{booking.booking_trip_count}}
+              {{ booking.booking_prifix }}{{ booking.booking_trip_count }}
             </td>
           </tr>
           <tr>
             <th>Pickup Address</th>
-             <td style="text-transform: capitalize">
+            <td style="text-transform: capitalize">
               {{ booking.pickup_address }}
             </td>
           </tr>
@@ -41,13 +44,12 @@
             <td>{{ booking.destination_address }}</td>
           </tr>
           <tr>
-          <tr>
             <th>Fare</th>
             <td>{{ booking.net_fare }}</td>
           </tr>
           <tr>
             <th>Distance</th>
-            <td>{{ booking.distance }}</td>
+            <td>{{ parseFloat(booking.distance).toFixed(2) }}</td>
           </tr>
           <tr>
             <th>Pickup Person Name</th>
@@ -68,20 +70,20 @@
         </tbody>
       </table>
     </div>
-  <!-- Second  -->
+    <!-- Second  -->
     <div v="customer">
       <div class="card-header" style="text-align: center">
         <h1>Customer Details</h1>
         <div v-if="customer === []">
           <h2>No Customer data found at the moment</h2>
-        </div> 
+        </div>
       </div>
       <table id="w0" class="table table-striped table-bordered detail-view">
         <tbody>
           <tr>
             <th>Full Name</th>
             <td style="text-transform: capitalize">
-              {{ customer.first_name +" "+customer.last_name}}
+              {{ customer.first_name + " " + customer.last_name }}
             </td>
           </tr>
           <tr>
@@ -101,7 +103,7 @@
         </tbody>
       </table>
     </div>
-  <!-- third  -->
+    <!-- third  -->
     <div v="driver">
       <div class="card-header" style="text-align: center">
         <h1>Driver Details</h1>
@@ -114,7 +116,7 @@
           <tr>
             <th>Full Name</th>
             <td style="text-transform: capitalize">
-              {{ driver.first_name +" "+  driver.last_name }}
+              {{ driver.first_name + " " + driver.last_name }}
             </td>
           </tr>
           <tr>
@@ -173,7 +175,7 @@
           <tr>
             <th>Vehicle RC No.</th>
             <td>
-             {{ vehicle.truck_rc }}
+              {{ vehicle.truck_rc }}
             </td>
           </tr>
           <tr>
@@ -216,6 +218,9 @@ export default {
   created() {
     this.id = this.$route.params.id;
     this.getBookingDetails(this.id);
+    if (localStorage.getItem("data") === null) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     getBookingDetails() {
