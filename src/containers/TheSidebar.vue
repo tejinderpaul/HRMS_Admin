@@ -5,7 +5,7 @@
     :show="show"
     @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
   >
-    <CSidebarBrand class="d-md-down-none" to="/">
+    <CSidebarBrand class="d-md-down-none bg-white" to="/">
       <!-- <CIcon 
         class="c-sidebar-brand-full" 
         name="cilStar" 
@@ -18,7 +18,7 @@
         size="custom-size" 
         :height="55" 
         :width="200"
-      src="https://img.icons8.com/officel/2x/truck.png"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwHPB-Xd_VZZPug-lL10OKkNRpdnKEfLHWTw&usqp=CAU"
       />
       <!-- <CIcon 
         class="c-sidebar-brand-minimized" 
@@ -32,7 +32,7 @@
         size="custom-size" 
         :height="55" 
         :width="55"
-      src="https://img.icons8.com/officel/2x/truck.png"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwHPB-Xd_VZZPug-lL10OKkNRpdnKEfLHWTw&usqp=CAU"
       />
     </CSidebarBrand>
 

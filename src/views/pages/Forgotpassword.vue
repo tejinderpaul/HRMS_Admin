@@ -78,7 +78,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:3000/adminuser/forgotpassword", user, {
+        .post("http://localhost:4000/user/forgotpassword", user, {
           "Content-Type": "application/json",
         })
         .then((res) => {

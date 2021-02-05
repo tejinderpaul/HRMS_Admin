@@ -10,31 +10,11 @@
                   <div v-if="error" class="alert alert-danger" role="alert">
                     {{ error }}
                   </div>
-                  <h4>Set new Password</h4>
+                  <h4>Change Password</h4>
                   <div class="form-group">
                     <input
-                      v-model="user.otp"
-                      placeholder="Enter OTP"
-                      class="form-control"
-                      :class="{
-                        'is-invalid': submitted && $v.user.otp.$error,
-                      }"
-                    />
-                    <div
-                      v-if="submitted && $v.user.otp.$error"
-                      class="invalid-feedback"
-                    >
-                      <span v-if="!$v.user.otp.required">OTP is required</span>
-                    </div>
-                  </div>
-                  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                  <div class="form-group">
-                    <input
-                      type="password"
                       v-model="user.password"
-                      id="password"
-                      name="password"
-                      placeholder="New Password"
+                      placeholder="Enter current password"
                       class="form-control"
                       :class="{
                         'is-invalid': submitted && $v.user.password.$error,
@@ -45,6 +25,28 @@
                       class="invalid-feedback"
                     >
                       <span v-if="!$v.user.password.required"
+                        >OTP is required</span
+                      >
+                    </div>
+                  </div>
+                  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                  <div class="form-group">
+                    <input
+                      type="password"
+                      v-model="user.newpassword"
+                      id="newpassword"
+                      name="newpassword"
+                      placeholder="New Password"
+                      class="form-control"
+                      :class="{
+                        'is-invalid': submitted && $v.user.newpassword.$error,
+                      }"
+                    />
+                    <div
+                      v-if="submitted && $v.user.newpassword.$error"
+                      class="invalid-feedback"
+                    >
+                      <span v-if="!$v.user.newpassword.required"
                         >Password is required</span
                       >
                     </div>
@@ -99,10 +101,10 @@ export default {
   name: "Login",
   data() {
     return {
+      admin: JSON.parse(localStorage.getItem("data")),
       user: {
-        email: this.$route.query.param,
-        otp: "",
         password: "",
+        newpassword: "",
         confirmpassword: "",
       },
       submitted: false,
@@ -111,9 +113,9 @@ export default {
   },
   validations: {
     user: {
-      otp: { required },
       password: { required },
-      confirmpassword: { required, sameAsPassword: sameAs("password") },
+      newpassword: { required },
+      confirmpassword: { required, sameAsPassword: sameAs("newpassword") },
     },
   },
   methods: {
@@ -127,20 +129,20 @@ export default {
       }
 
       let user = {
-        email: this.user.email,
-        otp: this.user.otp,
-        newpassword: this.user.password,
+        id: this.admin._id,
+        password: this.user.password,
+        newpassword: this.user.newpassword,
         confirmpassword: this.user.confirmpassword,
       };
 
       axios
-        .post("http://localhost:4000/user/setnewpassword", user, {
+        .post("http://localhost:4000/user/changepassword", user, {
           "Content-Type": "application/json",
         })
         .then((res) => {
           if (res.data.statusCode === 200) {
             localStorage.setItem("token", res.data.data.email);
-            this.$router.push({ path: "/login" });
+            this.$router.push({ path: "/dashboard" });
           } else if (res.data.statusCode === 404) {
             this.error = res.data.message;
           }

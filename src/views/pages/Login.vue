@@ -122,13 +122,13 @@ export default {
           "Content-Type": "application/json",
         })
         .then((res) => {
-          if (res.data.statuscode == 200) {
+          if (res.data.statusCode == 404) {
+            this.error = "Invalid username/password";
+          } else if (res.data.statusCode == 200) {
             localStorage.setItem("data", JSON.stringify(res.data.data));
             let admin = JSON.parse(localStorage.getItem("data"));
             console.log(admin);
             this.$router.push({ path: "/dashboard" });
-          } else if (res.data.statuscode == 404) {
-            this.error = "Invalid username/password";
           }
         });
     },

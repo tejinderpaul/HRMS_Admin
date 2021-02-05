@@ -8,20 +8,20 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Drivers',
+            name: 'Users List',
             to: '/drivers',
             icon: 'cil-people'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Customers',
+            name: 'Leave',
             to: '/customers',
             icon: 'cil-people'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Bookings',
-            to: '/bookings',
+            name: 'Apply Leave',
+            to: '/apply-leave',
             icon: 'cil-laptop'
         },
         {

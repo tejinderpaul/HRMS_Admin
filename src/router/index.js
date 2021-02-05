@@ -13,8 +13,8 @@ const Drivers = () =>
     import('@/views/Drivers')
 const Customers = () =>
     import('@/views/Customers')
-const Bookings = () =>
-    import('@/views/Bookings')
+const Applyleave = () =>
+    import('@/views/Applyleave')
 const Bookingview = () =>
     import('@/views/booking/Bookingview')
 const Complaint = () =>
@@ -49,8 +49,10 @@ const Forgotpassword = () =>
     import('@/views/pages/Forgotpassword')
 const Setpassword = () =>
     import('@/views/pages/Setpassword')
-    const Profile = ()=>
+const Profile = () =>
     import('@/views/pages/Profile')
+const Changepassword = () =>
+    import('@/views/pages/Changepassword')
 
 const Typography = () =>
     import('@/views/theme/Typography')
@@ -206,9 +208,10 @@ function configRoutes() {
             component: Customerdataview
         },
         {
-            path: 'bookings',
-            name: 'bookings',
-            component: Bookings
+            path: 'apply-leave',
+            name: 'apply-leave',
+            component:Applyleave 
+
         },
         {
             path: 'booking-view/:id',
@@ -279,6 +282,11 @@ function configRoutes() {
             path: 'profile-view',
             name: 'profile-view',
             component: Profile
+        },
+        {
+            path: 'change-password-view',
+            name: 'change-password-view',
+            component: Changepassword
         },
 
 

@@ -10,6 +10,14 @@
           onerror="this.onerror=null;this.src='https://www.maxpixel.net/static/photo/640/Elderly-Serious-Grandmother-Woman-Old-Aged-156097.png';"
           style="width: 200px"
         />
+        <CButton
+                class=" mt-3 ml-auto mr-5 w-10 h-25"
+                :to="{
+                  name: 'change-password-view',
+                }"
+                color="success"
+                >Change Password</CButton
+              >
       </div>
       <div class="profile-view">
         <table id="w0" class="table table-striped table-bordered detail-view">
