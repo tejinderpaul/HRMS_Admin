@@ -53,6 +53,9 @@
       <span slot="name" slot-scope="{ row }">
         {{row.firstname}}
       </span>
+      <span slot="address" slot-scope="{ row }">
+        {{row.address.city}},{{row.address.state}},{{row.address.country}},{{row.address.pincode}}
+      </span>
     </v-client-table>
   </div>
 </template>
