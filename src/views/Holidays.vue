@@ -1,28 +1,17 @@
 <template>
   <div class="container" style="background-color: white">
-    <h1 class="text-center">All Drivers List</h1>
-    <div class="VueTables__limit-field w-25 float-right mt-0">
-      <label for="VueTables__limit_6JR1w mb-0">Filter:</label
-      ><select
-        @change="onChange($event.target.value)"
-        id="VueTables__limit_6JR1w"
-        class="form-control"
+    <div class="text-center">
+      <h1>Holiday List</h1>
+      <router-link
+        :to="{
+          name: 'add-holidays',
+        }"
+        class="btn btn-md btn-primary"
+        style="float: right; margin-bottom: 10px"
+        >Add Holidays</router-link
       >
-        <option value="1">All Drivers</option>
-        <option value="4">Blocked Drivers</option>
-        <option value="2">Approved Drivers</option>
-        <option value="3">Waiting For Approvel Drivers</option>
-      </select>
     </div>
-
     <v-client-table :data="tableData" :columns="columns" :options="options">
-      <span slot="status" slot-scope="{ row }">
-        <td>
-          <a v-if="row.is_verified == 0">Waiting for Approvel</a>
-          <a v-if="row.is_verified == 1">Approved</a>
-          <a v-if="row.is_verified == 2">Blocked</a>
-        </td>
-      </span>
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 20px">
@@ -30,28 +19,25 @@
               <CButton
                 class="m-1"
                 :to="{
-                  name: 'driver-view',
+                  name: 'edit-holidays',
                   params: { id: row._id },
                 }"
                 block
                 variant="outline"
                 color="success"
-                >View</CButton
+                >Edit</CButton
               >
               <CButton
                 class="m-1"
                 block
                 variant="outline"
                 color="danger"
-                v-on:click="deletedriver(row._id)"
+                v-on:click="deleteHolidays(row._id)"
                 >Delete</CButton
               >
             </template>
           </div>
         </div>
-      </span>
-      <span slot="name" slot-scope="{ row }">
-        {{row.first_name}}
       </span>
     </v-client-table>
   </div>
@@ -70,29 +56,13 @@ export default {
   },
   data() {
     return {
-      columns: [
-        "name",,
-        "email",
-        "country_code",
-        "phone_number",
-        "status",
-        "action",
-      ],
+      columns: ["occasion_date", "occasion_name","note","action"],
       tableData: [],
       options: {
-        headings: {
-          name: "Name",
-        },
-        sortable: [
-          "first_name",
-          "last_name",
-          "email",
-          "phone_number",
-          "status",
-        ],
-        filterable: ["first_name", "email", "phone_number"],
+        sortable: ["title", "description"],
+        filterable: ["occasion_date", "description"],
         texts: {
-          filterPlaceholder: "Enter Name/ Number/ Email",
+          filterPlaceholder: "Enter Title/ Description",
         },
       },
     };
@@ -103,24 +73,16 @@ export default {
     }
   },
   mounted() {
-    this.axios.post("http://127.0.0.1:3000/drivers/alldrivers").then((res) => {
-      this.tableData = res.data.driver;
+    this.axios.post("http://127.0.0.1:4000/holidays/all_holidays").then((res) => {
+      this.tableData = res.data.data;
     });
   },
   methods: {
-    onChange(event) {
-      axios
-        .get("http://127.0.0.1:3000/drivers/filterDriver/" + event)
-        .then((data) => (this.tableData = data.data.data))
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    deletedriver(id) {
-      if (confirm("Are you sure you want to delete this driver?"))
-        axios
-          .delete("http://localhost:3000/drivers/deleteDriverDocuments/" + id)
-          .then((resp) => {
+    deleteHolidays(holiday_id) {
+      console.log(holiday_id);
+      if (confirm("Are you sure you want to delete this item?"))
+         axios.post("http://localhost:4000/holidays/delete_holiday", {holiday_id:holiday_id})
+         .then((res) => {
             window.location.reload();
           })
           .catch((error) => {
@@ -168,14 +130,17 @@ th:nth-child(3) {
 .VueTables__child-row-toggler--open::before {
   content: "-";
 }
-.VueTables__search-field {
-  margin-bottom: -80px;
-}
+/* .VueTables__search-field {
+  position: absolute;
+} */
 .VueTables__limit {
   float: right;
 }
 .VueTables__search-field {
   margin-bottom: 1px;
+}
+.VueTables__search {
+  display: inline-table;
 }
 .VueTables__limit-field label {
   margin: 0px;
@@ -187,19 +152,7 @@ th:nth-child(3) {
   content: "Search:";
   display: inherit;
 }
-.VueTables__row span td {
-  border: none;
-}
-.VueTables__row span td a {
-  padding: 8px;
-}
-.VueTables__row td {
-  padding: 5px;
-}
 .VueTables__heading{
   float: left;
-}
-select {
-  -webkit-appearance: menulist;
 }
 </style>

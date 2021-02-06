@@ -1,14 +1,26 @@
 <template>
   <div class="container" style="background-color: white">
-    <h1 class="text-center">All Complaints List</h1>
+    <h1 class="text-center">All Leaves List</h1>
+    <div class="VueTables__limit-field w-25 float-right mt-0">
+      <label for="VueTables__limit_6JR1w mb-0">Filter:</label
+      ><select
+        @change="onChange($event.target.value)"
+        id="VueTables__limit_6JR1w"
+        class="form-control"
+      >
+        <option value="1">All Customers</option>
+        <option value="2">Active Customers</option>
+        <option value="3">Deactive Customers</option>
+      </select>
+    </div>
     <v-client-table :data="tableData" :columns="columns" :options="options">
-      <span slot="created_on" slot-scope="{ row }">
-        {{ date(row.created_on) }}
+      <span slot="status" slot-scope="{ row }">
+        <td>
+          <a v-if="row.status == true">Active</a>
+          <a v-if="row.status == false">Deactive</a>
+        </td>
       </span>
-      <span slot="type" slot-scope="{ row }">
-        <p v-if="row.type == 1"><b>Complaint from Driver</b></p>
-        <p v-else><b>Complaint from Customer</b></p>
-      </span>
+     
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 20px">
@@ -16,8 +28,8 @@
               <CButton
                 class="m-1"
                 :to="{
-                  name: 'complaint-reply-view',
-                  params: { id: row.id },
+                  name: 'customer-view',
+                  params: { id: row._id },
                 }"
                 block
                 variant="outline"
@@ -29,7 +41,7 @@
                 block
                 variant="outline"
                 color="danger"
-                v-on:click="deleteComplaint(row.id, 0)"
+                v-on:click="deleteCustomer(row._id, 0)"
                 >Delete</CButton
               >
             </template>
@@ -45,6 +57,7 @@ import Vue from "vue";
 import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import router from "../router";
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -54,36 +67,23 @@ export default {
   data() {
     return {
       columns: [
-        "title",
-        "description",
-        "name",
-        "email",
-        "customer",
-        "driver",
-        "type",
+        "userId",
+        "leaveType",
+        "fromDate",
+        "toDate",
+        "note",
+        "mangerId",
         "action",
       ],
       tableData: [],
       options: {
-        sortable: [
-          "title",
-          "description",
-          "bookingTo",
-          "bookingFrom",
-          "customer",
-          "driver",
-          "type",
-        ],
-        filterable: [
-          "title",
-          "description",
-          "name",
-          "email",
-          "customer",
-          "driver",
-        ],
+        headings: {
+          name: "Name",
+        },
+        sortable: ["first_name", "last_name", "email", "phone_number"],
+        filterable: ["first_name", "email", "phone_number"],
         texts: {
-          filterPlaceholder: "Enter Name/ Title/ Email",
+          filterPlaceholder: "Enter Name/ Number/ Email",
         },
       },
     };
@@ -94,26 +94,32 @@ export default {
     }
   },
   mounted() {
-    this.axios.post("http://localhost:3000/query/get-all").then((res) => {
-      this.tableData = res.data.data;
-    });
+    this.axios
+      .post("http://127.0.0.1:4000/leaves/alleaves")
+      .then((res) => {
+        console.log(res);
+        this.tableData = res.data.data;
+      });
   },
   methods: {
-    deleteComplaint(id, index) {
-      if (confirm("Are you sure you want to delete this complaint?"))
+    deleteCustomer(id, index) {
+      if (confirm("Are you sure you want to delete this customer?"))
         axios
-          .get("http://127.0.0.1:3000/query/deletecomplaint/" + id)
+          .get("http://127.0.0.1:3000/adminuser/deletecustomer/" + id)
           .then((resp) => {
-            window.location.reload();
+            router.go("/");
           })
           .catch((error) => {
             console.log(error);
           });
     },
-    date(utc) {
-      var date = new Date(utc);
-      date.toString();
-      return date;
+    onChange(event) {
+      axios
+        .post("http://127.0.0.1:3000/adminuser/filterCustomer/" + event)
+        .then((data) => (this.tableData = data.data.data))
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
@@ -156,18 +162,19 @@ th:nth-child(3) {
 .VueTables__child-row-toggler--open::before {
   content: "-";
 }
-.VueTables__search-field {
-  margin-bottom: -80px;
-}
+/* .VueTables__search-field{
+  position: absolute;
+
+} */
 .VueTables__limit {
   float: right;
 }
 .VueTables__search-field {
   margin-bottom: 1px;
 }
-/* .VueTables__search{
-  position:absolute;
-} */
+.VueTables__search {
+  display: inline-table;
+}
 .VueTables__limit-field label {
   margin: 0px;
 }
@@ -178,7 +185,19 @@ th:nth-child(3) {
   content: "Search:";
   display: inherit;
 }
+.VueTables__row span td {
+  border: none;
+}
+.VueTables__row span td a {
+  padding: 8px;
+}
+.VueTables__row td {
+  padding: 5px;
+}
 .VueTables__heading{
   float: left;
+}
+select {
+  -webkit-appearance: menulist;
 }
 </style>

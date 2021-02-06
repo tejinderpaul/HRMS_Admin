@@ -8,14 +8,14 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Users List',
-            to: '/drivers',
+            name: 'Userlist',
+            to: '/user',
             icon: 'cil-people'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Leave',
-            to: '/customers',
+            name: 'Leaves',
+            to: '/leaves',
             icon: 'cil-people'
         },
         {
@@ -26,8 +26,8 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Complaint',
-            to: '/complaint',
+            name: 'Holidays',
+            to: '/holidays',
             icon: 'cil-lightbulb'
         },
         {

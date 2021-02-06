@@ -9,16 +9,16 @@ const TheContainer = () =>
 
 const Dashboard = () =>
     import('@/views/Dashboard')
-const Drivers = () =>
-    import('@/views/Drivers')
-const Customers = () =>
-    import('@/views/Customers')
+const Userlist = () =>
+    import('@/views/Userlist')
+const Leaves = () =>
+    import('@/views/Leaves')
 const Applyleave = () =>
     import('@/views/Applyleave')
 const Bookingview = () =>
     import('@/views/booking/Bookingview')
-const Complaint = () =>
-    import('@/views/Complaint')
+const Holidays = () =>
+    import('@/views/Holidays')
 const Customerdataview = () =>
     import('@/views/customers/Customerview')
 const Vehicle = () =>
@@ -43,8 +43,10 @@ const Creategoodstype = () =>
     import('@/views/goodstypes/Creategoodstype')
 const Editgoodstype = () =>
     import('@/views/goodstypes/Editgoodstype')
-const Complaintsreply = () =>
-    import('@/views/complaints/Complaintsreply')
+const Addholidays = () =>
+    import('@/views/holidays/Addholidays')
+    const Editholidays = () =>
+    import('@/views/holidays/Editholidays')
 const Forgotpassword = () =>
     import('@/views/pages/Forgotpassword')
 const Setpassword = () =>
@@ -187,9 +189,9 @@ function configRoutes() {
             component: Dashboard
         },
         {
-            path: 'drivers',
-            name: 'drivers',
-            component: Drivers
+            path: 'user',
+            name: 'user',
+            component: Userlist
         },
         {
             path: 'driver-view/:id',
@@ -197,9 +199,9 @@ function configRoutes() {
             component: Driverdataview
         },
         {
-            path: 'customers',
-            name: 'customers',
-            component: Customers,
+            path: 'leaves',
+            name: 'leaves',
+            component: Leaves,
 
         },
         {
@@ -219,9 +221,9 @@ function configRoutes() {
             component: Bookingview
         },
         {
-            path: 'complaint',
-            name: 'complaint',
-            component: Complaint
+            path: 'holidays',
+            name: 'holidays',
+            component: Holidays
         },
         {
             path: 'vehicletype',
@@ -274,9 +276,14 @@ function configRoutes() {
             component: Editgoodstype
         },
         {
-            path: 'complaint-reply-view/:id',
-            name: 'complaint-reply-view',
-            component: Complaintsreply
+            path: 'add-holidays',
+            name: 'add-holidays',
+            component: Addholidays
+        },
+        {
+            path: 'edit-holidays',
+            name: 'edit-holidays',
+            component: Editholidays
         },
         {
             path: 'profile-view',
