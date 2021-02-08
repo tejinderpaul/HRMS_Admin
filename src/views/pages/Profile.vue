@@ -25,12 +25,12 @@
             <tr>
               <th>Name</th>
               <td style="text-transform: capitalize">
-                {{ admin.name }}
+                {{ admin.firstname }}
               </td>
             </tr>
             <tr>
               <th>Phone Number</th>
-              <td>{{ admin.phone }}</td>
+              <td>{{ admin.phonenumber }}</td>
             </tr>
             <tr>
               <th>Email</th>

@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="background-color: white">
     <h1 class="text-center">All Leaves List</h1>
-    <div class="VueTables__limit-field w-25 float-right mt-0">
+    <!-- <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
       ><select
         @change="onChange($event.target.value)"
@@ -12,38 +12,35 @@
         <option value="2">Active Customers</option>
         <option value="3">Deactive Customers</option>
       </select>
-    </div>
+    </div> -->
     <v-client-table :data="tableData" :columns="columns" :options="options">
-      <span slot="status" slot-scope="{ row }">
+      <!-- <span slot="status" slot-scope="{ row }">
         <td>
           <a v-if="row.status == true">Active</a>
           <a v-if="row.status == false">Deactive</a>
         </td>
-      </span>
-     
+      </span> -->
+
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 20px">
             <template>
               <CButton
                 class="m-1"
-                :to="{
-                  name: 'customer-view',
-                  params: { id: row._id },
-                }"
                 block
                 variant="outline"
                 color="success"
-                >View</CButton
-              >
+                v-on:click="approve(row._id, 0)"
+                >Approve
+              </CButton>
               <CButton
                 class="m-1"
                 block
                 variant="outline"
-                color="danger"
-                v-on:click="deleteCustomer(row._id, 0)"
-                >Delete</CButton
-              >
+                color="success"
+                v-on:click="reject(row._id, 0)"
+                >Reject
+              </CButton>
             </template>
           </div>
         </div>
@@ -67,12 +64,13 @@ export default {
   data() {
     return {
       columns: [
-        "userId",
+        "name",
         "leaveType",
         "fromDate",
         "toDate",
         "note",
-        "mangerId",
+        "mangerName",
+        "status",
         "action",
       ],
       tableData: [],
@@ -94,32 +92,35 @@ export default {
     }
   },
   mounted() {
-    this.axios
-      .post("http://127.0.0.1:4000/leaves/alleaves")
-      .then((res) => {
-        console.log(res);
-        this.tableData = res.data.data;
-      });
+    this.axios.post("http://127.0.0.1:4000/leaves/alleaves").then((res) => {
+      console.log(res);
+      this.tableData = res.data.data;
+    });
   },
   methods: {
-    deleteCustomer(id, index) {
-      if (confirm("Are you sure you want to delete this customer?"))
+    approve(id, index) {
+      if (confirm("Are you sure you want to Block this customer?"))
         axios
-          .get("http://127.0.0.1:3000/adminuser/deletecustomer/" + id)
+          .post("http://127.0.0.1:4000/leaves/approve", { id: id })
           .then((resp) => {
-            router.go("/");
+            console.log(resp);
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error);
           });
     },
-    onChange(event) {
-      axios
-        .post("http://127.0.0.1:3000/adminuser/filterCustomer/" + event)
-        .then((data) => (this.tableData = data.data.data))
-        .catch((error) => {
-          console.log(error);
-        });
+    reject(id, index) {
+      if (confirm("Are you sure you want to activate this customer?"))
+        axios
+          .post("http://127.0.0.1:4000/user/reject", { id: id })
+          .then((resp) => {
+            console.log(resp);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
   },
 };
@@ -194,7 +195,7 @@ th:nth-child(3) {
 .VueTables__row td {
   padding: 5px;
 }
-.VueTables__heading{
+.VueTables__heading {
   float: left;
 }
 select {

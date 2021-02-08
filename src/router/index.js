@@ -134,12 +134,8 @@ const Login = () =>
 const Register = () =>
     import('@/views/pages/Register')
 
-// Users
-const Users = () =>
-    import('@/views/users/Users')
-const User = () =>
-    import('@/views/users/User')
-
+const Userview=()=>
+import('@/views/users/Userview')
 
 Vue.use(Router)
 
@@ -294,6 +290,11 @@ function configRoutes() {
             path: 'change-password-view',
             name: 'change-password-view',
             component: Changepassword
+        },
+        {
+            path: 'user-view/:id',
+            name: 'user-view',
+            component: Userview
         },
 
 
