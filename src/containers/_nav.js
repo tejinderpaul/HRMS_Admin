@@ -32,8 +32,8 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Vehicle Type',
-            to: '/vehicletype',
+            name: 'Add User',
+            to: '/add-employee',
             icon: 'cil-basket'
         },
         {

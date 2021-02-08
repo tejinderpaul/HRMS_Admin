@@ -21,8 +21,8 @@ const Holidays = () =>
     import('@/views/Holidays')
 const Customerdataview = () =>
     import('@/views/customers/Customerview')
-const Vehicle = () =>
-    import('@/views/Vehicle')
+const Addemployee = () =>
+    import('@/views/Addemployee')
 const vehicletype = () =>
     import('@/views/vehicletypes/Addvehicletypes')
 const editvehicletype = () =>
@@ -226,9 +226,9 @@ function configRoutes() {
             component: Holidays
         },
         {
-            path: 'vehicletype',
-            name: 'vehicle-type',
-            component: Vehicle
+            path: 'add-employee',
+            name: 'add-employee',
+            component: Addemployee
         },
         {
             path: 'addvehicletype',
