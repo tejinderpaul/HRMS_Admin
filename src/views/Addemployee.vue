@@ -6,24 +6,29 @@
           <strong><h2>Add User</h2></strong>
         </CCardHeader>
         <CCardBody>
+          <div class="summary text-red" v-if="$v.user.$error">
+            Form has errors
+          </div>
           <CForm @submit.prevent="submitForm">
             <CRow>
               <CCol class="col-sm-3">Employee Id</CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
+                    :class="{ hasError: $v.user.employeeId.$error }"
                     type="text"
                     placeholder="Enter Employee Id"
                     v-model="user.employeeId"
                     class="form-control"
-                  
                   />
-                  <div
-                    v-if="submitted && !$v.user.employeeId.required"
+                  <!-- <div
+                    v-if="submitted && $v.user.employeeId.$error"
                     class="invalid-feedback"
                   >
-                    <span> Employee Id is required</span>
-                  </div>
+                    <span v-if="!$v.user.employeeId.required"
+                      >Truck capacity is required</span
+                    >
+                  </div> -->
                 </div>
               </CCol>
             </CRow>
@@ -37,13 +42,17 @@
                     placeholder="Enter firstname"
                     v-model="user.firstname"
                     class="form-control"
-                  
+                    :class="{
+                      'is-invalid': submitted && $v.user.firstname.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.firstname.required"
+                    v-if="submitted && $v.user.firstname.$error"
                     class="invalid-feedback"
                   >
-                    <span> Name is required</span>
+                    <span v-if="!$v.user.firstname.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
               </CCol>
@@ -58,13 +67,17 @@
                     placeholder="Enter lastname"
                     v-model="user.lastname"
                     class="form-control"
-                   
+                    :class="{
+                      'is-invalid': submitted && $v.user.lastname.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.lastname.required"
+                    v-if="submitted && $v.user.lastname.$error"
                     class="invalid-feedback"
                   >
-                    <span> Name is required</span>
+                    <span v-if="!$v.user.lastname.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
               </CCol>
@@ -79,16 +92,17 @@
                     placeholder="Enter email"
                     v-model="user.email"
                     class="form-control"
-                   
+                    :class="{
+                      'is-invalid': submitted && $v.user.email.$error,
+                    }"
                   />
                   <div
                     v-if="submitted && $v.user.email.$error"
                     class="invalid-feedback"
                   >
                     <span v-if="!$v.user.email.required"
-                      >Email is required</span
+                      >Truck capacity is required</span
                     >
-                    <span v-if="!$v.user.email.email">Enter valid email</span>
                   </div>
                 </div>
               </CCol>
@@ -103,17 +117,16 @@
                     placeholder="Enter password"
                     v-model="user.password"
                     class="form-control"
-                    
+                    :class="{
+                      'is-invalid': submitted && $v.user.password.$error,
+                    }"
                   />
                   <div
                     v-if="submitted && $v.user.password.$error"
                     class="invalid-feedback"
                   >
                     <span v-if="!$v.user.password.required"
-                      >Password is required</span
-                    >
-                    <span v-if="!$v.user.password.minLength"
-                      >Please enter min. 6 char password</span
+                      >Truck capacity is required</span
                     >
                   </div>
                 </div>
@@ -127,16 +140,18 @@
                   <input
                     type="number"
                     placeholder="Enter phonenumber"
-                    v-model="user.phone"
+                    v-model="user.phonenumber"
                     class="form-control"
-                    
+                    :class="{
+                      'is-invalid': submitted && $v.user.phonenumber.$error,
+                    }"
                   />
                   <div
                     v-if="submitted && $v.user.phonenumber.$error"
                     class="invalid-feedback"
                   >
                     <span v-if="!$v.user.phonenumber.required"
-                      >Phone number is required</span
+                      >Truck capacity is required</span
                     >
                   </div>
                 </div>
@@ -151,13 +166,17 @@
                     type="date"
                     v-model="user.dob"
                     class="form-control"
-                  
+                    :class="{
+                      'is-invalid': submitted && $v.user.dob.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.dob.required"
+                    v-if="submitted && $v.user.dob.$error"
                     class="invalid-feedback"
                   >
-                    DOB is required
+                    <span v-if="!$v.user.dob.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
               </CCol>
@@ -172,13 +191,17 @@
                     placeholder="Enter department"
                     v-model="user.department"
                     class="form-control"
-                  
+                    :class="{
+                      'is-invalid': submitted && $v.user.department.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.department.required"
+                    v-if="submitted && $v.user.department.$error"
                     class="invalid-feedback"
                   >
-                    Department is required
+                    <span v-if="!$v.user.department.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
               </CCol>
@@ -193,13 +216,17 @@
                     placeholder="Enter designation"
                     v-model="user.designation"
                     class="form-control"
-                  
+                    :class="{
+                      'is-invalid': submitted && $v.user.designation.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.designation.required"
+                    v-if="submitted && $v.user.designation.$error"
                     class="invalid-feedback"
                   >
-                    Department is required
+                    <span v-if="!$v.user.designation.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
               </CCol>
@@ -211,31 +238,20 @@
                 <div class="form-group">
                   <input
                     type="text"
-                    placeholder="Enter street"
-                    v-model="user.street"
-                    class="form-control"
-               
-                  />
-                  <div
-                    v-if="submitted && !$v.user.address.street.required"
-                    class="invalid-feedback"
-                  >
-                    Street is required
-                  </div>
-                </div>
-                <div class="form-group">
-                  <input
-                    type="text"
                     placeholder="Enter city"
                     v-model="user.address.city"
                     class="form-control"
-                 
+                    :class="{
+                      'is-invalid': submitted && $v.user.address.city.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.address.city.required"
+                    v-if="submitted && $v.user.address.city.$error"
                     class="invalid-feedback"
                   >
-                    City is required
+                    <span v-if="!$v.user.address.city.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
                 <div class="form-group">
@@ -244,28 +260,55 @@
                     placeholder="Enter State"
                     v-model="user.address.state"
                     class="form-control"
-                    
+                    :class="{
+                      'is-invalid': submitted && $v.user.address.state.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.address.state.required"
+                    v-if="submitted && $v.user.address.state.$error"
                     class="invalid-feedback"
                   >
-                    State is required
+                    <span v-if="!$v.user.address.state.required"
+                      >Truck capacity is required</span
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    placeholder="Enter country"
+                    v-model="user.address.country"
+                    class="form-control"
+                    :class="{
+                      'is-invalid': submitted && $v.user.address.country.$error,
+                    }"
+                  />
+                  <div
+                    v-if="submitted && $v.user.address.country.$error"
+                    class="invalid-feedback"
+                  >
+                    <span v-if="!$v.user.address.country.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
                 <div class="form-group">
                   <input
                     type="text"
                     placeholder="Enter Pincode"
-                    v-model="user.address.zipCode"
+                    v-model="user.address.pincode"
                     class="form-control"
-                    
+                    :class="{
+                      'is-invalid': submitted && $v.user.address.pincode.$error,
+                    }"
                   />
                   <div
-                    v-if="submitted && !$v.user.address.zipCode.required"
+                    v-if="submitted && $v.user.address.pincode.$error"
                     class="invalid-feedback"
                   >
-                    Zipcode is required
+                    <span v-if="!$v.user.address.pincode.required"
+                      >Truck capacity is required</span
+                    >
                   </div>
                 </div>
               </CCol>
@@ -281,7 +324,6 @@
                     @change="onChange($event)"
                     value="male"
                     v-model="user.gender"
-                    
                   />
                   <label for="one"> Male</label><br />
                   <input
@@ -290,7 +332,6 @@
                     @change="onChange($event)"
                     value="female"
                     v-model="user.gender"
-                   
                   />
                   <label for="two"> Female</label><br />
                   <input
@@ -299,7 +340,6 @@
                     @change="onChange($event)"
                     value="other"
                     v-model="user.gender"
-              
                   />
                   <label for="two"> Other</label>
 
@@ -323,7 +363,6 @@
                     @change="onChange($event)"
                     value="married"
                     v-model="user.maritalStatus"
-                   
                   />
                   <label for="one">Married</label><br />
                   <input
@@ -374,7 +413,7 @@ export default {
     return {
       errors: "",
       user: {
-        employeeId:"",
+        employeeId: "",
         firstname: "",
         lastname: "",
         email: "",
@@ -387,32 +426,40 @@ export default {
         department: "",
         designation: "",
         address: {
-          street: "",
           city: "",
           state: "",
-          zipCode: "",
+          country: "",
+          pincode: "",
         },
       },
-      options: ['superadmin', 'admin', 'hr', 'teamlead', 'manager', 'employees'],
+      options: [
+        "superadmin",
+        "admin",
+        "hr",
+        "teamlead",
+        "manager",
+        "employees",
+      ],
       submitted: false,
     };
   },
-  // validations: {
-  //   user: {
-  //     firstname: { required },
-  //     lastname: { required },
-  //     email: { required, email },
-  //     password: { required },
-  //     phonenumber: { required },
-  //     role: { required },
-  //     gender: { required },
-  //     dob: { required },
-  //     maritalStatus: { required },
-  //     department: { required },
-  //     designation: { required },
-  //     address: { required },
-  //   },
-  // },
+  validations: {
+    user: {
+      employeeId: { required },
+      firstname: { required },
+      lastname: { required },
+      email: { required, email },
+      password: { required },
+      phonenumber: { required },
+      //  role: { required },
+      //  gender: { required },
+      dob: { required },
+      maritalStatus: { required },
+      department: { required },
+      designation: { required },
+      address: { required },
+    },
+  },
   created() {
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
@@ -423,17 +470,21 @@ export default {
       var optionText = event.target.value;
       console.log(optionText);
     },
-    submitForm(e) {
-      // this.submitted = true;
-      // // stop here if form is invalid
-      // this.$v.$touch();
+    submitForm() {
+      this.submitted = true;
+      // stop here if form is invalid
+      // this.$v.user.$touch();
 
-      // if (this.$v.$invalid) {
+      // if (this.$v.user.$invalid) {
       //   return;
       // }
+      this.$v.user.$touch();
+      if (this.$v.user.$error) return;
+      // to form submit after this
+      alert("Form submitted");
 
       let user = {
-        employeeId:this.user.employeeId,
+        employeeId: this.user.employeeId,
         firstname: this.user.firstname,
         lastname: this.user.lastname,
         email: this.user.email,
