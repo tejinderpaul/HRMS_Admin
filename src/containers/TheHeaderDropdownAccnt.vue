@@ -43,12 +43,19 @@ export default {
       itemsCount: 42,
     };
   },
+  created() {
+    this.id = JSON.parse(localStorage.getItem("data")).id;
+    
+  },
   methods: {
     logout() {
-      localStorage.clear()
-      this.$router.push("/login");
+      console.log(this.id);
+      axios.post("http://localhost:4000/user/logout", {id:this.id}).then((res) => {
+        localStorage.clear();
+        this.$router.push("/login");
+      });
+    },
   },
-  }
 };
 </script>
 

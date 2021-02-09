@@ -10,7 +10,7 @@
               v-on:click="navigate()"
               style="margin-top: -53px"
             >
-              View All users
+              View All Users
             </button>
           </small>
         </h4>
@@ -115,27 +115,27 @@
               <th>Designation</th>
               <td>{{ user.designation }}</td>
             </tr>
+            <tr>
+              <th>City</th>
+              <td>{{ user.address.city }}</td>
+            </tr>
+            <tr>
+              <th>State</th>
+              <td>{{ user.address.state }}</td>
+            </tr>
+            <tr>
+              <th>Country</th>
+              <td>{{ user.address.country }}</td>
+            </tr>
+            <tr>
+              <th>Pincode</th>
+              <td>{{ user.address.pincode }}</td>
+            </tr>
+            <tr>
+              <th>Date of joining</th>
+              <td>{{ Date(user.dateOfRegistration) }}</td>
+            </tr>
           </tbody>
-          <tr>
-            <th>City</th>
-            <td>{{ user.address.city }}</td>
-          </tr>
-          <tr>
-            <th>State</th>
-            <td>{{ user.address.state }}</td>
-          </tr>
-          <tr>
-            <th>Country</th>
-            <td>{{ user.address.country }}</td>
-          </tr>
-          <tr>
-            <th>Pincode</th>
-            <td>{{ user.address.pincode }}</td>
-          </tr>
-          <tr>
-            <th>Date of joining</th>
-            <td>{{ Date(user.dateOfRegistration) }}</td>
-          </tr>
         </table>
       </div>
     </div>
@@ -169,7 +169,11 @@
               <td>{{ leave.leaveType }}</td>
               <td>{{ leave.mangerName }}</td>
               <td>{{ leave.note }}</td>
-              <td>{{ leave.status }}</td>
+              <td>
+                <p v-if="leave.status == 0">Pending</p>
+                <p v-if="leave.status == 1">Approved</p>
+                <p v-if="leave.status == 2">Rejected</p>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -208,6 +212,9 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    navigate() {
+      router.go(-1);
     },
   },
 };

@@ -14,12 +14,13 @@
       </select>
     </div> -->
     <v-client-table :data="tableData" :columns="columns" :options="options">
-      <!-- <span slot="status" slot-scope="{ row }">
+      <span slot="status" slot-scope="{ row }">
         <td>
-          <a v-if="row.status == true">Active</a>
-          <a v-if="row.status == false">Deactive</a>
+          <p v-if="row.status == 0">Pending</p>
+          <p v-if="row.status == 1">Approved</p>
+          <p v-if="row.status == 2">Rejected</p>
         </td>
-      </span> -->
+      </span>
 
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
@@ -30,7 +31,7 @@
                 block
                 variant="outline"
                 color="success"
-                v-on:click="approve(row._id, 0)"
+                v-on:click="approve(row._id)"
                 >Approve
               </CButton>
               <CButton
@@ -38,7 +39,7 @@
                 block
                 variant="outline"
                 color="success"
-                v-on:click="reject(row._id, 0)"
+                v-on:click="reject(row._id)"
                 >Reject
               </CButton>
             </template>
@@ -98,8 +99,9 @@ export default {
     });
   },
   methods: {
-    approve(id, index) {
-      if (confirm("Are you sure you want to Block this customer?"))
+    approve(id) {
+      console.log(id);
+      if (confirm("Are you sure you want to Approve this leave?"))
         axios
           .post("http://127.0.0.1:4000/leaves/approve", { id: id })
           .then((resp) => {
@@ -110,10 +112,10 @@ export default {
             console.log(error);
           });
     },
-    reject(id, index) {
-      if (confirm("Are you sure you want to activate this customer?"))
+    reject(id) {
+      if (confirm("Are you sure you want to Reject this leave?"))
         axios
-          .post("http://127.0.0.1:4000/user/reject", { id: id })
+          .post("http://127.0.0.1:4000/leaves/reject", { id: id })
           .then((resp) => {
             console.log(resp);
             window.location.reload();
