@@ -6,184 +6,158 @@
           <strong><h2>Add User</h2></strong>
         </CCardHeader>
         <CCardBody>
-          <div class="summary text-red" v-if="$v.user.$error">
-            Form has errors
-          </div>
           <CForm @submit.prevent="submitForm">
             <CRow>
-              <CCol class="col-sm-3">Employee Id</CCol>
+              <CCol class="col-sm-3">Employee Id<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
-                    :class="{ hasError: $v.user.employeeId.$error }"
                     type="text"
                     placeholder="Enter Employee Id"
                     v-model="user.employeeId"
+                    :class="{
+                      'is-invalid': validationStatus($v.user.employeeId),
+                    }"
                     class="form-control"
                   />
-                  <!-- <div
-                    v-if="submitted && $v.user.employeeId.$error"
+                  <div
+                    v-if="!$v.user.employeeId.required"
                     class="invalid-feedback"
                   >
-                    <span v-if="!$v.user.employeeId.required"
-                      >Truck capacity is required</span
-                    >
-                  </div> -->
+                    Employee Id field is required.
+                  </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">First Name</CCol>
+              <CCol class="col-sm-3"
+                >First Name<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
                     type="text"
                     placeholder="Enter firstname"
                     v-model="user.firstname"
-                    class="form-control"
                     :class="{
-                      'is-invalid': submitted && $v.user.firstname.$error,
+                      'is-invalid': validationStatus($v.user.firstname),
                     }"
+                    class="form-control"
                   />
                   <div
-                    v-if="submitted && $v.user.firstname.$error"
+                    v-if="!$v.user.firstname.required"
                     class="invalid-feedback"
                   >
-                    <span v-if="!$v.user.firstname.required"
-                      >Truck capacity is required</span
-                    >
+                    First name field is required.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Last Name</CCol>
+              <CCol class="col-sm-3">Last Name<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
                     type="text"
                     placeholder="Enter lastname"
                     v-model="user.lastname"
-                    class="form-control"
                     :class="{
-                      'is-invalid': submitted && $v.user.lastname.$error,
+                      'is-invalid': validationStatus($v.user.lastname),
                     }"
+                    class="form-control"
                   />
                   <div
-                    v-if="submitted && $v.user.lastname.$error"
+                    v-if="!$v.user.lastname.required"
                     class="invalid-feedback"
                   >
-                    <span v-if="!$v.user.lastname.required"
-                      >Truck capacity is required</span
-                    >
+                    Last name field is required.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Email</CCol>
+              <CCol class="col-sm-3">Email<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
                     type="email"
                     placeholder="Enter email"
                     v-model="user.email"
+                    :class="{ 'is-invalid': validationStatus($v.user.email) }"
                     class="form-control"
-                    :class="{
-                      'is-invalid': submitted && $v.user.email.$error,
-                    }"
                   />
-                  <div
-                    v-if="submitted && $v.user.email.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.email.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.email.required" class="invalid-feedback">
+                    Email is required.
                   </div>
+                   <div v-if="!$v.user.email.email" class="invalid-feedback">The email is not valid.</div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Password</CCol>
+              <CCol class="col-sm-3">Password<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
                     type="password"
                     placeholder="Enter password"
                     v-model="user.password"
-                    class="form-control"
                     :class="{
-                      'is-invalid': submitted && $v.user.password.$error,
+                      'is-invalid': validationStatus($v.user.password),
                     }"
+                    class="form-control"
                   />
-                  <div
-                    v-if="submitted && $v.user.password.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.password.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.email.required" class="invalid-feedback">
+                    Email is required.
                   </div>
+                <div v-if="!$v.user.password.minLength" class="invalid-feedback">You must have at least {{ $v.user.password.$params.minLength.min }} letters.</div>
+                <div v-if="!$v.user.password.maxLength" class="invalid-feedback">You must not have greater then {{ $v.user.password.$params.maxLength.min }} letters.</div> 
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Phone Number</CCol>
+              <CCol class="col-sm-3">Phone Number<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
                     type="number"
                     placeholder="Enter phonenumber"
                     v-model="user.phonenumber"
-                    class="form-control"
                     :class="{
-                      'is-invalid': submitted && $v.user.phonenumber.$error,
+                      'is-invalid': validationStatus($v.user.phonenumber),
                     }"
+                    class="form-control"
                   />
-                  <div
-                    v-if="submitted && $v.user.phonenumber.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.phonenumber.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.phonenumber.required" class="invalid-feedback">
+                    Phone number is required.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">DOB</CCol>
+              <CCol class="col-sm-3">DOB<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
                     type="date"
                     v-model="user.dob"
                     class="form-control"
-                    :class="{
-                      'is-invalid': submitted && $v.user.dob.$error,
-                    }"
+                    :class="{ 'is-invalid': validationStatus($v.user.dob) }"
                   />
-                  <div
-                    v-if="submitted && $v.user.dob.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.dob.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.dob.required" class="invalid-feedback">
+                    Date of birth is required.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Department</CCol>
+              <CCol class="col-sm-3">Department<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -192,23 +166,21 @@
                     v-model="user.department"
                     class="form-control"
                     :class="{
-                      'is-invalid': submitted && $v.user.department.$error,
+                      'is-invalid': validationStatus($v.user.department),
                     }"
                   />
                   <div
-                    v-if="submitted && $v.user.department.$error"
+                    v-if="!$v.user.department.required"
                     class="invalid-feedback"
                   >
-                    <span v-if="!$v.user.department.required"
-                      >Truck capacity is required</span
-                    >
+                    Department is required.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Designation</CCol>
+              <CCol class="col-sm-3">Designation<span class="text-danger">*</span></CCol>
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -217,23 +189,21 @@
                     v-model="user.designation"
                     class="form-control"
                     :class="{
-                      'is-invalid': submitted && $v.user.designation.$error,
+                      'is-invalid': validationStatus($v.user.designation),
                     }"
                   />
                   <div
-                    v-if="submitted && $v.user.designation.$error"
+                    v-if="!$v.user.designation.required"
                     class="invalid-feedback"
                   >
-                    <span v-if="!$v.user.designation.required"
-                      >Truck capacity is required</span
-                    >
+                    Designation is required.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Address</CCol>
+              <CCol class="col-sm-3">Address<span class="text-danger">*</span></CCol>
               <CCol sm="2">
                 <div class="form-group">
                   <input
@@ -241,17 +211,10 @@
                     placeholder="Enter city"
                     v-model="user.address.city"
                     class="form-control"
-                    :class="{
-                      'is-invalid': submitted && $v.user.address.city.$error,
-                    }"
+                    :class="{ 'is-invalid': validationStatus($v.user.address.city) }"
                   />
-                  <div
-                    v-if="submitted && $v.user.address.city.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.address.city.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.address.city" class="invalid-feedback">
+                    City is required.
                   </div>
                 </div>
                 <div class="form-group">
@@ -260,17 +223,10 @@
                     placeholder="Enter State"
                     v-model="user.address.state"
                     class="form-control"
-                    :class="{
-                      'is-invalid': submitted && $v.user.address.state.$error,
-                    }"
+                    :class="{ 'is-invalid': validationStatus($v.user.address.state) }"
                   />
-                  <div
-                    v-if="submitted && $v.user.address.state.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.address.state.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.address.state" class="invalid-feedback">
+                    State is required.
                   </div>
                 </div>
                 <div class="form-group">
@@ -279,17 +235,10 @@
                     placeholder="Enter country"
                     v-model="user.address.country"
                     class="form-control"
-                    :class="{
-                      'is-invalid': submitted && $v.user.address.country.$error,
-                    }"
+                    :class="{ 'is-invalid': validationStatus($v.user.address.country) }"
                   />
-                  <div
-                    v-if="submitted && $v.user.address.country.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.address.country.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.address.country" class="invalid-feedback">
+                    Country is required.
                   </div>
                 </div>
                 <div class="form-group">
@@ -298,24 +247,17 @@
                     placeholder="Enter Pincode"
                     v-model="user.address.pincode"
                     class="form-control"
-                    :class="{
-                      'is-invalid': submitted && $v.user.address.pincode.$error,
-                    }"
+                    :class="{ 'is-invalid': validationStatus($v.user.address.pincode) }"
                   />
-                  <div
-                    v-if="submitted && $v.user.address.pincode.$error"
-                    class="invalid-feedback"
-                  >
-                    <span v-if="!$v.user.address.pincode.required"
-                      >Truck capacity is required</span
-                    >
+                  <div v-if="!$v.user.address.pincode" class="invalid-feedback">
+                    Pincode is required.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Gender</CCol>
+              <CCol class="col-sm-3">Gender<span class="text-danger">*</span></CCol>
               <CCol sm="1">
                 <div class="form-group">
                   <input
@@ -342,13 +284,6 @@
                     v-model="user.gender"
                   />
                   <label for="two"> Other</label>
-
-                  <div
-                    v-if="submitted && !$v.user.gender.required"
-                    class="invalid-feedback"
-                  >
-                    Gender is required
-                  </div>
                 </div>
               </CCol>
             </CRow>
@@ -373,11 +308,8 @@
                     v-model="user.maritalStatus"
                   />
                   <label for="two">Unmarried</label>
-                  <div
-                    v-if="submitted && !$v.user.maritalStatus.required"
-                    class="invalid-feedback"
-                  >
-                    Marital Status is required
+                  <div v-if="!$v.user.maritalStatus" class="invalid-feedback">
+                    Pincode is required.
                   </div>
                 </div>
               </CCol>
@@ -406,7 +338,7 @@
 <script>
 import axios from "axios";
 import router from "../router";
-import { required, email, numeric, minLength } from "vuelidate/lib/validators";
+import { required, email, minLength, maxLength  } from "vuelidate/lib/validators";
 export default {
   name: "add-employee",
   data() {
@@ -449,15 +381,20 @@ export default {
       firstname: { required },
       lastname: { required },
       email: { required, email },
-      password: { required },
+      password: { required, minLength: minLength(6), maxLength: maxLength(18) },
       phonenumber: { required },
-      //  role: { required },
-      //  gender: { required },
+      role: { required },
+      gender: { required },
       dob: { required },
       maritalStatus: { required },
       department: { required },
       designation: { required },
-      address: { required },
+      address:{ 
+      city: { required },
+      state: { required },
+      country: { required },
+      pincode: { required },
+      }
     },
   },
   created() {
@@ -466,22 +403,29 @@ export default {
     }
   },
   methods: {
+    validationStatus: function (validation) {
+      return typeof validation != "undefined" ? validation.$error : false;
+    },
     onChange(event) {
       var optionText = event.target.value;
       console.log(optionText);
     },
+
     submitForm() {
-      this.submitted = true;
+      //  this.submitted = true;
       // stop here if form is invalid
       // this.$v.user.$touch();
 
       // if (this.$v.user.$invalid) {
       //   return;
       // }
-      this.$v.user.$touch();
-      if (this.$v.user.$error) return;
+      // this.$v.user.$touch();
+      // if (this.$v.user.$error) return;
       // to form submit after this
-      alert("Form submitted");
+      // alert("Form submitted");
+
+      this.$v.$touch();
+      if (this.$v.$pendding || this.$v.$error) return;
 
       let user = {
         employeeId: this.user.employeeId,
