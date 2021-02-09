@@ -7,7 +7,9 @@
       <CCardBody>
         <CForm @submit.prevent="submitForm">
           <CRow>
-            <CCol class="col-sm-3">Subject<span class="text-danger">*</span></CCol>
+            <CCol class="col-sm-3"
+              >Subject<span class="text-danger">*</span></CCol
+            >
             <CCol sm="9">
               <div class="form-group">
                 <input
@@ -15,7 +17,16 @@
                   placeholder="Enter leave subject"
                   class="form-control"
                   v-model="user.leaveType"
+                  :class="{
+                    'is-invalid': validationStatus($v.user.leaveType),
+                  }"
                 />
+                <div
+                  v-if="!$v.user.leaveType.required"
+                  class="invalid-feedback"
+                >
+                  Subject field is required.
+                </div>
               </div>
             </CCol>
           </CRow>
@@ -31,7 +42,13 @@
                   placeholder="Vehicle capacity....."
                   class="form-control"
                   v-model="user.fromDate"
+                  :class="{
+                    'is-invalid': validationStatus($v.user.fromDate),
+                  }"
                 />
+                <div v-if="!$v.user.fromDate.required" class="invalid-feedback">
+                  From date is required.
+                </div>
               </div>
             </CCol>
 
@@ -43,14 +60,22 @@
                   placeholder="Enter basic fare....."
                   class="form-control"
                   v-model="user.toDate"
+                  :class="{
+                    'is-invalid': validationStatus($v.user.toDate),
+                  }"
                 />
+                <div v-if="!$v.user.toDate.required" class="invalid-feedback">
+                  To date is required.
+                </div>
               </div>
             </CCol>
           </CRow>
 
           <!-- ******************************************************* -->
           <CRow>
-            <CCol class="col-sm-3">Reason<span class="text-danger">*</span></CCol>
+            <CCol class="col-sm-3"
+              >Reason<span class="text-danger">*</span></CCol
+            >
             <CCol sm="9">
               <div class="form-group">
                 <textarea
@@ -62,7 +87,9 @@
             </CCol>
           </CRow>
           <CRow>
-            <CCol class="col-sm-3">Assign To<span class="text-danger">*</span></CCol>
+            <CCol class="col-sm-3"
+              >Assign To<span class="text-danger">*</span></CCol
+            >
             <CCol class="col-sm-9">
               <select
                 v-model="user.mangername"
@@ -71,21 +98,21 @@
                 class="form-control"
                 tabindex="12"
               >
-               <option value="" selected disabled>Please Select</option>
+                <option value="" selected disabled>Please Select</option>
                 <option
-                  
                   v-for="(options, index) in options"
-                   v-bind:value="options"
+                  v-bind:value="options"
                   :key="index"
-                
-                  >
-                ({{options.role}}) {{ options.firstname.toUpperCase() }} ({{options.email}})
+                >
+                  ({{ options.role }}) {{ options.firstname.toUpperCase() }} ({{
+                    options.email
+                  }})
                 </option>
               </select>
             </CCol>
           </CRow>
           <CRow>
-            <CCol >
+            <CCol>
               <CButton
                 type="submit"
                 class="btn btn btn-success"
@@ -121,15 +148,15 @@ export default {
       submitted: false,
     };
   },
-  // validations: {
-  //   leave: {
-  //     name: { required },
-  //     email: { required, email },
-  //     password: { required },
-  //     phone: { required, numeric, minLength: minLength(6) },
-  //     role: { required },
-  //   },
-  // },
+  validations: {
+    user: {
+      leaveType: { required },
+      fromDate: { required },
+      toDate: { required },
+      note: { required },
+      mangername: { required },
+    },
+  },
   created() {
     let user = JSON.parse(localStorage.getItem("data"));
     this.userId = user._id;
@@ -144,14 +171,12 @@ export default {
     });
   },
   methods: {
-    submitForm(e) {
-      // this.submitted = true;
-      // // stop here if form is invalid
-      // this.$v.$touch();
-
-      // if (this.$v.$invalid) {
-      //   return;
-      // }
+    validationStatus: function (validation) {
+      return typeof validation != "undefined" ? validation.$error : false;
+    },
+    submitForm() {
+      this.$v.$touch();
+      if (this.$v.$pendding || this.$v.$error) return;
 
       let user = {
         mangerId: this.user.mangername,

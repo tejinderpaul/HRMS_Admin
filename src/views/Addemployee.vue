@@ -412,18 +412,6 @@ export default {
     },
 
     submitForm() {
-      //  this.submitted = true;
-      // stop here if form is invalid
-      // this.$v.user.$touch();
-
-      // if (this.$v.user.$invalid) {
-      //   return;
-      // }
-      // this.$v.user.$touch();
-      // if (this.$v.user.$error) return;
-      // to form submit after this
-      // alert("Form submitted");
-
       this.$v.$touch();
       if (this.$v.$pendding || this.$v.$error) return;
 
