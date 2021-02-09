@@ -451,7 +451,7 @@ export default {
     },
     submittoserver(data) {
       axios.post("http://localhost:4000/user/signup", data).then((res) => {
-        // router.go(-1);
+        window.location.reload();
       });
     },
   },

@@ -71,15 +71,15 @@
                 class="form-control"
                 tabindex="12"
               >
-               <option selected disabled>Please Select</option>
+               <option value="" selected disabled>Please Select</option>
                 <option
-                
+                  
                   v-for="(options, index) in options"
+                   v-bind:value="options"
                   :key="index"
-                  :value="options.id"
                 
                   >
-                  {{ options.firstname }}
+                ({{options.role}}) {{ options.firstname.toUpperCase() }} ({{options.email}})
                 </option>
               </select>
             </CCol>
@@ -117,7 +117,6 @@ export default {
         toDate: "",
         note: "",
       },
-selected: "Please select",
       options: [],
       submitted: false,
     };
@@ -169,7 +168,7 @@ selected: "Please select",
       axios
         .post("http://localhost:4000/leaves/applyleave", data)
         .then((res) => {
-          // router.go(-1);
+          window.location.reload();
         });
     },
   },

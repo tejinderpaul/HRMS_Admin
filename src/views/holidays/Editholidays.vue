@@ -78,6 +78,7 @@ export default {
   data() {
     return {
       errors: "",
+      id:0,
       holidays: {
         occasion_date: "",
         occasion_name: "",
@@ -94,6 +95,8 @@ export default {
     },
   },
   created() {
+    this.id = this.$route.params.id;
+    this.getholiday();
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
@@ -120,6 +123,11 @@ export default {
       axios.post("http://localhost:4000/holidays/update_holiday", data).then((res) => {
         router.go(-1);
       });
+    },
+    getholiday() {
+      axios
+        .post("http://127.1.1.0:4000/holidays/holiday",{id:this.id})
+        .then((data) => (this.holidays = data.data.data));
     },
   },
 };
