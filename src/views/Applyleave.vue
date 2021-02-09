@@ -7,7 +7,7 @@
       <CCardBody>
         <CForm @submit.prevent="submitForm">
           <CRow>
-            <CCol class="col-sm-3">Subject</CCol>
+            <CCol class="col-sm-3">Subject<span class="text-danger">*</span></CCol>
             <CCol sm="9">
               <div class="form-group">
                 <input
@@ -24,7 +24,7 @@
           <CRow>
             <CCol class="col-sm-3">Date</CCol>
             <CCol sm="3">
-              <span>from</span>
+              <span>from<span class="text-danger">*</span></span>
               <div class="form-group">
                 <input
                   type="date"
@@ -36,7 +36,7 @@
             </CCol>
 
             <CCol sm="3">
-              <span>TO</span>
+              <span>TO<span class="text-danger">*</span></span>
               <div class="form-group">
                 <input
                   type="date"
@@ -50,7 +50,7 @@
 
           <!-- ******************************************************* -->
           <CRow>
-            <CCol class="col-sm-3">Reason</CCol>
+            <CCol class="col-sm-3">Reason<span class="text-danger">*</span></CCol>
             <CCol sm="9">
               <div class="form-group">
                 <textarea
@@ -62,7 +62,7 @@
             </CCol>
           </CRow>
           <CRow>
-            <CCol class="col-sm-3">Assign To</CCol>
+            <CCol class="col-sm-3">Assign To<span class="text-danger">*</span></CCol>
             <CCol class="col-sm-9">
               <select
                 v-model="user.mangername"
