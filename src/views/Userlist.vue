@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="background-color: white">
     <h1 class="text-center">All User List</h1>
-    <div class="VueTables__limit-field w-25 float-right mt-0">
+    <!-- <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
       ><select
         @change="onChange($event.target.value)"
@@ -13,16 +13,16 @@
         <option value="2">Approved Drivers</option>
         <option value="3">Waiting For Approvel Drivers</option>
       </select>
-    </div>
+    </div> -->
 
     <v-client-table :data="tableData" :columns="columns" :options="options">
-      <span slot="status" slot-scope="{ row }">
+      <!-- <span slot="status" slot-scope="{ row }">
         <td>
           <a v-if="row.is_verified == 0">Waiting for Approvel</a>
           <a v-if="row.is_verified == 1">Approved</a>
           <a v-if="row.is_verified == 2">Blocked</a>
         </td>
-      </span>
+      </span> -->
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 20px">
@@ -30,7 +30,7 @@
               <CButton
                 class="m-1"
                 :to="{
-                  name: 'driver-view',
+                  name: 'user-view',
                   params: { id: row._id },
                 }"
                 block
@@ -38,23 +38,33 @@
                 color="success"
                 >View</CButton
               >
-              <CButton
-                class="m-1"
-                block
-                variant="outline"
-                color="danger"
-                v-on:click="deletedriver(row._id)"
-                >Delete</CButton
-              >
+              <CButton class="m-1" block variant="outline" color="success">
+                <a
+                  v-if="row.status == true"
+                  href="javascript:;"
+                  class="btn btn-sm btn-primary"
+                  v-on:click="BlockUser(row._id, 0)"
+                  >Block</a
+                >
+                <a
+                  v-if="row.status == false"
+                  href="javascript:;"
+                  class="btn btn-sm btn-danger"
+                  v-on:click="UnblockUser(row._id, 0)"
+                  >UnBlock</a
+                >
+              </CButton>
             </template>
           </div>
         </div>
       </span>
       <span slot="name" slot-scope="{ row }">
-        {{row.firstname}}
+        {{ row.firstname }}
       </span>
       <span slot="address" slot-scope="{ row }">
-        {{row.address.city}},{{row.address.state}},{{row.address.country}},{{row.address.pincode}}
+        {{ row.address.city }},{{ row.address.state }},{{
+          row.address.country
+        }},{{ row.address.pincode }}
       </span>
     </v-client-table>
   </div>
@@ -73,14 +83,7 @@ export default {
   },
   data() {
     return {
-      columns: [
-        "name",,
-        "email",
-        "address",
-        "phonenumber",
-        "role",
-        "action",
-      ],
+      columns: ["name", , "email", "address", "phonenumber", "role", "action"],
       tableData: [],
       options: {
         headings: {
@@ -106,24 +109,29 @@ export default {
     }
   },
   mounted() {
-    this.axios.post("http://127.0.0.1:4000/leaves/adminlist").then((res) => {
+    this.axios.post("http://127.0.0.1:4000/user/alluser").then((res) => {
       this.tableData = res.data.data;
     });
   },
   methods: {
-    onChange(event) {
-      axios
-        .get("http://127.0.0.1:3000/drivers/filterDriver/" + event)
-        .then((data) => (this.tableData = data.data.data))
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    deletedriver(id) {
-      if (confirm("Are you sure you want to delete this driver?"))
+    BlockUser(id, index) {
+      if (confirm("Are you sure you want to Block this customer?"))
         axios
-          .delete("http://localhost:3000/drivers/deleteDriverDocuments/" + id)
+          .post("http://127.0.0.1:4000/user/blockuser", { id: id })
           .then((resp) => {
+            console.log(resp);
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    },
+    UnblockUser(id, index) {
+      if (confirm("Are you sure you want to activate this customer?"))
+        axios
+          .post("http://127.0.0.1:4000/user/Unblock", { id: id })
+          .then((resp) => {
+            console.log(resp);
             window.location.reload();
           })
           .catch((error) => {
@@ -199,7 +207,7 @@ th:nth-child(3) {
 .VueTables__row td {
   padding: 5px;
 }
-.VueTables__heading{
+.VueTables__heading {
   float: left;
 }
 select {
