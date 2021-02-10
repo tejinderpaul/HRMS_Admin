@@ -3,12 +3,14 @@
     <div class="text-center">
       <CCard>
         <CCardHeader>
-          <strong><h2>Create Admin User</h2></strong>
+          <strong><h2>Add Holiday</h2></strong>
         </CCardHeader>
         <CCardBody>
           <CForm @submit.prevent="submitForm">
             <CRow>
-              <CCol class="col-sm-3">Occasion Date</CCol>
+              <CCol class="col-sm-3"
+                >Date<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -16,15 +18,14 @@
                     v-model="holidays.occasion_date"
                     class="form-control"
                     :class="{
-                      'is-invalid':
-                        submitted && $v.holidays.occasion_date.$error,
+                      'is-invalid': validationStatus($v.holidays.occasion_date),
                     }"
                   />
                   <div
-                    v-if="submitted && !$v.holidays.occasion_date.required"
+                    v-if="!$v.holidays.occasion_date.required"
                     class="invalid-feedback"
                   >
-                    Date is required
+                    Date field is required.
                   </div>
                 </div>
               </CCol>
@@ -39,7 +40,16 @@
                     placeholder="Enter occasion"
                     v-model="holidays.occasion_name"
                     class="form-control"
+                    :class="{
+                      'is-invalid': validationStatus($v.holidays.occasion_name),
+                    }"
                   />
+                   <div
+                    v-if="!$v.holidays.occasion_name.required"
+                    class="invalid-feedback"
+                  >
+                    Occasion name field is required.
+                  </div>
                 </div>
               </CCol>
             </CRow>
@@ -53,7 +63,16 @@
                     placeholder="write note....."
                     v-model="holidays.note"
                     class="form-control"
+                    :class="{
+                      'is-invalid': validationStatus($v.holidays.note),
+                    }"
                   />
+                      <div
+                    v-if="!$v.holidays.note.required"
+                    class="invalid-feedback"
+                  >
+                    Note field is required.
+                  </div>
                 </div>
               </CCol>
             </CRow>
@@ -99,14 +118,12 @@ export default {
     }
   },
   methods: {
-    submitForm(e) {
-      this.submitted = true;
-      // stop here if form is invalid
+    validationStatus: function (validation) {
+      return typeof validation != "undefined" ? validation.$error : false;
+    },
+    submitForm() {
       this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return;
-      }
+      if (this.$v.$pendding || this.$v.$error) return;
 
       let holidays = {
         occasionDate: this.holidays.occasion_date,
@@ -116,9 +133,11 @@ export default {
       this.submittoserver(holidays);
     },
     submittoserver(data) {
-      axios.post("http://localhost:4000/holidays/add_holiday", data).then((res) => {
-        router.go(-1);
-      });
+      axios
+        .post("http://localhost:4000/holidays/add_holiday", data)
+        .then((res) => {
+          router.go(-1);
+        });
     },
   },
 };
