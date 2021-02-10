@@ -55,7 +55,7 @@
 
                   <CRow>
                     <CCol col="6" class="text-left">
-                      <CButton color="primary" class="px-4" type="submit"
+                      <CButton color="success" class="px-4" type="submit"
                         >Login</CButton
                       >
                     </CCol>
@@ -122,13 +122,10 @@ export default {
           "Content-Type": "application/json",
         })
         .then((res) => {
-          console.log("vfdvjhgkjhcxsvcs");
           if (res.data.statusCode == 404) {
             this.error = "Invalid username/password";
           } else if (res.data.statusCode == 200) {
             localStorage.setItem("data", JSON.stringify(res.data.data));
-            let admin = JSON.parse(localStorage.getItem("data"));
-            console.log(admin);
             this.$router.push({ path: "/dashboard" });
           }
         });
@@ -136,3 +133,8 @@ export default {
   },
 };
 </script>
+<style>
+.c-main{
+  padding:0px
+}
+</style>

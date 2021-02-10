@@ -1,19 +1,21 @@
 <template>
   <div class="container" style="background-color: white">
-    <h1 class="text-center">All User List</h1>
-    <!-- <div class="VueTables__limit-field w-25 float-right mt-0">
+    <h1 class="text-center">All Employees</h1>
+    <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
       ><select
         @change="onChange($event.target.value)"
         id="VueTables__limit_6JR1w"
         class="form-control"
       >
-        <option value="1">All Drivers</option>
-        <option value="4">Blocked Drivers</option>
-        <option value="2">Approved Drivers</option>
-        <option value="3">Waiting For Approvel Drivers</option>
+        <option selected value="all">All</option>
+        <option value="hr">HR</option>
+        <option value="admin">Admin</option>
+        <option value="teamlead">Team Lead</option>
+        <option value="employee">Employee</option>
+        <option value="manager">Manager</option>
       </select>
-    </div> -->
+    </div>
 
     <v-client-table :data="tableData" :columns="columns" :options="options">
       <!-- <span slot="status" slot-scope="{ row }">
@@ -25,7 +27,7 @@
       </span> -->
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group" style="margin-bottom: 20px">
+          <div class="btn-group" style="margin-bottom: 2px">
             <template>
               <CButton
                 class="m-1"
@@ -38,20 +40,18 @@
                 color="success"
                 >View</CButton
               >
-              <CButton class="m-1" block variant="outline" color="success">
+              <CButton class="m-1" block variant="outline" color="danger">
                 <a
                   v-if="row.status == true"
                   href="javascript:;"
-                  class="btn btn-sm btn-primary"
                   v-on:click="BlockUser(row._id, 0)"
                   >Block</a
                 >
                 <a
                   v-if="row.status == false"
                   href="javascript:;"
-                  class="btn btn-sm btn-danger"
                   v-on:click="UnblockUser(row._id, 0)"
-                  >UnBlock</a
+                  >Unblock</a
                 >
               </CButton>
             </template>
@@ -83,20 +83,15 @@ export default {
   },
   data() {
     return {
-      columns: ["name", , "email", "address", "phonenumber", "role", "action"],
+      columns: ["name", "email", "address", "phonenumber", "role", "action"],
       tableData: [],
       options: {
         headings: {
           name: "Name",
+          role:"Role",
         },
-        sortable: [
-          "first_name",
-          "last_name",
-          "email",
-          "phone_number",
-          "status",
-        ],
-        filterable: ["first_name", "email", "phonenumber"],
+        sortable: ["name","email", "phonenumber", "status"],
+        filterable: ["firstname","email","phonenumber"],
         texts: {
           filterPlaceholder: "Enter Name/ Number/ Email",
         },
@@ -137,6 +132,14 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+    },
+    onChange(event) {
+      axios
+        .post("http://127.0.0.1:4000/user/filteremployee",{role: event})
+        .then((data) => (this.tableData = data.data.data))
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

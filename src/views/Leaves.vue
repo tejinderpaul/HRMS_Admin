@@ -1,18 +1,19 @@
 <template>
   <div class="container" style="background-color: white">
     <h1 class="text-center">All Leaves List</h1>
-    <!-- <div class="VueTables__limit-field w-25 float-right mt-0">
+    <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
       ><select
         @change="onChange($event.target.value)"
         id="VueTables__limit_6JR1w"
         class="form-control"
       >
-        <option value="1">All Customers</option>
-        <option value="2">Active Customers</option>
-        <option value="3">Deactive Customers</option>
+        <option value="all">All Leaves</option>
+        <option value="0">Pending Leaves</option>
+        <option value="1">Approved Leaves</option>
+        <option value="2">Rejected Leaves</option>
       </select>
-    </div> -->
+    </div>
     <v-client-table :data="tableData" :columns="columns" :options="options">
       <span slot="status" slot-scope="{ row }">
         <td>
@@ -24,7 +25,7 @@
 
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group" style="margin-bottom: 20px">
+          <div class="btn-group" style="margin-bottom: 1px">
             <template>
               <CButton
                 class="m-1"
@@ -78,11 +79,15 @@ export default {
       options: {
         headings: {
           name: "Name",
+          leaveType: "Subject",
+          fromDate: "From",
+          toDate: "To",
+          mangerName: "Email TO",
         },
-        sortable: ["first_name", "last_name", "email", "phone_number"],
-        filterable: ["first_name", "email", "phone_number"],
+        sortable: ["name", "leaveType", "phone_number"],
+        filterable: ["name", "leaveType", "mangerName"],
         texts: {
-          filterPlaceholder: "Enter Name/ Number/ Email",
+          filterPlaceholder: "Enter Name/ Number/ MangerName",
         },
       },
     };
@@ -123,6 +128,14 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+    },
+    onChange(event) {
+      axios
+        .post("http://127.0.0.1:4000/leaves/filterleave", { status: event })
+        .then((res) => (this.tableData = res.data.data))
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

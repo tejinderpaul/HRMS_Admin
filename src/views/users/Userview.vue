@@ -143,7 +143,7 @@
       <div class="card-header" style="text-align: center">
         <h1>Leaves Details</h1>
         <div v-if="leave.length === 0">
-          <h2>No Booking found at the moment</h2>
+          <h2>No Leaves Applied</h2>
         </div>
       </div>
       <div class="">
