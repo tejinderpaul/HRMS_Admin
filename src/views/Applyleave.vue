@@ -39,7 +39,6 @@
               <div class="form-group">
                 <input
                   type="date"
-                  placeholder="Vehicle capacity....."
                   class="form-control"
                   v-model="user.fromDate"
                   :class="{
@@ -53,11 +52,10 @@
             </CCol>
 
             <CCol sm="3">
-              <span>TO<span class="text-danger">*</span></span>
+              <span>To<span class="text-danger">*</span></span>
               <div class="form-group">
                 <input
                   type="date"
-                  placeholder="Enter basic fare....."
                   class="form-control"
                   v-model="user.toDate"
                   :class="{
@@ -79,10 +77,16 @@
             <CCol sm="9">
               <div class="form-group">
                 <textarea
-                  placeholder="Enter basic distance....."
+                  placeholder="Enter reason....."
                   class="form-control"
                   v-model="user.note"
+                  :class="{
+                    'is-invalid': validationStatus($v.user.note),
+                  }"
                 />
+                <div v-if="!$v.user.note.required" class="invalid-feedback">
+                  Reason is required.
+                </div>
               </div>
             </CCol>
           </CRow>
@@ -97,6 +101,9 @@
                 id="city"
                 class="form-control"
                 tabindex="12"
+                :class="{
+                  'is-invalid': validationStatus($v.user.mangername),
+                }"
               >
                 <option value="" selected disabled>Please Select</option>
                 <option
@@ -109,6 +116,9 @@
                   }})
                 </option>
               </select>
+              <div v-if="!$v.user.mangername.required" class="invalid-feedback">
+                Reason is required.
+              </div>
             </CCol>
           </CRow>
           <CRow>
@@ -199,4 +209,3 @@ export default {
   },
 };
 </script>
-
