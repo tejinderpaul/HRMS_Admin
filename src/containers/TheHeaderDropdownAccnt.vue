@@ -27,7 +27,7 @@
       >
     </CDropdownItem>
     <CDropdownItem>
-      <CButton v-on:click="logout()"
+      <CButton v-on:click="logout(id)"
         ><CIcon name="cil-lock-locked" /> Logout</CButton
       >
     </CDropdownItem>
@@ -40,6 +40,7 @@ export default {
   name: "TheHeaderDropdownAccnt",
   data() {
     return {
+      id:"",
       itemsCount: 42,
     };
   },
@@ -48,8 +49,8 @@ export default {
     
   },
   methods: {
-    logout() {
-      console.log(this.id);
+    logout(id) {
+      console.log(id);
       axios.post("http://localhost:4000/user/logout", {id:this.id}).then((res) => {
         localStorage.clear();
         this.$router.push("/login");

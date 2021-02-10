@@ -14,7 +14,7 @@
     <v-client-table :data="tableData" :columns="columns" :options="options">
       <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group" style="margin-bottom: 20px">
+          <div class="btn-group" style="margin-bottom: 0px">
             <template>
               <CButton
                 class="m-1"
@@ -59,10 +59,14 @@ export default {
       columns: ["occasion_date", "occasion_name","note","action"],
       tableData: [],
       options: {
+         headings: {
+          occasion_date:"Date",
+          occasion_name:"Occasion Name"
+        },
         sortable: ["title", "description"],
-        filterable: ["occasion_date", "description"],
+        filterable: ["occasion_date", "occasion_name"],
         texts: {
-          filterPlaceholder: "Enter Title/ Description",
+          filterPlaceholder: "Enter Date/ Occasion Name",
         },
       },
     };

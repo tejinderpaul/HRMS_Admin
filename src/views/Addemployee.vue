@@ -370,7 +370,7 @@ export default {
         "hr",
         "teamlead",
         "manager",
-        "employees",
+        "employee",
       ],
       submitted: false,
     };

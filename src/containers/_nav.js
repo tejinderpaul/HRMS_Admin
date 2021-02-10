@@ -8,7 +8,7 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Userlist',
+            name: 'All Employees List',
             to: '/user',
             icon: 'cil-people'
         },
@@ -36,37 +36,37 @@ export default [{
             to: '/add-employee',
             icon: 'cil-basket'
         },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Admin User',
-            to: '/admin-user',
-            icon: 'cil-user'
-        },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Goods Types',
-            to: '/goodstypes',
-            icon: 'cil-moon'
-        },
-        {
-            _name: 'CSidebarNavDropdown',
-            name: 'Notifications',
-            route: '/notifications',
-            icon: 'cil-bell',
-            // items: [{
-            //         name: 'Alerts',
-            //         to: '/notifications/alerts'
-            //     },
-            //     {
-            //         name: 'Badges',
-            //         to: '/notifications/badges'
-            //     },
-            //     {
-            //         name: 'Modals',
-            //         to: '/notifications/modals'
-            //     }
-            // ]
-        },
+        // {
+        //     _name: 'CSidebarNavItem',
+        //     name: 'Admin User',
+        //     to: '/admin-user',
+        //     icon: 'cil-user'
+        // },
+        // {
+        //     _name: 'CSidebarNavItem',
+        //     name: 'Goods Types',
+        //     to: '/goodstypes',
+        //     icon: 'cil-moon'
+        // },
+        // {
+        //     _name: 'CSidebarNavDropdown',
+        //     name: 'Notifications',
+        //     route: '/notifications',
+        //     icon: 'cil-bell',
+        //     items: [{
+        //             name: 'Alerts',
+        //             to: '/notifications/alerts'
+        //         },
+        //         {
+        //             name: 'Badges',
+        //             to: '/notifications/badges'
+        //         },
+        //         {
+        //             name: 'Modals',
+        //             to: '/notifications/modals'
+        //         }
+        //     ]
+        // },
 
     ]
 }]
