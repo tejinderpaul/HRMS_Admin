@@ -201,7 +201,7 @@ export default {
     submittoserver(data) {
       console.log(data);
       axios
-        .post("http://localhost:4000/leaves/applyleave", data)
+        .post("http://192.168.1.20:4000/leaves/applyleave", data)
         .then((res) => {
           window.location.reload();
         });

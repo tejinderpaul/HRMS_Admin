@@ -98,7 +98,7 @@ export default {
     }
   },
   mounted() {
-    this.axios.post("http://127.0.0.1:4000/leaves/alleaves").then((res) => {
+    this.axios.post("http://192.168.1.20:4000/leaves/alleaves").then((res) => {
       console.log(res);
       this.tableData = res.data.data;
     });
@@ -108,7 +108,7 @@ export default {
       console.log(id);
       if (confirm("Are you sure you want to Approve this leave?"))
         axios
-          .post("http://127.0.0.1:4000/leaves/approve", { id: id })
+          .post("http://192.168.1.20:4000/leaves/approve", { id: id })
           .then((resp) => {
             console.log(resp);
             window.location.reload();
@@ -120,7 +120,7 @@ export default {
     reject(id) {
       if (confirm("Are you sure you want to Reject this leave?"))
         axios
-          .post("http://127.0.0.1:4000/leaves/reject", { id: id })
+          .post("http://192.168.1.20:4000/leaves/reject", { id: id })
           .then((resp) => {
             console.log(resp);
             window.location.reload();

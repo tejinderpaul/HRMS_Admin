@@ -14,6 +14,7 @@
                   <div class="form-group">
                     <input
                       v-model="user.email"
+                      type="email"
                       autocomplete="username email"
                       placeholder="Email"
                       class="form-control"
@@ -78,7 +79,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:4000/user/forgotpassword", user, {
+        .post("http://192.168.1.20:4000/user/forgotpassword", user, {
           "Content-Type": "application/json",
         })
         .then((res) => {
@@ -90,6 +91,7 @@ export default {
             });
           } else if (res.data.statusCode === 404) {
             this.error = "Invalid email";
+
           }
         });
     },

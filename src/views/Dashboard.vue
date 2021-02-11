@@ -91,7 +91,7 @@ export default {
   methods: {
     fetchCustomers() {
       axios
-        .get("http://127.0.0.1:3000/adminuser/dashboard")
+        .get("http://192.168.1.20:4000/adminuser/dashboard")
         .then(
           (data) => (
             (this.customer = data.data.customer),

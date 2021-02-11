@@ -77,7 +77,7 @@ export default {
     }
   },
   mounted() {
-    this.axios.post("http://127.0.0.1:4000/holidays/all_holidays").then((res) => {
+    this.axios.post("http://192.168.1.20:4000/holidays/all_holidays").then((res) => {
       this.tableData = res.data.data;
     });
   },
@@ -85,7 +85,7 @@ export default {
     deleteHolidays(holiday_id) {
       console.log(holiday_id);
       if (confirm("Are you sure you want to delete this item?"))
-         axios.post("http://localhost:4000/holidays/delete_holiday", {holiday_id:holiday_id})
+         axios.post("http://192.168.1.20:4000/holidays/delete_holiday", {holiday_id:holiday_id})
          .then((res) => {
             window.location.reload();
           })
