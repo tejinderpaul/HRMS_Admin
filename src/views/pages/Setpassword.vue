@@ -134,7 +134,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:4000/user/setnewpassword", user, {
+        .post("http://192.168.1.20:4000/user/setnewpassword", user, {
           "Content-Type": "application/json",
         })
         .then((res) => {

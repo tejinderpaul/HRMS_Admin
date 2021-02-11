@@ -186,7 +186,7 @@ export default {
       this.submittoserver(user);
     },
     submittoserver(data) {
-      axios.post("http://localhost:3000/adminuser/signin", data).then((res) => {
+      axios.post("http://192.168.1.20:3000/adminuser/signin", data).then((res) => {
         router.go(-1);
       });
     },

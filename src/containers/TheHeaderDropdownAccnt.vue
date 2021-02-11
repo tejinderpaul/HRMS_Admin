@@ -45,13 +45,12 @@ export default {
     };
   },
   created() {
-    this.id = JSON.parse(localStorage.getItem("data")).id;
+    this.id = JSON.parse(localStorage.getItem("data"))._id;
     
   },
   methods: {
     logout(id) {
-      console.log(id);
-      axios.post("http://localhost:4000/user/logout", {id:this.id}).then((res) => {
+      axios.post("http://192.168.1.20:4000/user/logout", {id:this.id}).then((res) => {
         localStorage.clear();
         this.$router.push("/login");
       });

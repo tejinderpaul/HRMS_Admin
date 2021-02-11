@@ -70,7 +70,7 @@ export default {
   },
   mounted() {
     this.axios
-      .post("http://localhost:3000/adminuser/getalladminuser")
+      .post("http://192.168.1.20:3000/adminuser/getalladminuser")
       .then((res) => {
         this.tableData = res.data.data;
       });
@@ -85,7 +85,7 @@ export default {
     deleteadminuser(id, index) {
       if (confirm("Are you sure you want to delete this admin?"))
         axios
-          .get("http://127.0.0.1:3000/adminuser/deleteadminuser/" + id)
+          .get("http://192.168.1.20:3000/adminuser/deleteadminuser/" + id)
           .then((resp) => {
             router.go("/");
           })

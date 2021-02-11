@@ -38,18 +38,21 @@
                 block
                 variant="outline"
                 color="success"
+                style="width:100px"
                 >View</CButton
               >
-              <CButton class="m-1" block variant="outline" color="danger">
+              <CButton class="m-1 " block variant="outline" color="danger" style="width:100px">
                 <a
                   v-if="row.status == true"
                   href="javascript:;"
+                  style="width:100px"
                   v-on:click="BlockUser(row._id, 0)"
                   >Block</a
                 >
                 <a
                   v-if="row.status == false"
                   href="javascript:;"
+                  style="width:100px"
                   v-on:click="UnblockUser(row._id, 0)"
                   >Unblock</a
                 >
@@ -104,7 +107,7 @@ export default {
     }
   },
   mounted() {
-    this.axios.post("http://127.0.0.1:4000/user/alluser").then((res) => {
+    this.axios.post("http://192.168.1.20:4000/user/alluser").then((res) => {
       this.tableData = res.data.data;
     });
   },
@@ -112,7 +115,7 @@ export default {
     BlockUser(id, index) {
       if (confirm("Are you sure you want to Block this customer?"))
         axios
-          .post("http://127.0.0.1:4000/user/blockuser", { id: id })
+          .post("http://192.168.1.20:4000/user/blockuser", { id: id })
           .then((resp) => {
             console.log(resp);
             window.location.reload();

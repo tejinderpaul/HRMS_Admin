@@ -433,7 +433,7 @@ export default {
       this.submittoserver(user);
     },
     submittoserver(data) {
-      axios.post("http://localhost:4000/user/signup", data).then((res) => {
+      axios.post("http://192.168.1.20:4000/user/signup", data).then((res) => {
         window.location.reload();
       });
     },

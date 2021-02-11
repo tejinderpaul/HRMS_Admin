@@ -118,7 +118,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:4000/user/login", user, {
+        .post("http://192.168.1.20:4000/user/login", user, {
           "Content-Type": "application/json",
         })
         .then((res) => {

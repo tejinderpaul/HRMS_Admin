@@ -136,14 +136,14 @@ export default {
     },
     submittoserver(data) {
       axios
-        .post("http://localhost:4000/holidays/update_holiday", data)
+        .post("http://192.168.1.20:4000/holidays/update_holiday", data)
         .then((res) => {
           router.go(-1);
         });
     },
     getholiday() {
       axios
-        .post("http://127.1.1.0:4000/holidays/holiday", { id: this.id })
+        .post("http://192.168.1.20:4000/holidays/holiday", { id: this.id })
         .then((data) => (this.holidays = data.data.data));
     },
   },

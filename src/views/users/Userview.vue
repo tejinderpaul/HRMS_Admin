@@ -204,7 +204,7 @@ export default {
   methods: {
     getuser() {
       axios
-        .post(`http://127.0.0.1:4000/user/userview/${this.id}`)
+        .post(`http://192.168.1.20:4000/user/userview/${this.id}`)
         .then((response) => {
           this.user = response.data.data;
           this.leave = response.data.leave;
