@@ -38,21 +38,27 @@
                 block
                 variant="outline"
                 color="success"
-                style="width:100px"
+                style="width: 100px"
                 >View</CButton
               >
-              <CButton class="m-1 " block variant="outline" color="danger" style="width:100px">
+              <CButton
+                class="m-1"
+                block
+                variant="outline"
+                color="danger"
+                style="width: 100px"
+              >
                 <a
                   v-if="row.status == true"
                   href="javascript:;"
-                  style="width:100px"
+                  style="width: 100px"
                   v-on:click="BlockUser(row._id, 0)"
                   >Block</a
                 >
                 <a
                   v-if="row.status == false"
                   href="javascript:;"
-                  style="width:100px"
+                  style="width: 100px"
                   v-on:click="UnblockUser(row._id, 0)"
                   >Unblock</a
                 >
@@ -78,6 +84,7 @@ import Vue from "vue";
 import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import config from "@/config";
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -91,10 +98,10 @@ export default {
       options: {
         headings: {
           name: "Name",
-          role:"Role",
+          role: "Role",
         },
-        sortable: ["name","email", "phonenumber", "status"],
-        filterable: ["firstname","email","phonenumber"],
+        sortable: ["name", "email", "phonenumber", "status"],
+        filterable: ["firstname", "email", "phonenumber"],
         texts: {
           filterPlaceholder: "Enter Name/ Number/ Email",
         },
@@ -102,12 +109,21 @@ export default {
     };
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
   },
   mounted() {
-    this.axios.post("http://192.168.1.20:4000/user/alluser").then((res) => {
+    let options = {
+      method: "post",
+      url: `${config.apiUrl}/user/alluser`,
+      headers: {
+        token: this.token,
+      },
+    };
+    this.axios(options).then((res) => {
       this.tableData = res.data.data;
     });
   },
@@ -115,7 +131,15 @@ export default {
     BlockUser(id, index) {
       if (confirm("Are you sure you want to Block this customer?"))
         axios
-          .post("http://192.168.1.20:4000/user/blockuser", { id: id })
+          .post(
+            `${config.apiUrl}/user/blockuser`,
+            { id: id },
+            {
+              headers: {
+                token: this.token,
+              },
+            }
+          )
           .then((resp) => {
             console.log(resp);
             window.location.reload();
@@ -127,9 +151,16 @@ export default {
     UnblockUser(id, index) {
       if (confirm("Are you sure you want to activate this customer?"))
         axios
-          .post("http://127.0.0.1:4000/user/Unblock", { id: id })
+          .post(
+            `${config.apiUrl}/user/Unblock`,
+            { id: id },
+            {
+              headers: {
+                token: this.token,
+              },
+            }
+          )
           .then((resp) => {
-            console.log(resp);
             window.location.reload();
           })
           .catch((error) => {
@@ -138,7 +169,15 @@ export default {
     },
     onChange(event) {
       axios
-        .post("http://127.0.0.1:4000/user/filteremployee",{role: event})
+        .post(
+          `${config.apiUrl}/user/filteremployee`,
+          { role: event },
+          {
+            headers: {
+              token: this.token,
+            },
+          }
+        )
         .then((data) => (this.tableData = data.data.data))
         .catch((error) => {
           console.log(error);
