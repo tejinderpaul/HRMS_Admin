@@ -48,6 +48,7 @@ import Vue from "vue";
 import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import config from "@/config";
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -68,12 +69,21 @@ export default {
     };
   },
   created() {
+      this.user = JSON.parse(localStorage.getItem("data"));
+    this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
   },
   mounted() {
-    this.axios.post("http://127.0.0.1:3000/goodstype/allgoods").then((res) => {
+    let options = {
+      method: "post",
+      url: `${config.apiUrl}/goodstype/allgoods`,
+      headers: {
+        token: this.token,
+      },
+    };
+    this.axios(options).then((res) => {
       this.tableData = res.data.data;
     });
   },
@@ -81,7 +91,7 @@ export default {
     deleteGood(id, index) {
       if (confirm("Are you sure you want to delete this item?"))
         axios
-          .delete("http://127.0.0.1:3000/goodstype/deletegoods/" + id)
+          .delete(`${config.apiUrl}/goodstype/deletegoods/` + id)
           .then((resp) => {
             window.location.reload();
           })

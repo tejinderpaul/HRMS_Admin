@@ -35,6 +35,7 @@
                 v-on:click="approve(row._id)"
                 >Approve
               </CButton>
+
               <CButton
                 class="m-1"
                 block
@@ -56,6 +57,7 @@ import Vue from "vue";
 import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import config from "@/config";
 import router from "../router";
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
@@ -93,45 +95,69 @@ export default {
     };
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
   },
   mounted() {
-    this.axios.post("http://192.168.1.20:4000/leaves/alleaves").then((res) => {
-      console.log(res);
+    let options = {
+      method: "post",
+      url: `${config.apiUrl}/leaves/alleaves`,
+      headers: {
+        token: this.token,
+      },
+    };
+    this.axios(options).then((res) => {
       this.tableData = res.data.data;
     });
   },
   methods: {
     approve(id) {
-      console.log(id);
       if (confirm("Are you sure you want to Approve this leave?"))
         axios
-          .post("http://192.168.1.20:4000/leaves/approve", { id: id })
+          .post(
+            `${config.apiUrl}/leaves/approve`,
+            { id: id },
+            {
+              headers: {
+                token: this.token,
+              },
+            }
+          )
           .then((resp) => {
-            console.log(resp);
             window.location.reload();
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch((error) => {});
     },
     reject(id) {
       if (confirm("Are you sure you want to Reject this leave?"))
         axios
-          .post("http://192.168.1.20:4000/leaves/reject", { id: id })
+          .post(
+            `${config.apiUrl}/leaves/reject`,
+            { id: id },
+            {
+              headers: {
+                token: this.token,
+              },
+            }
+          )
           .then((resp) => {
-            console.log(resp);
             window.location.reload();
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch((error) => {});
     },
     onChange(event) {
       axios
-        .post("http://127.0.0.1:4000/leaves/filterleave", { status: event })
+        .post(`${config.apiUrl}/leaves/filterleave`,
+        { status: event },
+         {
+            headers: {
+              token: this.token,
+            },
+          }
+        )
         .then((res) => (this.tableData = res.data.data))
         .catch((error) => {
           console.log(error);
