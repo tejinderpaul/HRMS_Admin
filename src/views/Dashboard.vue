@@ -2,7 +2,7 @@
   <div class="container" style="background-color: white">
     <CRow>
       <CCol sm="6" lg="3" v="customer">
-        <CWidgetDropdown color="primary" header="Customers">
+        <CWidgetDropdown color="primary" header="Employees">
           <h1>{{ customer }}</h1>
           <template #footer>
             <CChartLineSimple
@@ -18,8 +18,16 @@
         </CWidgetDropdown>
       </CCol>
       <CCol sm="6" lg="3" v="driver">
-        <CWidgetDropdown color="info" header="Drivers">
-          <h1>{{ driver }}</h1>
+        <CWidgetDropdown color="info" header="Attendence">
+          <CButton
+          class="bg-success w-50"
+                :to="{
+                  name: 'attendence-view'
+                }"
+                block
+                variant="outline"
+                >Click Here to Check</CButton
+              >
           <template #footer>
             <CChartLineSimple
               pointed
@@ -35,7 +43,7 @@
         </CWidgetDropdown>
       </CCol>
       <CCol sm="6" lg="3" v="booking">
-        <CWidgetDropdown color="warning" header="Bookings">
+        <CWidgetDropdown color="warning" header="">
           <h1>{{ booking }}</h1>
           <template #footer>
             <CChartLineSimple
@@ -52,7 +60,7 @@
         </CWidgetDropdown>
       </CCol>
       <CCol sm="6" lg="3" v="complaint">
-        <CWidgetDropdown color="danger" header="Complaints">
+        <CWidgetDropdown color="danger" header="">
           <h1>{{ complaint }}</h1>
           <template #footer>
             <CChartBarSimple
@@ -91,10 +99,11 @@ export default {
   methods: {
     fetchCustomers() {
       axios
-        .get("http://192.168.1.20:4000/adminuser/dashboard")
+        .get("http://192.168.1.20:4000/user/dashboard")
         .then(
           (data) => (
-            (this.customer = data.data.customer),
+            console.log(data)
+            (this.customer = data.data.user),
             (this.driver = data.data.driver),
             (this.booking = data.data.booking),
             (this.complaint = data.data.complaint)

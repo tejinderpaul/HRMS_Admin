@@ -45,7 +45,7 @@ const Editgoodstype = () =>
     import('@/views/goodstypes/Editgoodstype')
 const Addholidays = () =>
     import('@/views/holidays/Addholidays')
-    const Editholidays = () =>
+const Editholidays = () =>
     import('@/views/holidays/Editholidays')
 const Forgotpassword = () =>
     import('@/views/pages/Forgotpassword')
@@ -56,6 +56,8 @@ const Profile = () =>
 const Changepassword = () =>
     import('@/views/pages/Changepassword')
 
+const Attendence = () =>
+    import('@/views/Attendence')
 const Typography = () =>
     import('@/views/theme/Typography')
 
@@ -134,8 +136,8 @@ const Login = () =>
 const Register = () =>
     import('@/views/pages/Register')
 
-const Userview=()=>
-import('@/views/users/Userview')
+const Userview = () =>
+    import('@/views/users/Userview')
 
 Vue.use(Router)
 
@@ -208,7 +210,7 @@ function configRoutes() {
         {
             path: 'apply-leave',
             name: 'apply-leave',
-            component:Applyleave 
+            component: Applyleave
 
         },
         {
@@ -295,6 +297,11 @@ function configRoutes() {
             path: 'user-view/:id',
             name: 'user-view',
             component: Userview
+        },
+        {
+            path: 'attendence-view',
+            name: 'attendence-view',
+            component: Attendence
         },
 
 
