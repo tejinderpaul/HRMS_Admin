@@ -92,6 +92,7 @@
 import axios from "axios";
 import router from "../../router";
 import { required } from "vuelidate/lib/validators";
+import config from "@/config";
 export default {
   name: "create-admin-user",
   data() {
@@ -113,6 +114,8 @@ export default {
     },
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
@@ -134,7 +137,13 @@ export default {
     },
     submittoserver(data) {
       axios
-        .post("http://192.168.1.20:4000/holidays/add_holiday", data)
+        .post(`${config.apiUrl}/holidays/add_holiday`, data,
+        {
+              headers: {
+                token: this.token,
+              },
+            }
+        )
         .then((res) => {
           router.go(-1);
         });

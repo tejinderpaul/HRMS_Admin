@@ -140,6 +140,7 @@
 <script>
 import axios from "axios";
 import router from "../router";
+import config from "@/config";
 import { required, email, numeric, minLength } from "vuelidate/lib/validators";
 export default {
   name: "apply-leave",
@@ -170,14 +171,21 @@ export default {
   created() {
     let user = JSON.parse(localStorage.getItem("data"));
     this.userId = user._id;
+    this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
   },
   mounted() {
-    axios.post("http://localhost:4000/leaves/adminlist").then((res) => {
+    let options = {
+      method: "post",
+      url: `${config.apiUrl}/leaves/adminlist`,
+      headers: {
+        token: this.token,
+      },
+    };
+    axios.post(options).then((res) => {
       this.options = res.data.data;
-      console.log(this.options);
     });
   },
   methods: {
@@ -199,9 +207,15 @@ export default {
       this.submittoserver(user);
     },
     submittoserver(data) {
-      console.log(data);
+
       axios
-        .post("http://192.168.1.20:4000/leaves/applyleave", data)
+        .post(`${config.apiUrl}/leaves/applyleave`, data,
+         {
+              headers: {
+                token: this.token,
+              },
+            }
+        )
         .then((res) => {
           window.location.reload();
         });

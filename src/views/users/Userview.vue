@@ -185,6 +185,7 @@
 <script>
 import axios from "axios";
 import router from "../../router";
+import config from "@/config";
 // import LoginVue from "../pages/Login.vue";
 export default {
   name: "user-view",
@@ -195,6 +196,8 @@ export default {
     };
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.token = this.user.token;
     this.id = this.$route.params.id;
     this.getuser(this.id);
     if (localStorage.getItem("data") === null) {
@@ -204,7 +207,13 @@ export default {
   methods: {
     getuser() {
       axios
-        .post(`http://192.168.1.20:4000/user/userview/${this.id}`)
+        .post(`${config.apiUrl}/user/userview/${this.id}`,{},
+        {
+              headers: {
+                token: this.token,
+              },
+            }
+            )
         .then((response) => {
           this.user = response.data.data;
           this.leave = response.data.leave;

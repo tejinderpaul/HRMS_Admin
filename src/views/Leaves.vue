@@ -150,7 +150,14 @@ export default {
     },
     onChange(event) {
       axios
-        .post(`${config.apiUrl}/leaves/filterleave`, { status: event })
+        .post(`${config.apiUrl}/leaves/filterleave`,
+        { status: event },
+         {
+            headers: {
+              token: this.token,
+            },
+          }
+        )
         .then((res) => (this.tableData = res.data.data))
         .catch((error) => {
           console.log(error);

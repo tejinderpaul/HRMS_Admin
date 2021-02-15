@@ -337,7 +337,7 @@
 
 <script>
 import axios from "axios";
-import router from "../router";
+import config from "@/config";
 import { required, email, minLength, maxLength  } from "vuelidate/lib/validators";
 export default {
   name: "add-employee",
@@ -398,6 +398,8 @@ export default {
     },
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
@@ -433,7 +435,7 @@ export default {
       this.submittoserver(user);
     },
     submittoserver(data) {
-      axios.post("http://192.168.1.20:4000/user/signup", data).then((res) => {
+      axios.post(`${config.apiUrl}/user/signup`, data).then((res) => {
         window.location.reload();
       });
     },

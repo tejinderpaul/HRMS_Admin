@@ -48,6 +48,7 @@ import Vue from "vue";
 import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import config from "@/config";
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -72,20 +73,34 @@ export default {
     };
   },
   created() {
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
   },
   mounted() {
-    this.axios.post("http://192.168.1.20:4000/holidays/all_holidays").then((res) => {
+     let options = {
+      method: "post",
+      url: `${config.apiUrl}/holidays/all_holidays`,
+      headers: {
+        token: this.token,
+      },
+    };
+    this.axios(options).then((res) => {
       this.tableData = res.data.data;
     });
   },
   methods: {
     deleteHolidays(holiday_id) {
-      console.log(holiday_id);
       if (confirm("Are you sure you want to delete this item?"))
-         axios.post("http://192.168.1.20:4000/holidays/delete_holiday", {holiday_id:holiday_id})
+         axios.post(`${config.apiUrl}/holidays/delete_holiday`, {holiday_id:holiday_id},
+         {
+              headers: {
+                token: this.token,
+              },
+            }
+         )
          .then((res) => {
             window.location.reload();
           })
