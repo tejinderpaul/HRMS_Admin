@@ -20,7 +20,7 @@
       <CCol sm="6" lg="3" v="driver">
         <CWidgetDropdown color="info" header="Attendence">
           <CButton
-          class="bg-success w-50"
+          class="bg-success w-50 "
                 :to="{
                   name: 'attendence-view'
                 }"
@@ -32,7 +32,7 @@
             <CChartLineSimple
               pointed
               class="mt-3 mx-3"
-              style="height: 70px"
+              style="height: 85px"
               :data-points="[1, 18, 9, 17, 34, 22, 11]"
               point-hover-background-color="info"
               :options="{ elements: { line: { tension: 0.00001 } } }"
@@ -43,7 +43,7 @@
         </CWidgetDropdown>
       </CCol>
       <CCol sm="6" lg="3" v="booking">
-        <CWidgetDropdown color="warning" header="Pending Leaves">
+        <CWidgetDropdown color="warning" header="Remaining Leaves">
           <h1>{{ pendingleaves }}</h1>
           <template #footer>
             <CChartLineSimple

@@ -8,7 +8,9 @@
         <CCardBody>
           <CForm @submit.prevent="submitForm">
             <CRow>
-              <CCol class="col-sm-3">Employee Id<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Employee Id<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -56,7 +58,9 @@
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Last Name<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Last Name<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -79,7 +83,9 @@
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Email<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Email<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -92,13 +98,17 @@
                   <div v-if="!$v.user.email.required" class="invalid-feedback">
                     Email is required.
                   </div>
-                   <div v-if="!$v.user.email.email" class="invalid-feedback">The email is not valid.</div>
+                  <div v-if="!$v.user.email.email" class="invalid-feedback">
+                    The email is not valid.
+                  </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Password<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Password<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -113,14 +123,28 @@
                   <div v-if="!$v.user.email.required" class="invalid-feedback">
                     Email is required.
                   </div>
-                <div v-if="!$v.user.password.minLength" class="invalid-feedback">You must have at least {{ $v.user.password.$params.minLength.min }} letters.</div>
-                <div v-if="!$v.user.password.maxLength" class="invalid-feedback">You must not have greater then {{ $v.user.password.$params.maxLength.min }} letters.</div> 
+                  <div
+                    v-if="!$v.user.password.minLength"
+                    class="invalid-feedback"
+                  >
+                    You must have at least
+                    {{ $v.user.password.$params.minLength.min }} letters.
+                  </div>
+                  <div
+                    v-if="!$v.user.password.maxLength"
+                    class="invalid-feedback"
+                  >
+                    You must not have greater then
+                    {{ $v.user.password.$params.maxLength.min }} letters.
+                  </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Phone Number<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Phone Number<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -132,7 +156,10 @@
                     }"
                     class="form-control"
                   />
-                  <div v-if="!$v.user.phonenumber.required" class="invalid-feedback">
+                  <div
+                    v-if="!$v.user.phonenumber.required"
+                    class="invalid-feedback"
+                  >
                     Phone number is required.
                   </div>
                 </div>
@@ -140,7 +167,9 @@
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">DOB<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >DOB<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -157,7 +186,9 @@
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Department<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Department<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -180,7 +211,9 @@
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Designation<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Designation<span class="text-danger">*</span></CCol
+              >
               <CCol sm="9">
                 <div class="form-group">
                   <input
@@ -203,7 +236,9 @@
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Address<span class="text-danger">*</span></CCol>
+              <CCol class="col-sm-3"
+                >Address<span class="text-danger">*</span></CCol
+              >
               <CCol sm="2">
                 <div class="form-group">
                   <input
@@ -211,43 +246,57 @@
                     placeholder="Enter city"
                     v-model="user.address.city"
                     class="form-control"
-                    :class="{ 'is-invalid': validationStatus($v.user.address.city) }"
+                    :class="{
+                      'is-invalid': validationStatus($v.user.address.city),
+                    }"
                   />
                   <div v-if="!$v.user.address.city" class="invalid-feedback">
                     City is required.
                   </div>
                 </div>
+              </CCol>
+              <CCol sm="2">
                 <div class="form-group">
                   <input
                     type="text"
                     placeholder="Enter State"
                     v-model="user.address.state"
                     class="form-control"
-                    :class="{ 'is-invalid': validationStatus($v.user.address.state) }"
+                    :class="{
+                      'is-invalid': validationStatus($v.user.address.state),
+                    }"
                   />
                   <div v-if="!$v.user.address.state" class="invalid-feedback">
                     State is required.
                   </div>
                 </div>
+              </CCol>
+              <CCol sm="2">
                 <div class="form-group">
                   <input
                     type="text"
                     placeholder="Enter country"
                     v-model="user.address.country"
                     class="form-control"
-                    :class="{ 'is-invalid': validationStatus($v.user.address.country) }"
+                    :class="{
+                      'is-invalid': validationStatus($v.user.address.country),
+                    }"
                   />
                   <div v-if="!$v.user.address.country" class="invalid-feedback">
                     Country is required.
                   </div>
                 </div>
+              </CCol>
+              <CCol sm="2">
                 <div class="form-group">
                   <input
                     type="text"
                     placeholder="Enter Pincode"
                     v-model="user.address.pincode"
                     class="form-control"
-                    :class="{ 'is-invalid': validationStatus($v.user.address.pincode) }"
+                    :class="{
+                      'is-invalid': validationStatus($v.user.address.pincode),
+                    }"
                   />
                   <div v-if="!$v.user.address.pincode" class="invalid-feedback">
                     Pincode is required.
@@ -257,35 +306,50 @@
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3">Gender<span class="text-danger">*</span></CCol>
-              <CCol sm="1">
+              <CCol class="col-sm-3"
+                >Gender<span class="text-danger">*</span></CCol
+              >
+              <CCol sm="2">
                 <div class="form-group">
                   <input
+                    class="float-left"
                     type="radio"
                     name="gender"
                     @change="onChange($event)"
                     value="male"
                     v-model="user.gender"
                   />
-                  <label for="one"> Male</label><br />
+
+                  <label class="float-left pl-1" for="one"> Male</label><br />
+                </div>
+              </CCol>
+              <CCol sm="2">
+                <div class="form-group">
                   <input
+                    class="float-left"
                     type="radio"
                     name="gender"
                     @change="onChange($event)"
                     value="female"
                     v-model="user.gender"
                   />
-                  <label for="two"> Female</label><br />
+                  <label class="float-left pl-1"> Female</label>
+                </div>
+              </CCol>
+              <CCol sm="2">
+                <div class="form-group">
                   <input
+                    class="float-left"
                     type="radio"
                     name="gender"
                     @change="onChange($event)"
                     value="other"
                     v-model="user.gender"
                   />
-                  <label for="two"> Other</label>
+                  <label class="float-left pl-1"> Other</label>
                 </div>
               </CCol>
+              <!-- </CCol> -->
             </CRow>
 
             <CRow>
@@ -293,21 +357,27 @@
               <CCol sm="1">
                 <div class="form-group">
                   <input
+                  class="float-left"
                     type="radio"
                     name="maritalStatus"
                     @change="onChange($event)"
                     value="married"
                     v-model="user.maritalStatus"
                   />
-                  <label for="one">Married</label><br />
+                  <label class="float-left pl-1">Married</label><br />
+                </div>
+              </CCol>
+              <CCol sm="1">
+                <div class="form-group">
                   <input
+                  class="float-left"
                     type="radio"
                     name="maritalStatus"
                     @change="onChange($event)"
                     value="unmarried"
                     v-model="user.maritalStatus"
                   />
-                  <label for="two">Unmarried</label>
+                  <label class="float-left pl-1">Unmarried</label>
                   <div v-if="!$v.user.maritalStatus" class="invalid-feedback">
                     Pincode is required.
                   </div>
@@ -338,7 +408,12 @@
 <script>
 import axios from "axios";
 import config from "@/config";
-import { required, email, minLength, maxLength  } from "vuelidate/lib/validators";
+import {
+  required,
+  email,
+  minLength,
+  maxLength,
+} from "vuelidate/lib/validators";
 export default {
   name: "add-employee",
   data() {
@@ -364,14 +439,7 @@ export default {
           pincode: "",
         },
       },
-      options: [
-        "superadmin",
-        "admin",
-        "hr",
-        "teamlead",
-        "manager",
-        "employee",
-      ],
+      options: ["superadmin", "admin", "hr", "teamlead", "manager", "employee"],
       submitted: false,
     };
   },
@@ -389,17 +457,17 @@ export default {
       maritalStatus: { required },
       department: { required },
       designation: { required },
-      address:{ 
-      city: { required },
-      state: { required },
-      country: { required },
-      pincode: { required },
-      }
+      address: {
+        city: { required },
+        state: { required },
+        country: { required },
+        pincode: { required },
+      },
     },
   },
   created() {
-    this.user = JSON.parse(localStorage.getItem("data"));
-    this.token = this.user.token;
+    this.users = JSON.parse(localStorage.getItem("data"));
+    this.token = this.users.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
@@ -435,8 +503,8 @@ export default {
       this.submittoserver(user);
     },
     submittoserver(data) {
-      axios.post(`${config.apiUrl}/user/signup`, data).then((res) => {
-        window.location.reload();
+      axios.post(`http//localhost:4000/user/signup`, data).then((res) => {
+        //  window.location.reload();
       });
     },
   },

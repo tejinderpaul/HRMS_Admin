@@ -62,34 +62,34 @@
         <h1>Attendence List</h1>
       </div>
       <table
-        v="tableData"
+        v-if="time"
         id="w0"
         class="table table-striped table-bordered detail-view"
       >
-        <tbody v="user">
+        <tbody >
           <tr>
             <th>Employee Id</th>
-            <td>{{  }}</td>
+            <td>{{ user._id }}</td>
           </tr>
           <tr>
             <th>Name</th>
-            <td>{{  }}</td>
+            <td>{{ user.firstname }} {{ user.lastname }}</td>
           </tr>
           <tr>
             <th>Hours</th>
-            <td>{{  }}</td>
+            <td>{{ time.hours }}</td>
           </tr>
           <tr>
             <th>Minutes</th>
-            <td>{{  }}</td>
+            <td>{{ time.minutes }}</td>
           </tr>
           <tr>
             <th>Second</th>
-            <td>{{ }}</td>
+            <td>{{ time.seconds }}</td>
           </tr>
           <tr>
             <th>Milisecond</th>
-            <td>{{  }}</td>
+            <td>{{ time.milliseconds }}</td>
           </tr>
         </tbody>
       </table>
@@ -109,7 +109,8 @@ export default {
   name: "apply-leave",
   data() {
     return {
-      tableData: "",
+      time: "",
+      user: "",
       errors: "",
       date: {
         fromDate: "",
@@ -151,8 +152,10 @@ export default {
       axios
         .post("http://192.168.1.20:4000/user/attendence", data)
         .then((res) => {
-          this.tableData = res.data.data.time;
+          this.time = res.data.data.time;
           this.user = res.data.data.user;
+          console.log(this.tableData);
+          console.log(this.user);
         });
     },
   },
