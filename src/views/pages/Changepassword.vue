@@ -96,6 +96,11 @@
 <script>
 import axios from "axios";
 import { required, sameAs } from "vuelidate/lib/validators";
+import VueSweetalert2 from 'vue-sweetalert2';
+import Vue from 'vue';
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
 
 export default {
   name: "Login",
@@ -140,11 +145,12 @@ export default {
           "Content-Type": "application/json",
         })
         .then((res) => {
+          console.log(res.data);
           if (res.data.statusCode === 200) {
-            localStorage.setItem("token", res.data.data.email);
+     Vue.swal('Success');
             this.$router.push({ path: "/dashboard" });
-          } else if (res.data.statusCode === 404) {
-            this.error = res.data.message;
+          } else if (res.data.statusCode === 400) {
+            Vue.swal( res.data.message);
           }
         });
     },

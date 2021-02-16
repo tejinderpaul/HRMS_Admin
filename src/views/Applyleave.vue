@@ -142,6 +142,11 @@ import axios from "axios";
 import router from "../router";
 import config from "@/config";
 import { required, email, numeric, minLength } from "vuelidate/lib/validators";
+import VueSweetalert2 from "vue-sweetalert2";
+import Vue from "vue";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
 export default {
   name: "apply-leave",
   data() {
@@ -217,8 +222,9 @@ export default {
             }
         )
         .then((res) => {
-          window.location.reload();
-        });
+          Vue.swal("Registerd Success!");
+          this.$router.push("/leaves");
+          });
     },
   },
 };

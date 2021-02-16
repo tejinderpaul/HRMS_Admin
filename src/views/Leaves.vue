@@ -32,6 +32,7 @@
                 block
                 variant="outline"
                 color="success"
+                :disabled="row.status == 2&&1 "
                 v-on:click="approve(row._id)"
                 >Approve
               </CButton>
@@ -41,6 +42,7 @@
                 block
                 variant="outline"
                 color="success"
+                :disabled="row.status == 2&&1"
                 v-on:click="reject(row._id)"
                 >Reject
               </CButton>
@@ -150,9 +152,10 @@ export default {
     },
     onChange(event) {
       axios
-        .post(`${config.apiUrl}/leaves/filterleave`,
-        { status: event },
-         {
+        .post(
+          `${config.apiUrl}/leaves/filterleave`,
+          { status: event },
+          {
             headers: {
               token: this.token,
             },

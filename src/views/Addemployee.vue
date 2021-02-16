@@ -354,10 +354,10 @@
 
             <CRow>
               <CCol class="col-sm-3">Marital Status</CCol>
-              <CCol sm="1">
+              <CCol sm="2">
                 <div class="form-group">
                   <input
-                  class="float-left"
+                    class="float-left"
                     type="radio"
                     name="maritalStatus"
                     @change="onChange($event)"
@@ -367,10 +367,10 @@
                   <label class="float-left pl-1">Married</label><br />
                 </div>
               </CCol>
-              <CCol sm="1">
+              <CCol sm="2">
                 <div class="form-group">
                   <input
-                  class="float-left"
+                    class="float-left"
                     type="radio"
                     name="maritalStatus"
                     @change="onChange($event)"
@@ -414,6 +414,11 @@ import {
   minLength,
   maxLength,
 } from "vuelidate/lib/validators";
+import VueSweetalert2 from "vue-sweetalert2";
+import Vue from "vue";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
 export default {
   name: "add-employee",
   data() {
@@ -466,8 +471,8 @@ export default {
     },
   },
   created() {
-    this.users = JSON.parse(localStorage.getItem("data"));
-    this.token = this.users.token;
+    let user = JSON.parse(localStorage.getItem("data"));
+    this.token = user.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
@@ -491,7 +496,7 @@ export default {
         lastname: this.user.lastname,
         email: this.user.email,
         password: this.user.password,
-        phonenumber: this.user.phone,
+        phonenumber: this.user.phonenumber,
         role: this.user.role,
         gender: this.user.gender,
         dob: this.user.dob,
@@ -503,9 +508,16 @@ export default {
       this.submittoserver(user);
     },
     submittoserver(data) {
-      axios.post(`http//localhost:4000/user/signup`, data).then((res) => {
-        //  window.location.reload();
-      });
+      axios
+        .post(`${config.apiUrl}/user/signup`, data, {
+          headers: {
+            token: this.token,
+          },
+        })
+        .then((res) => {
+          Vue.swal("Registerd Success!");
+          this.$router.push("/user");
+        });
     },
   },
 };

@@ -25,7 +25,7 @@
           <a v-if="row.is_verified == 2">Blocked</a>
         </td>
       </span> -->
-      <span slot="action" slot-scope="{ row }">
+      <span slot="action" slot-scope="{ row } ">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 2px">
             <template>
@@ -35,6 +35,7 @@
                   name: 'user-view',
                   params: { id: row._id },
                 }"
+                
                 block
                 variant="outline"
                 color="success"
