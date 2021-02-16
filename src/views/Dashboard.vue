@@ -3,7 +3,7 @@
     <CRow>
       <CCol sm="6" lg="3" v="customer">
         <CWidgetDropdown color="primary" header="Employees">
-          <h1>{{ customer }}</h1>
+          <h1>{{ employees }}</h1>
           <template #footer>
             <CChartLineSimple
               pointed
@@ -43,8 +43,8 @@
         </CWidgetDropdown>
       </CCol>
       <CCol sm="6" lg="3" v="booking">
-        <CWidgetDropdown color="warning" header="">
-          <h1>{{ booking }}</h1>
+        <CWidgetDropdown color="warning" header="Pending Leaves">
+          <h1>{{ pendingleaves }}</h1>
           <template #footer>
             <CChartLineSimple
               class="mt-3"
@@ -60,8 +60,8 @@
         </CWidgetDropdown>
       </CCol>
       <CCol sm="6" lg="3" v="complaint">
-        <CWidgetDropdown color="danger" header="">
-          <h1>{{ complaint }}</h1>
+        <CWidgetDropdown color="danger" header="Reject Leaves">
+          <h1>{{ rejectleaves }}</h1>
           <template #footer>
             <CChartBarSimple
               class="mt-3 mx-3"
@@ -84,13 +84,14 @@ export default {
   components: { CChartLineSimple, CChartBarSimple },
   data() {
     return {
-      customer: "",
-      driver: "",
-      booking: "",
-      complaint: "",
+      employees: "",
+      pendingleaves: "",
+      rejectleaves: "",
     };
   },
   created() {
+    let user = JSON.parse(localStorage.getItem("data"));
+    this.userId = user._id;
     this.fetchCustomers();
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
@@ -99,14 +100,12 @@ export default {
   methods: {
     fetchCustomers() {
       axios
-        .get("http://192.168.1.20:4000/user/dashboard")
+        .post("http://192.168.1.20:4000/user/dashboard",{"userId":this.userId})
         .then(
           (data) => (
-            console.log(data)
-            (this.customer = data.data.user),
-            (this.driver = data.data.driver),
-            (this.booking = data.data.booking),
-            (this.complaint = data.data.complaint)
+            (this.employees = data.data.user),
+            (this.pendingleaves = data.data.pendingleaves),
+            (this.rejectleaves = data.data.rejectleaves)
           )
         );
     },

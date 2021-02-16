@@ -184,7 +184,7 @@ export default {
         token: this.token,
       },
     };
-    axios.post(options).then((res) => {
+    axios(options).then((res) => {
       this.options = res.data.data;
     });
   },
