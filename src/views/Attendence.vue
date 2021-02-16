@@ -2,7 +2,7 @@
   <div>
     <CCard>
       <CCardHeader>
-        <strong><h2>My Attendance Records</h2></strong>
+        <strong><h2>Attendance Records</h2></strong>
       </CCardHeader>
       <CCardBody>
         <CForm @submit.prevent="submitForm">
@@ -61,8 +61,38 @@
       <div class="text-center">
         <h1>Attendence List</h1>
       </div>
-      <v-client-table :data="tableData" :columns="columns" :options="options">
-      </v-client-table>
+      <table
+        v="tableData"
+        id="w0"
+        class="table table-striped table-bordered detail-view"
+      >
+        <tbody v="user">
+          <tr>
+            <th>Employee Id</th>
+            <td>{{  }}</td>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <td>{{  }}</td>
+          </tr>
+          <tr>
+            <th>Hours</th>
+            <td>{{  }}</td>
+          </tr>
+          <tr>
+            <th>Minutes</th>
+            <td>{{  }}</td>
+          </tr>
+          <tr>
+            <th>Second</th>
+            <td>{{ }}</td>
+          </tr>
+          <tr>
+            <th>Milisecond</th>
+            <td>{{  }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -79,8 +109,7 @@ export default {
   name: "apply-leave",
   data() {
     return {
-      columns: ["hours", "description", "action"],
-      tableData: [],
+      tableData: "",
       errors: "",
       date: {
         fromDate: "",
@@ -119,12 +148,11 @@ export default {
       this.submittoserver(date);
     },
     submittoserver(data) {
-      console.log("dgdgdg", data);
       axios
         .post("http://192.168.1.20:4000/user/attendence", data)
         .then((res) => {
-          this.tableData = res.data.data;
-          console.log("dsfvsdfbdfb",this.tableData);
+          this.tableData = res.data.data.time;
+          this.user = res.data.data.user;
         });
     },
   },
