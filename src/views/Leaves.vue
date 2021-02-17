@@ -23,7 +23,7 @@
         </td>
       </span>
 
-      <span slot="action" slot-scope="{ row }">
+      <span slot="action" slot-scope="{ row }" >
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 1px">
             <template>
@@ -61,6 +61,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
 import router from "../router";
+
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -69,16 +70,8 @@ export default {
   },
   data() {
     return {
-      columns: [
-        "name",
-        "leaveType",
-        "fromDate",
-        "toDate",
-        "note",
-        "mangerName",
-        "status",
-        "action",
-      ],
+      user:"",
+      columns:"",
       tableData: [],
       options: {
         headings: {
@@ -97,8 +90,32 @@ export default {
     };
   },
   created() {
+   
+     // this.tableData = [];
     this.user = JSON.parse(localStorage.getItem("data"));
     this.token = this.user.token;
+     if((this.user.role=="admin")||(this.user.role=="superadmin")){
+      this.columns =[
+        "name",
+        "leaveType",
+        "fromDate",
+        "toDate",
+        "note",
+        "mangerName",
+        "status",
+       "action",
+      ];
+    }else{
+      this.columns =[
+        "name",
+        "leaveType",
+        "fromDate",
+        "toDate",
+        "note",
+        "mangerName",
+        "status",
+      ];
+    }
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }

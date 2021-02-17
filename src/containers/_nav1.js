@@ -5,13 +5,9 @@ export default [{
             name: 'Dashboard',
             to: '/dashboard',
             icon: 'cil-speedometer',
+          //  display: 'none'
         },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'All Employees List',
-            to: '/user',
-            icon: 'cil-people'
-        },
+        
         {
             _name: 'CSidebarNavItem',
             name: 'Leaves',
@@ -29,12 +25,6 @@ export default [{
             name: 'Holidays',
             to: '/holidays',
             icon: 'cil-lightbulb'
-        },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Add Employee',
-            to: '/add-employee',
-            icon: 'cil-basket'
         },
        
 

@@ -37,9 +37,11 @@
             <CCol sm="3">
               <span>from<span class="text-danger">*</span></span>
               <div class="form-group">
-                <input
-                  type="date"
+                <datepicker
+                  placeholder="Select Date"
                   class="form-control"
+                  :format="DatePickerFormat"
+                  :disabledDates="disabledDates"
                   v-model="user.fromDate"
                   :class="{
                     'is-invalid': validationStatus($v.user.fromDate),
@@ -54,17 +56,19 @@
             <CCol sm="3">
               <span>To<span class="text-danger">*</span></span>
               <div class="form-group">
-                <input
-                  type="date"
+                <datepicker
+                  placeholder="Select Date"
                   class="form-control"
+                  :format="DatePickerFormat"
+                  :disabledDates="disabledDates"
                   v-model="user.toDate"
                   :class="{
                     'is-invalid': validationStatus($v.user.toDate),
                   }"
                 />
                 <div v-if="!$v.user.toDate.required" class="invalid-feedback">
-                  To date is required.
-                </div>
+                  To date is required.vdp-datepicker form-control
+                  </div>
               </div>
             </CCol>
           </CRow>
@@ -144,14 +148,21 @@ import config from "@/config";
 import { required, email, numeric, minLength } from "vuelidate/lib/validators";
 import VueSweetalert2 from "vue-sweetalert2";
 import Vue from "vue";
-// If you don't need the styles, do not connect
+import Datepicker from "vuejs-datepicker";
 import "sweetalert2/dist/sweetalert2.min.css";
 Vue.use(VueSweetalert2);
 export default {
   name: "apply-leave",
+  components: {
+    Datepicker,
+  },
   data() {
     return {
       errors: "",
+      DatePickerFormat: "dd/MM/yyyy",
+      disabledDates: {
+        to: new Date(Date.now() - 8640000),
+      },
       user: {
         mangername: "",
         userId: "",
@@ -212,20 +223,23 @@ export default {
       this.submittoserver(user);
     },
     submittoserver(data) {
-
       axios
-        .post(`${config.apiUrl}/leaves/applyleave`, data,
-         {
-              headers: {
-                token: this.token,
-              },
-            }
-        )
+        .post(`${config.apiUrl}/leaves/applyleave`, data, {
+          headers: {
+            token: this.token,
+          },
+        })
         .then((res) => {
           Vue.swal("Registerd Success!");
           this.$router.push("/leaves");
-          });
+        });
     },
   },
 };
 </script>
+<style>
+input{
+  width:100%
+}
+
+</style>

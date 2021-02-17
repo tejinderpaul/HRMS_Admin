@@ -1,18 +1,13 @@
 <template>
   <CSidebar 
+  
     fixed 
     :minimize="minimize"
     :show="show"
     @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
   >
     <CSidebarBrand class="d-md-down-none bg-white" to="/">
-      <!-- <CIcon 
-        class="c-sidebar-brand-full" 
-        name="cilStar" 
-        size="custom-size" 
-        :height="35" 
-        viewBox="0 0 556 134"
-      /> -->
+     
       <c-img 
        class="c-sidebar-brand-full" 
         size="custom-size" 
@@ -20,13 +15,7 @@
         :width="200"
       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwHPB-Xd_VZZPug-lL10OKkNRpdnKEfLHWTw&usqp=CAU"
       />
-      <!-- <CIcon 
-        class="c-sidebar-brand-minimized" 
-        name="cilLaptop" 
-        size="custom-size" 
-        :height="35" 
-        viewBox="0 0 110 134"
-      /> -->
+      
       <c-img 
        class="c-sidebar-brand-minimized" 
         size="custom-size" 
@@ -36,7 +25,8 @@
       />
     </CSidebarBrand>
 
-    <CRenderFunction flat :content-to-render="$options.nav"/>
+    <CRenderFunction v-if="userData.role=='admin'||userData.role=='superadmin'||userData.role=='hr'" flat :content-to-render="$options.nav"/>
+    <CRenderFunction  v-if="userData.role=='employee'||userData.role=='teamlead'||userData.role=='manager'" flat :content-to-render="$options.nav1"/>
     <CSidebarMinimizer
       class="d-md-down-none"
       @click.native="$store.commit('set', ['sidebarMinimize', !minimize])"
@@ -45,11 +35,20 @@
 </template>
 
 <script>
+
 import nav from './_nav'
+import nav1 from './_nav1'
+// console.log(userData.role);
 
 export default {
+data(){
+  return{
+    userData:[]
+  }
+},
   name: 'TheSidebar',
   nav,
+  nav1,
   computed: {
     show () {
       return this.$store.state.sidebarShow 
@@ -57,6 +56,10 @@ export default {
     minimize () {
       return this.$store.state.sidebarMinimize 
     }
-  }
+  },created(){
+    this.userData =JSON.parse(localStorage.getItem("data"))
+      
+  
+}
 }
 </script>

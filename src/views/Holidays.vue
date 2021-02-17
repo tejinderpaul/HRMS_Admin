@@ -57,7 +57,7 @@ export default {
   },
   data() {
     return {
-      columns: ["occasion_date", "occasion_name","note","action"],
+      columns: "",
       tableData: [],
       options: {
          headings: {
@@ -75,6 +75,11 @@ export default {
   created() {
     this.user = JSON.parse(localStorage.getItem("data"));
     this.token = this.user.token;
+    if((this.user.role=="admin")||(this.user.role=="superadmin")){
+      this.columns =["occasion_date", "occasion_name","note","action"]
+    }else{
+      this.columns =["occasion_date", "occasion_name","note"];
+    }
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
