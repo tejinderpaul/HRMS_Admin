@@ -102,6 +102,11 @@ export default {
       password: { required },
     },
   },
+  created() {
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.userId = this.user._id;
+   
+  },
   methods: {
     onSubmit(e) {
       this.submitted = true;
@@ -113,6 +118,7 @@ export default {
       }
 
       let user = {
+        id:this.userId,
         email: this.user.email,
         password: this.user.password,
       };

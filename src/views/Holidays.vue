@@ -3,6 +3,11 @@
     <div class="text-center">
       <h1>Holiday List</h1>
       <router-link
+        v-if="
+          user.role != 'employee' ||
+          user.role != 'teamlead' ||
+          user.role != 'manager'
+        "
         :to="{
           name: 'add-holidays',
         }"
@@ -57,12 +62,13 @@ export default {
   },
   data() {
     return {
+      user: "",
       columns: "",
       tableData: [],
       options: {
-         headings: {
-          occasion_date:"Date",
-          occasion_name:"Occasion Name"
+        headings: {
+          occasion_date: "Date",
+          occasion_name: "Occasion Name",
         },
         sortable: ["title", "description"],
         filterable: ["occasion_date", "occasion_name"],
@@ -75,17 +81,21 @@ export default {
   created() {
     this.user = JSON.parse(localStorage.getItem("data"));
     this.token = this.user.token;
-    if((this.user.role=="admin")||(this.user.role=="superadmin")){
-      this.columns =["occasion_date", "occasion_name","note","action"]
-    }else{
-      this.columns =["occasion_date", "occasion_name","note"];
+    if (
+      this.user.role == "admin" ||
+      this.user.role == "superadmin" ||
+      this.user.role == "hr"
+    ) {
+      this.columns = ["occasion_date", "occasion_name", "note", "action"];
+    } else {
+      this.columns = ["occasion_date", "occasion_name", "note"];
     }
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
   },
   mounted() {
-     let options = {
+    let options = {
       method: "post",
       url: `${config.apiUrl}/holidays/all_holidays`,
       headers: {
@@ -99,14 +109,17 @@ export default {
   methods: {
     deleteHolidays(holiday_id) {
       if (confirm("Are you sure you want to delete this item?"))
-         axios.post(`${config.apiUrl}/holidays/delete_holiday`, {holiday_id:holiday_id},
-         {
+        axios
+          .post(
+            `${config.apiUrl}/holidays/delete_holiday`,
+            { holiday_id: holiday_id },
+            {
               headers: {
                 token: this.token,
               },
             }
-         )
-         .then((res) => {
+          )
+          .then((res) => {
             window.location.reload();
           })
           .catch((error) => {
@@ -176,7 +189,7 @@ th:nth-child(3) {
   content: "Search:";
   display: inherit;
 }
-.VueTables__heading{
+.VueTables__heading {
   float: left;
 }
 </style>
