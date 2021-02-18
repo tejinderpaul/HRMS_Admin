@@ -10,8 +10,8 @@ export default [{
         
         {
             _name: 'CSidebarNavItem',
-            name: 'Leaves',
-            to: '/leaves',
+            name: 'My Leaves',
+            to: '/myleaves',
             icon: 'cil-people'
         },
         {

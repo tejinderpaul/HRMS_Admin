@@ -103,8 +103,8 @@ export default {
     },
   },
   created() {
-    this.user = JSON.parse(localStorage.getItem("data"));
-    this.userId = this.user._id;
+    // this.user = JSON.parse(localStorage.getItem("data"));
+    // this.userId = this.user._id;
    
   },
   methods: {
@@ -118,7 +118,7 @@ export default {
       }
 
       let user = {
-        id:this.userId,
+        // id:this.userId,
         email: this.user.email,
         password: this.user.password,
       };

@@ -11,10 +11,14 @@ const Dashboard = () =>
     import('@/views/Dashboard')
 const Userlist = () =>
     import('@/views/Userlist')
+const MyLeaves = () =>
+    import('@/views/MyLeaves')
 const Leaves = () =>
     import('@/views/Leaves')
 const Applyleave = () =>
     import('@/views/Applyleave')
+    const RequestedLeave = () =>
+    import('@/views/RequestedLeave')   
 const Bookingview = () =>
     import('@/views/booking/Bookingview')
 const Holidays = () =>
@@ -154,159 +158,170 @@ function configRoutes() {
 
     return [{
 
-        path: '/',
-        redirect: '/login',
-        name: 'Home',
-        component: TheLoginContainer,
-        children: [{
-            path: 'login',
-            name: 'Admin Login',
-            component: Login
-        },
-        {
-            path: 'forgot-password',
-            name: 'forgot-password',
-            component: Forgotpassword
-        },
-        {
-            path: 'set-password',
-            name: 'set-password',
-            component: Setpassword
-        }
+            path: '/',
+            redirect: '/login',
+            name: 'Home',
+            component: TheLoginContainer,
+            children: [{
+                    path: 'login',
+                    name: 'Admin Login',
+                    component: Login
+                },
+                {
+                    path: 'forgot-password',
+                    name: 'forgot-password',
+                    component: Forgotpassword
+                },
+                {
+                    path: 'set-password',
+                    name: 'set-password',
+                    component: Setpassword
+                }
 
-        ]
-    },
-    {
-        path: '/',
-        redirect: '/dashboard',
-        name: 'Dashboard',
-        component: TheContainer,
-        children: [{
-            path: 'dashboard',
+            ]
+        },
+        {
+            path: '/',
+            redirect: '/dashboard',
             name: 'Dashboard',
-            component: Dashboard
-        },
-        {
-            path: 'user',
-            name: 'user',
-            component: Userlist
-        },
-        {
-            path: 'driver-view/:id',
-            name: 'driver-view',
-            component: Driverdataview
-        },
-        {
-            path: 'leaves',
-            name: 'leaves',
-            component: Leaves,
+            component: TheContainer,
+            children: [{
+                    path: 'dashboard',
+                    name: 'Dashboard',
+                    component: Dashboard
+                },
+                {
+                    path: 'user',
+                    name: 'user',
+                    component: Userlist
+                },
+                {
+                    path: 'driver-view/:id',
+                    name: 'driver-view',
+                    component: Driverdataview
+                },
+                {
+                    path: 'myleaves',
+                    name: 'myleaves',
+                    component: MyLeaves,
 
-        },
-        {
-            path: 'customer-view/:id',
-            name: 'customer-view',
-            component: Customerdataview
-        },
-        {
-            path: 'apply-leave',
-            name: 'apply-leave',
-            component: Applyleave
+                },
+                {
+                    path: 'leaves',
+                    name: 'leaves',
+                    component: Leaves,
 
-        },
-        {
-            path: 'booking-view/:id',
-            name: 'booking-view',
-            component: Bookingview
-        },
-        {
-            path: 'holidays',
-            name: 'holidays',
-            component: Holidays
-        },
-        {
-            path: 'add-employee',
-            name: 'add-employee',
-            component: Addemployee
-        },
-        {
-            path: 'addvehicletype',
-            name: 'add-vehicle-type',
-            component: vehicletype
-        },
-        {
-            path: 'editvehicletype/:id',
-            name: 'edit-vehicle-type',
-            component: editvehicletype
-        },
-        {
-            path: 'admin-user',
-            name: 'admin-user',
-            component: AdminUser
-        },
-        {
-            path: 'create-admin-user',
-            name: 'create-admin-user',
-            component: CreateAdminUser
-        },
-        {
-            path: 'driver-weekly-earning/:id',
-            name: 'driver-weekly-earning',
-            component: DriverWeeklyEarning
-        },
-        {
-            path: 'driver-weekly-earning-details',
-            name: 'driver-weekly-earning-details',
-            component: Driverweeklyearningdetails
-        },
-        {
-            path: 'goodstypes',
-            name: 'goodstypes',
-            component: Goodstype
-        },
-        {
-            path: 'create-goods-types',
-            name: 'create-goods-types',
-            component: Creategoodstype
-        },
-        {
-            path: 'edit-goods-types/:id',
-            name: 'edit-goods-types',
-            component: Editgoodstype
-        },
-        {
-            path: 'add-holidays',
-            name: 'add-holidays',
-            component: Addholidays
-        },
-        {
-            path: 'edit-holidays',
-            name: 'edit-holidays',
-            component: Editholidays
-        },
-        {
-            path: 'profile-view',
-            name: 'profile-view',
-            component: Profile
-        },
-        {
-            path: 'change-password-view',
-            name: 'change-password-view',
-            component: Changepassword
-        },
-        {
-            path: 'user-view/:id',
-            name: 'user-view',
-            component: Userview
-        },
-        {
-            path: 'attendence-view',
-            name: 'attendence-view',
-            component: Attendence
-        },
+                },
+                {
+                    path: 'requestedleaves',
+                    name: 'requestedleaves',
+                    component: RequestedLeave,
+                },
+                {
+                    path: 'customer-view/:id',
+                    name: 'customer-view',
+                    component: Customerdataview
+                },
+                {
+                    path: 'apply-leave',
+                    name: 'apply-leave',
+                    component: Applyleave
+
+                },
+                {
+                    path: 'booking-view/:id',
+                    name: 'booking-view',
+                    component: Bookingview
+                },
+                {
+                    path: 'holidays',
+                    name: 'holidays',
+                    component: Holidays
+                },
+                {
+                    path: 'add-employee',
+                    name: 'add-employee',
+                    component: Addemployee
+                },
+                {
+                    path: 'addvehicletype',
+                    name: 'add-vehicle-type',
+                    component: vehicletype
+                },
+                {
+                    path: 'editvehicletype/:id',
+                    name: 'edit-vehicle-type',
+                    component: editvehicletype
+                },
+                {
+                    path: 'admin-user',
+                    name: 'admin-user',
+                    component: AdminUser
+                },
+                {
+                    path: 'create-admin-user',
+                    name: 'create-admin-user',
+                    component: CreateAdminUser
+                },
+                {
+                    path: 'driver-weekly-earning/:id',
+                    name: 'driver-weekly-earning',
+                    component: DriverWeeklyEarning
+                },
+                {
+                    path: 'driver-weekly-earning-details',
+                    name: 'driver-weekly-earning-details',
+                    component: Driverweeklyearningdetails
+                },
+                {
+                    path: 'goodstypes',
+                    name: 'goodstypes',
+                    component: Goodstype
+                },
+                {
+                    path: 'create-goods-types',
+                    name: 'create-goods-types',
+                    component: Creategoodstype
+                },
+                {
+                    path: 'edit-goods-types/:id',
+                    name: 'edit-goods-types',
+                    component: Editgoodstype
+                },
+                {
+                    path: 'add-holidays',
+                    name: 'add-holidays',
+                    component: Addholidays
+                },
+                {
+                    path: 'edit-holidays',
+                    name: 'edit-holidays',
+                    component: Editholidays
+                },
+                {
+                    path: 'profile-view',
+                    name: 'profile-view',
+                    component: Profile
+                },
+                {
+                    path: 'change-password-view',
+                    name: 'change-password-view',
+                    component: Changepassword
+                },
+                {
+                    path: 'user-view/:id',
+                    name: 'user-view',
+                    component: Userview
+                },
+                {
+                    path: 'attendence-view',
+                    name: 'attendence-view',
+                    component: Attendence
+                },
 
 
-        ]
-    },
+            ]
+        },
 
         // {
         //     path: '/pages',
