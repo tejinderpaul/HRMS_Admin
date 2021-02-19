@@ -40,7 +40,7 @@ export default {
   name: "TheHeaderDropdownAccnt",
   data() {
     return {
-      id:"",
+      id:"",   
       itemsCount: 42,
     };
   },
@@ -51,6 +51,7 @@ export default {
   methods: {
     logout(id) {
       axios.post("http://192.168.1.20:4000/user/logout", {id:this.id}).then((res) => {
+    
         localStorage.clear();
         this.$router.push("/login");
       });

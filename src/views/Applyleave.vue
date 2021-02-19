@@ -200,7 +200,7 @@ export default {
         token: this.token,
       },
     };
-    axios(options).then((res) => {
+    axios.post(`${config.apiUrl}/leaves/adminlist`,{id:this.userId}).then((res) => {
       this.options = res.data.data;
     });
   },
@@ -231,7 +231,7 @@ export default {
         })
         .then((res) => {
           Vue.swal("Registerd Success!");
-          this.$router.push("/leaves");
+          this.$router.push("/myleaves");
         });
     },
   },

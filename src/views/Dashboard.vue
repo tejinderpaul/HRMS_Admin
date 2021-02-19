@@ -70,7 +70,7 @@
           <template #footer>
             <CChartBarSimple
               class="mt-3 mx-3"
-              style="height: 70px"
+              style="height: 57px"
               background-color="rgb(250, 152, 152)"
             />
           </template>

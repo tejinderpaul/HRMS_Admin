@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="background-color: white">
     <h1 class="text-center">All Leaves List</h1>
-    <div class="VueTables__limit-field w-25 float-right mt-0">
+    <!-- <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
       ><select
         @change="onChange($event.target.value)"
@@ -13,7 +13,7 @@
         <option value="1">Approved Leaves</option>
         <option value="2">Rejected Leaves</option>
       </select>
-    </div>
+    </div> -->
     <v-client-table :data="tableData" :columns="columns" :options="options">
       <span slot="status" slot-scope="{ row }">
         <td>
@@ -32,8 +32,7 @@
                 block
                 variant="outline"
                 color="success"
-                :disabled="row.status == 2&&1 "
-                v-on:click="approve(row._id)"
+                v-on:click="approve(row.userId)"
                 >Approve
               </CButton>
 
@@ -42,8 +41,7 @@
                 block
                 variant="outline"
                 color="success"
-                :disabled="row.status == 2&&1"
-                v-on:click="reject(row._id)"
+                v-on:click="reject(row.userId)"
                 >Reject
               </CButton>
             </template>
@@ -71,7 +69,15 @@ export default {
   data() {
     return {
       user:"",
-      columns:"",
+      columns:[
+        "name",
+        "leaveType",
+        "fromDate",
+        "toDate",
+        "note",
+        "status",
+       "action",
+      ],
       tableData: [],
       options: {
         headings: {
@@ -79,7 +85,6 @@ export default {
           leaveType: "Subject",
           fromDate: "From",
           toDate: "To",
-          mangerName: "Email TO",
         },
         sortable: ["name", "leaveType", "phone_number"],
         filterable: ["name", "leaveType", "mangerName"],
@@ -94,28 +99,6 @@ export default {
      // this.tableData = [];
     this.user = JSON.parse(localStorage.getItem("data"));
     this.token = this.user.token;
-     if((this.user.role=="admin")||(this.user.role=="superadmin")){
-      this.columns =[
-        "name",
-        "leaveType",
-        "fromDate",
-        "toDate",
-        "note",
-        "mangerName",
-        "status",
-       "action",
-      ];
-    }else{
-      this.columns =[
-        "name",
-        "leaveType",
-        "fromDate",
-        "toDate",
-        "note",
-        "mangerName",
-        "status",
-      ];
-    }
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
@@ -139,6 +122,7 @@ export default {
   },
   methods: {
     approve(id) {
+      console.log("sdvkfvkjd",id);
       if (confirm("Are you sure you want to Approve this leave?"))
         axios
           .post(
@@ -172,22 +156,22 @@ export default {
           })
           .catch((error) => {});
     },
-    onChange(event) {
-      axios
-        .post(
-          `${config.apiUrl}/leaves/filterleave`,
-          { status: event },
-          {
-            headers: {
-              token: this.token,
-            },
-          }
-        )
-        .then((res) => (this.tableData = res.data.data))
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  //   onChange(event) {
+  //     axios
+  //       .post(
+  //         `${config.apiUrl}/leaves/filterleave`,
+  //         { status: event },
+  //         {
+  //           headers: {
+  //             token: this.token,
+  //           },
+  //         }
+  //       )
+  //       .then((res) => (this.tableData = res.data.data))
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   },
   },
 };
 </script>

@@ -23,7 +23,7 @@
         </td>
       </span>
 
-      <span slot="action" slot-scope="{ row }" >
+      <!-- <span slot="action" slot-scope="{ row }" >
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 1px">
             <template>
@@ -49,7 +49,7 @@
             </template>
           </div>
         </div>
-      </span>
+      </span> -->
     </v-client-table>
   </div>
 </template>
@@ -71,7 +71,15 @@ export default {
   data() {
     return {
       user:"",
-      columns:"",
+      columns:[
+        "name",
+        "leaveType",
+        "fromDate",
+        "toDate",
+        "note",
+        "mangerName",
+        "status",
+      ],
       tableData: [],
       options: {
         headings: {
@@ -94,28 +102,6 @@ export default {
      // this.tableData = [];
     this.user = JSON.parse(localStorage.getItem("data"));
     this.token = this.user.token;
-     if((this.user.role=="admin")||(this.user.role=="superadmin")){
-      this.columns =[
-        "name",
-        "leaveType",
-        "fromDate",
-        "toDate",
-        "note",
-        "mangerName",
-        "status",
-       "action",
-      ];
-    }else{
-      this.columns =[
-        "name",
-        "leaveType",
-        "fromDate",
-        "toDate",
-        "note",
-        "mangerName",
-        "status",
-      ];
-    }
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
