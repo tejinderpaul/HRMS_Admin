@@ -103,7 +103,6 @@ export default {
         "note",
         "mangerName",
         "status",
-       "action",
       ];
     }else{
       this.columns =[

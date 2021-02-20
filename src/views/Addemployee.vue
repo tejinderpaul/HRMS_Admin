@@ -471,8 +471,8 @@ export default {
     },
   },
   created() {
-    let user = JSON.parse(localStorage.getItem("data"));
-    this.token = user.token;
+    let users = JSON.parse(localStorage.getItem("data"));
+    this.token = users.token;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }

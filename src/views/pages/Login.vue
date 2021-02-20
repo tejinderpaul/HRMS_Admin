@@ -132,8 +132,9 @@ export default {
             this.error = "Invalid username/password";
           }
            else if (res.data.statusCode == 200) {
+              this.$router.push({ path: "/dashboard" });
             localStorage.setItem("data", JSON.stringify(res.data.data));
-            this.$router.push({ path: "/dashboard" });
+           
           }
         });
     },

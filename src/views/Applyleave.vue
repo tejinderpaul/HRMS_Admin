@@ -231,7 +231,7 @@ export default {
         })
         .then((res) => {
           Vue.swal("Registerd Success!");
-          this.$router.push("/myleaves");
+          this.$router.push("/leaves");
         });
     },
   },

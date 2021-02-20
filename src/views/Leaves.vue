@@ -114,7 +114,10 @@ export default {
         token: this.token,
       },
     };
-    this.axios(options).then((res) => {
+    this.axios.post(`${config.apiUrl}/leaves/alleaves`,{id:this.user._id},{headers: {
+        token: this.token,
+      },
+    }).then((res) => {
       this.tableData = res.data.data;
     });
   },

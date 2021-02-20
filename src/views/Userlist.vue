@@ -25,7 +25,7 @@
           <a v-if="row.is_verified == 2">Blocked</a>
         </td>
       </span> -->
-      <span slot="action" slot-scope="{ row } ">
+      <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 2px">
             <template>
@@ -35,7 +35,6 @@
                   name: 'user-view',
                   params: { id: row._id },
                 }"
-                
                 block
                 variant="outline"
                 color="success"
@@ -124,7 +123,11 @@ export default {
         token: this.token,
       },
     };
-    this.axios(options).then((res) => {
+    this.axios.post(
+      `${config.apiUrl}/user/alluser`,{id:this.user._id},{headers: {
+        token: this.token,
+      },
+    }).then((res) => {
       this.tableData = res.data.data;
     });
   },
