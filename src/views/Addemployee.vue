@@ -305,7 +305,18 @@
               </CCol>
             </CRow>
 
-            <CRow>
+
+
+               <CSelect
+              label="Select Marital Status"
+              name="role"
+              horizontal
+              :options="options2"
+              placeholder="Please select"
+              :value.sync="user.maritalStatus"
+            />
+
+            <!-- <CRow>
               <CCol class="col-sm-3"
                 >Gender<span class="text-danger">*</span></CCol
               >
@@ -349,13 +360,12 @@
                   <label class="float-left pl-1"> Other</label>
                 </div>
               </CCol>
-              <!-- </CCol> -->
-            </CRow>
+            <!-- </CRow> --> 
 
-            <CRow>
-              <CCol class="col-sm-3">Marital Status</CCol>
-              <CCol sm="2">
-                <div class="form-group">
+            <!-- <CRow> -->
+              <!-- <CCol class="col-sm-3">Marital Status</CCol>
+              <CCol sm="2"> -->
+                <!-- <div class="form-group">
                   <input
                     class="float-left"
                     type="radio"
@@ -381,9 +391,16 @@
                   <div v-if="!$v.user.maritalStatus" class="invalid-feedback">
                     Pincode is required.
                   </div>
-                </div>
-              </CCol>
-            </CRow>
+                </div> -->
+               <CSelect
+              label="Select Gender"
+              name="role"
+              horizontal
+              :options="options1"
+              placeholder="Please select"
+              :value.sync="user.gender"
+            />
+            <!-- </CRow> -->
 
             <CSelect
               label="Select Role"
@@ -445,6 +462,8 @@ export default {
         },
       },
       options: ["superadmin", "admin", "hr", "teamlead", "manager", "employee"],
+      options1:["male","female","other"],
+      options2:["unmarried","married"],
       submitted: false,
     };
   },

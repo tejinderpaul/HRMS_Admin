@@ -70,8 +70,8 @@ export default {
   },
   data() {
     return {
-      user:"",
-      columns:[
+      user: "",
+      columns: [
         "name",
         "leaveType",
         "fromDate",
@@ -98,8 +98,7 @@ export default {
     };
   },
   created() {
-   
-     // this.tableData = [];
+    // this.tableData = [];
     this.user = JSON.parse(localStorage.getItem("data"));
     this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
@@ -114,12 +113,22 @@ export default {
         token: this.token,
       },
     };
-    this.axios.post(`${config.apiUrl}/leaves/alleaves`,{id:this.user._id},{headers: {
-        token: this.token,
-      },
-    }).then((res) => {
-      this.tableData = res.data.data;
-    });
+    this.axios
+      .post(
+        `${config.apiUrl}/leaves/alleaves`,
+        { id: this.user._id },
+        {
+          headers: {
+            token: this.token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.statusCode == 401) {
+          this.$router.push("/login");
+        }
+        this.tableData = res.data.data;
+      });
   },
   methods: {
     approve(id) {

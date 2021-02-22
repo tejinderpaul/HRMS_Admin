@@ -92,12 +92,14 @@ export default {
     };
   },
   created() {
+    if (localStorage.getItem("data") === null) {
+      console.log("sdsfcwdfcsd")
+      this.$router.push("/login");
+    }
     let user = JSON.parse(localStorage.getItem("data"));
     this.userId = user._id;
     this.token=user.token
-    if (localStorage.getItem("data") === null) {
-      this.$router.push("/login");
-    }
+    
   },
   mounted() {
       axios
@@ -111,11 +113,15 @@ export default {
           }
         )
         .then(
-          (data) => (
+          (data) => {
+            console.log(data.data.statusCode);
+            if(data.data.statusCode==401){
+               this.$router.push("/login")
+            }
             (this.employees = data.data.user),
             (this.pendingleaves = data.data.pendingleaves),
             (this.rejectleaves = data.data.rejectleaves)
-          )
+          }
         );
     },
   };

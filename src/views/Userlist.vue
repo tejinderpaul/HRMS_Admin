@@ -123,13 +123,22 @@ export default {
         token: this.token,
       },
     };
-    this.axios.post(
-      `${config.apiUrl}/user/alluser`,{id:this.user._id},{headers: {
-        token: this.token,
-      },
-    }).then((res) => {
-      this.tableData = res.data.data;
-    });
+    this.axios
+      .post(
+        `${config.apiUrl}/user/alluser`,
+        { id: this.user._id },
+        {
+          headers: {
+            token: this.token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.statusCode == 401) {
+          this.$router.push("/login");
+        }
+        this.tableData = res.data.data;
+      });
   },
   methods: {
     BlockUser(id, index) {
