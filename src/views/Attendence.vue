@@ -46,7 +46,19 @@
           <CRow>
             <CCol>
               <CButton
+              v-if="user.role==employee"
                 type="submit"
+                class="btn btn btn-success"
+                style="margin-left: 50%"
+                >Submit</CButton
+              >
+              <CButton
+              v-if="user.role==superadmin"
+                type="submit"
+                :to="{
+                      name: 'employeeattendance',
+                      params: {from:date.fromDate, to:date.toDate},
+                    }"
                 class="btn btn btn-success"
                 style="margin-left: 50%"
                 >Submit</CButton
@@ -127,6 +139,9 @@ export default {
     },
   },
   created() {
+    console.log("**********************");
+    console.log(date.fromDate);
+    console.log("#############################");
     let user = JSON.parse(localStorage.getItem("data"));
     this.userId = user._id;
     if (localStorage.getItem("data") === null) {

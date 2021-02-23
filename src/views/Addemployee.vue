@@ -316,82 +316,7 @@
               :value.sync="user.maritalStatus"
             />
 
-            <!-- <CRow>
-              <CCol class="col-sm-3"
-                >Gender<span class="text-danger">*</span></CCol
-              >
-              <CCol sm="2">
-                <div class="form-group">
-                  <input
-                    class="float-left"
-                    type="radio"
-                    name="gender"
-                    @change="onChange($event)"
-                    value="male"
-                    v-model="user.gender"
-                  />
-
-                  <label class="float-left pl-1" for="one"> Male</label><br />
-                </div>
-              </CCol>
-              <CCol sm="2">
-                <div class="form-group">
-                  <input
-                    class="float-left"
-                    type="radio"
-                    name="gender"
-                    @change="onChange($event)"
-                    value="female"
-                    v-model="user.gender"
-                  />
-                  <label class="float-left pl-1"> Female</label>
-                </div>
-              </CCol>
-              <CCol sm="2">
-                <div class="form-group">
-                  <input
-                    class="float-left"
-                    type="radio"
-                    name="gender"
-                    @change="onChange($event)"
-                    value="other"
-                    v-model="user.gender"
-                  />
-                  <label class="float-left pl-1"> Other</label>
-                </div>
-              </CCol>
-            <!-- </CRow> --> 
-
-            <!-- <CRow> -->
-              <!-- <CCol class="col-sm-3">Marital Status</CCol>
-              <CCol sm="2"> -->
-                <!-- <div class="form-group">
-                  <input
-                    class="float-left"
-                    type="radio"
-                    name="maritalStatus"
-                    @change="onChange($event)"
-                    value="married"
-                    v-model="user.maritalStatus"
-                  />
-                  <label class="float-left pl-1">Married</label><br />
-                </div>
-              </CCol>
-              <CCol sm="2">
-                <div class="form-group">
-                  <input
-                    class="float-left"
-                    type="radio"
-                    name="maritalStatus"
-                    @change="onChange($event)"
-                    value="unmarried"
-                    v-model="user.maritalStatus"
-                  />
-                  <label class="float-left pl-1">Unmarried</label>
-                  <div v-if="!$v.user.maritalStatus" class="invalid-feedback">
-                    Pincode is required.
-                  </div>
-                </div> -->
+        
                <CSelect
               label="Select Gender"
               name="role"
@@ -400,7 +325,7 @@
               placeholder="Please select"
               :value.sync="user.gender"
             />
-            <!-- </CRow> -->
+           
 
             <CSelect
               label="Select Role"

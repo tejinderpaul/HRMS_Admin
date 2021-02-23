@@ -17,8 +17,8 @@ const Leaves = () =>
     import('@/views/Leaves')
 const Applyleave = () =>
     import('@/views/Applyleave')
-    const RequestedLeave = () =>
-    import('@/views/RequestedLeave')   
+const RequestedLeave = () =>
+    import('@/views/RequestedLeave')
 const Bookingview = () =>
     import('@/views/booking/Bookingview')
 const Holidays = () =>
@@ -62,6 +62,8 @@ const Changepassword = () =>
 
 const Attendence = () =>
     import('@/views/Attendence')
+const Employeeattendance = () =>
+    import('@/views/Employeeattendance')
 const Typography = () =>
     import('@/views/theme/Typography')
 
@@ -318,6 +320,12 @@ function configRoutes() {
                     name: 'attendence-view',
                     component: Attendence
                 },
+                {
+                    path: 'employeeattendance',
+                    name: 'employeeattendance',
+                    component: Employeeattendance
+                },
+
 
 
             ]
