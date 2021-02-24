@@ -46,14 +46,15 @@
           <CRow>
             <CCol>
               <CButton
-              v-if="user.role==employee"
+             
+              v-if="user.role=='employee'||user.role=='teamlead'||user.role=='manager'"
                 type="submit"
                 class="btn btn btn-success"
                 style="margin-left: 50%"
                 >Submit</CButton
-              >
+              >   
               <CButton
-              v-if="user.role==superadmin"
+            v-if="user.role=='superadmin'||user.role=='admin'||user.role=='hr'"
                 type="submit"
                 :to="{
                       name: 'employeeattendance',
@@ -139,11 +140,8 @@ export default {
     },
   },
   created() {
-    console.log("**********************");
-    console.log(date.fromDate);
-    console.log("#############################");
-    let user = JSON.parse(localStorage.getItem("data"));
-    this.userId = user._id;
+    this.user = JSON.parse(localStorage.getItem("data"));
+    this.userId = this.user._id;
     if (localStorage.getItem("data") === null) {
       this.$router.push("/login");
     }
@@ -155,7 +153,6 @@ export default {
     submitForm() {
       this.$v.$touch();
       if (this.$v.$pendding || this.$v.$error) return;
-
       let date = {
         id: this.userId,
         from: this.date.fromDate,
@@ -169,8 +166,6 @@ export default {
         .then((res) => {
           this.time = res.data.data.time;
           this.user = res.data.data.user;
-          console.log(this.tableData);
-          console.log(this.user);
         });
     },
   },

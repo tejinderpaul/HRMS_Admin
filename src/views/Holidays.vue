@@ -1,195 +1,180 @@
 <template>
-  <div class="container" style="background-color: white">
-    <div class="text-center">
-      <h1>Holiday List</h1>
-      <router-link
-        v-if="
-          user.role != 'employee' ||
-          user.role != 'teamlead' ||
-          user.role != 'manager'
-        "
-        :to="{
-          name: 'add-holidays',
-        }"
-        class="btn btn-md btn-primary"
-        style="float: right; margin-bottom: 10px"
-        >Add Holidays</router-link
-      >
-    </div>
-    <v-client-table :data="tableData" :columns="columns" :options="options">
-      <span slot="action" slot-scope="{ row }">
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group" style="margin-bottom: 0px">
-            <template>
-              <CButton
-                class="m-1"
-                :to="{
-                  name: 'edit-holidays',
-                  params: { id: row._id },
-                }"
-                block
-                variant="outline"
-                color="success"
-                >Edit</CButton
-              >
-              <CButton
-                class="m-1"
-                block
-                variant="outline"
-                color="danger"
-                v-on:click="deleteHolidays(row._id)"
-                >Delete</CButton
-              >
-            </template>
-          </div>
-        </div>
-      </span>
-    </v-client-table>
-  </div>
+<div>
+<DxScheduler
+:data-source="dataSource"
+:current-date="currentDate"
+:views="views"
+:show-current-time-indicator="showCurrentTimeIndicator"
+:shade-until-current-time="shadeUntilCurrentTime"
+:on-content-ready="onContentReady"
+:on-appointment-click="onAppointmentClick"
+:on-appointment-dbl-click="onAppointmentDblClick"
+:editing="false"
+:show-all-day-panel="false"
+appointment-template="AppointmentTemplateSlot"
+height="600"
+current-view="week"
+>
+<DxResource
+:data-source="moviesData"
+field-expr="movieId"
+/>
+<template #AppointmentTemplateSlot="{ data }">
+<AppointmentTemplate :appointment-model="data"/>
 </template>
-
+</DxScheduler>
+<div class="options">
+<div class="column">
+<div class="option">
+<div class="label">Current time indicator</div>
+<div class="value">
+<DxSwitch
+id="show-indicator"
+v-model:value="showCurrentTimeIndicator"
+/>
+</div>
+</div>
+<div class="option">
+<div class="label">Shading until current time</div>
+<div class="value">
+<DxSwitch
+id="allow-shading"
+v-model:value="shadeUntilCurrentTime"
+/>
+</div>
+</div>
+</div>
+<div class="column">
+<div class="option">
+<div class="label">Update position in</div>
+<div class="value">
+<DxNumberBox
+v-model:value="updateInterval"
+:format="'#0 s'"
+:min="1"
+:max="1200"
+:step="10"
+:show-spin-buttons="true"
+width="100"
+/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</template>
 <script>
-import Vue from "vue";
-import { ClientTable } from "vue-tables-2";
-import axios from "axios";
-import VueAxios from "vue-axios";
-import config from "@/config";
-Vue.use(VueAxios, axios);
-Vue.use(ClientTable);
+
+import DxScheduler, { DxResource } from 'devextreme-vue/scheduler';
+import { DxSwitch } from 'devextreme-vue/switch';
+import { DxNumberBox } from 'devextreme-vue/number-box';
+
+import AppointmentTemplate from './AppointmentTemplate.vue';
+import { data, moviesData } from './data.js';
+
 export default {
-  components: {
-    ClientTable,
-  },
-  data() {
-    return {
-      user: "",
-      columns: "",
-      tableData: [],
-      options: {
-        headings: {
-          occasion_date: "Date",
-          occasion_name: "Occasion Name",
-        },
-        sortable: ["title", "description"],
-        filterable: ["occasion_date", "occasion_name"],
-        texts: {
-          filterPlaceholder: "Enter Date/ Occasion Name",
-        },
-      },
-    };
-  },
-  created() {
-    this.user = JSON.parse(localStorage.getItem("data"));
-    this.token = this.user.token;
-    if (
-      this.user.role == "admin" ||
-      this.user.role == "superadmin" ||
-      this.user.role == "hr"
-    ) {
-      this.columns = ["occasion_date", "occasion_name", "note", "action"];
-    } else {
-      this.columns = ["occasion_date", "occasion_name", "note"];
-    }
-    if (localStorage.getItem("data") === null) {
-      this.$router.push("/login");
-    }
-  },
-  mounted() {
-    let options = {
-      method: "post",
-      url: `${config.apiUrl}/holidays/all_holidays`,
-      headers: {
-        token: this.token,
-      },
-    };
-    this.axios(options).then((res) => {
-      this.tableData = res.data.data;
-    });
-  },
-  methods: {
-    deleteHolidays(holiday_id) {
-      if (confirm("Are you sure you want to delete this item?"))
-        axios
-          .post(
-            `${config.apiUrl}/holidays/delete_holiday`,
-            { holiday_id: holiday_id },
-            {
-              headers: {
-                token: this.token,
-              },
-            }
-          )
-          .then((res) => {
-            window.location.reload();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    },
-  },
+components: {
+DxScheduler,
+DxResource,
+DxSwitch,
+DxNumberBox,
+AppointmentTemplate
+},
+data() {
+return {
+views: ['week', 'timelineWeek'],
+currentDate: new Date(),
+showCurrentTimeIndicator: true,
+shadeUntilCurrentTime: true,
+updateInterval: 10,
+dataSource: data,
+moviesData: moviesData,
+};
+},
+methods: {
+onContentReady: function(e) {
+const currentHour = new Date().getHours() - 1;
+e.component.scrollToTime(currentHour, 30, new Date());
+},
+
+onAppointmentClick: function(e) {
+e.cancel = true;
+},
+
+onAppointmentDblClick: function(e) {
+e.cancel = true;
+},
+
+onShowCurrentTimeIndicatorChanged: function(e) {
+this.setState({ showCurrentTimeIndicator: e.value });
+},
+
+onShadeUntilCurrentTimeChanged: function(e) {
+this.setState({ shadeUntilCurrentTime: e.value });
+},
+
+onUpdateIntervalChanged: function(args) {
+this.setState({ updateInterval: args.value });
+}
+}
 };
 </script>
 
-<style>
-#app {
-  width: 95%;
-  margin-top: 50px;
+<style scoped>
+.dx-scheduler-appointment {
+color: #000000;
+font-weight: 500;
+background-color: #e4e4e4;
 }
-.VuePagination {
-  text-align: center;
+
+.dx-scheduler-appointment-recurrence .dx-scheduler-appointment-content {
+padding: 5px 0px 5px 7px;
 }
-.vue-title {
-  text-align: center;
-  margin-bottom: 10px;
+
+.options {
+background-color: rgba(191, 191, 191, 0.15);
+margin-top: 20px;
 }
-.vue-pagination-ad {
-  text-align: center;
+
+.column {
+width: 40%;
+display: inline-block;
+margin: 15px 3%;
+text-align: left;
+vertical-align: top;
 }
-.glyphicon.glyphicon-eye-open {
-  width: 16px;
-  display: block;
-  margin: 0 auto;
+
+.column:last-child .option {
+margin-left: 4px;
 }
-th:nth-child(3) {
-  text-align: center;
+
+.option {
+padding: 5px 0;
 }
-.VueTables__child-row-toggler {
-  width: 16px;
-  height: 16px;
-  line-height: 16px;
-  display: block;
-  margin: auto;
-  text-align: center;
+
+.label, .value {
+display: inline-block;
+vertical-align: middle;
 }
-.VueTables__child-row-toggler--closed::before {
-  content: "+";
+
+.label {
+width: 184px;
 }
-.VueTables__child-row-toggler--open::before {
-  content: "-";
+
+.value {
+width: 30%;
 }
-/* .VueTables__search-field {
-  position: absolute;
-} */
-.VueTables__limit {
-  float: right;
+
+.movie img {
+height: 70px;
 }
-.VueTables__search-field {
-  margin-bottom: 1px;
+
+.movie-text {
+font-size: 90%;
+white-space: normal;
 }
-.VueTables__search {
-  display: inline-table;
-}
-.VueTables__limit-field label {
-  margin: 0px;
-}
-.VueTables__search-field label {
-  display: none;
-}
-.VueTables__search-field::before {
-  content: "Search:";
-  display: inherit;
-}
-.VueTables__heading {
-  float: left;
+
+#allow-shading, #show-indicator {
+height: 36px;
 }
 </style>
