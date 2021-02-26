@@ -8,7 +8,8 @@ import store from './store'
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import Vuelidate from "vuelidate";
-
+import LunarFullCalendar from "vue-lunar-full-calendar";
+Vue.use(LunarFullCalendar);
 
 Vue.use(Vuelidate);
 Vue.config.productionTip = false

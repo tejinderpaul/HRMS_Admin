@@ -3,7 +3,7 @@
     <div class="text-center">
       <CCard>
         <CCardHeader>
-          <strong><h2>Add Holiday</h2></strong>
+          <strong><h2>Add Holidays</h2></strong>
         </CCardHeader>
         <CCardBody>
           <CForm @submit.prevent="submitForm">
@@ -54,28 +54,7 @@
               </CCol>
             </CRow>
 
-            <CRow>
-              <CCol class="col-sm-3">Note</CCol>
-              <CCol sm="9">
-                <div class="form-group">
-                  <textarea
-                    type="password"
-                    placeholder="write note....."
-                    v-model="holidays.note"
-                    class="form-control"
-                    :class="{
-                      'is-invalid': validationStatus($v.holidays.note),
-                    }"
-                  />
-                      <div
-                    v-if="!$v.holidays.note.required"
-                    class="invalid-feedback"
-                  >
-                    Note field is required.
-                  </div>
-                </div>
-              </CCol>
-            </CRow>
+            
             <CCardFooter>
               <CButton type="submit" class="btn btn btn-success"
                 ><CIcon name="cil-check-circle" /> Submit</CButton
@@ -109,8 +88,7 @@ export default {
   validations: {
     holidays: {
       occasion_date: { required },
-      occasion_name: { required },
-      note: { required },
+      occasion_name: { required }
     },
   },
   created() {
@@ -131,7 +109,6 @@ export default {
       let holidays = {
         occasionDate: this.holidays.occasion_date,
         occasion: this.holidays.occasion_name,
-        note: this.holidays.note,
       };
       this.submittoserver(holidays);
     },
@@ -145,7 +122,7 @@ export default {
             }
         )
         .then((res) => {
-          router.go(-1);
+          router.go(-2);
         });
     },
   },

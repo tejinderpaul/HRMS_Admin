@@ -8,10 +8,10 @@
         <CCardBody>
           <CForm @submit.prevent="submitForm">
             <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
                 >Employee Id<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
                     type="text"
@@ -30,13 +30,36 @@
                   </div>
                 </div>
               </CCol>
+              <CCol class="col-sm-2" style="display: flex"
+                >Phone Number<span class="text-danger">*</span></CCol
+              >
+              <CCol sm="4">
+                <div class="form-group">
+                  <input
+                    type="number"
+                    placeholder="Enter phonenumber"
+                    v-model="user.phonenumber"
+                    :class="{
+                      'is-invalid': validationStatus($v.user.phonenumber),
+                    }"
+                    class="form-control"
+                  />
+                  <div
+                    v-if="!$v.user.phonenumber.required"
+                    class="invalid-feedback"
+                  >
+                    Phone number is required.
+                  </div>
+                </div>
+              </CCol>
+              
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
                 >First Name<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
                     type="text"
@@ -55,13 +78,10 @@
                   </div>
                 </div>
               </CCol>
-            </CRow>
-
-            <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
                 >Last Name<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
                     type="text"
@@ -80,36 +100,14 @@
                   </div>
                 </div>
               </CCol>
+             
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3"
-                >Email<span class="text-danger">*</span></CCol
-              >
-              <CCol sm="9">
-                <div class="form-group">
-                  <input
-                    type="email"
-                    placeholder="Enter email"
-                    v-model="user.email"
-                    :class="{ 'is-invalid': validationStatus($v.user.email) }"
-                    class="form-control"
-                  />
-                  <div v-if="!$v.user.email.required" class="invalid-feedback">
-                    Email is required.
-                  </div>
-                  <div v-if="!$v.user.email.email" class="invalid-feedback">
-                    The email is not valid.
-                  </div>
-                </div>
-              </CCol>
-            </CRow>
-
-            <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
                 >Password<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
                     type="password"
@@ -139,38 +137,33 @@
                   </div>
                 </div>
               </CCol>
-            </CRow>
-
-            <CRow>
-              <CCol class="col-sm-3"
-                >Phone Number<span class="text-danger">*</span></CCol
+               <CCol class="col-sm-2" style="display: flex"
+                >Email<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
-                    type="number"
-                    placeholder="Enter phonenumber"
-                    v-model="user.phonenumber"
-                    :class="{
-                      'is-invalid': validationStatus($v.user.phonenumber),
-                    }"
+                    type="email"
+                    placeholder="Enter email"
+                    v-model="user.email"
+                    :class="{ 'is-invalid': validationStatus($v.user.email) }"
                     class="form-control"
                   />
-                  <div
-                    v-if="!$v.user.phonenumber.required"
-                    class="invalid-feedback"
-                  >
-                    Phone number is required.
+                  <div v-if="!$v.user.email.required" class="invalid-feedback">
+                    Email is required.
+                  </div>
+                  <div v-if="!$v.user.email.email" class="invalid-feedback">
+                    The email is not valid.
                   </div>
                 </div>
               </CCol>
             </CRow>
 
             <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
                 >DOB<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
                     type="date"
@@ -183,13 +176,10 @@
                   </div>
                 </div>
               </CCol>
-            </CRow>
-
-            <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
                 >Department<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
                     type="text"
@@ -209,12 +199,11 @@
                 </div>
               </CCol>
             </CRow>
-
             <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
                 >Designation<span class="text-danger">*</span></CCol
               >
-              <CCol sm="9">
+              <CCol sm="4">
                 <div class="form-group">
                   <input
                     type="text"
@@ -233,10 +222,57 @@
                   </div>
                 </div>
               </CCol>
+              <CCol class="col-sm-2" style="display: flex"
+                >Select Marital Status<span class="text-danger">*</span></CCol
+              >
+
+              <CSelect
+                class="col-sm-4 pt-0 changeWidth"
+                name="role"
+                horizontal
+                :options="options2"
+                placeholder="Please select"
+                :value.sync="user.maritalStatus"
+              />
             </CRow>
 
+           
+            <!-- <CSelect
+              label="Select Marital Status"
+              name="role"
+              horizontal
+              :options="options2"
+              placeholder="Please select"
+              :value.sync="user.maritalStatus"
+            /> -->
             <CRow>
-              <CCol class="col-sm-3"
+              <CCol class="col-sm-2" style="display: flex"
+                >Select Gender<span class="text-danger">*</span></CCol
+              >
+              <CSelect
+                class="col-sm-4 pt-0 changeWidth"
+                name="role"
+                horizontal
+                :options="options1"
+                placeholder="Please select"
+                :value.sync="user.gender"
+              />
+
+              <CCol class="col-sm-2 ml-2" style="display: flex"
+                >Select Role<span class="text-danger ">*</span></CCol
+              >
+
+               <CSelect
+               class="col-sm-4 pt-0 changeWidth "
+              name="role"
+              horizontal
+              :options="options"
+              placeholder="Please select"
+              :value.sync="user.role"
+            />
+            </CRow>
+             <CRow>
+              <CCol class="col-sm-2" style="display: flex"
                 >Address<span class="text-danger">*</span></CCol
               >
               <CCol sm="2">
@@ -305,36 +341,23 @@
               </CCol>
             </CRow>
 
-
-
-               <CSelect
-              label="Select Marital Status"
-              name="role"
-              horizontal
-              :options="options2"
-              placeholder="Please select"
-              :value.sync="user.maritalStatus"
-            />
-
-        
-               <CSelect
+            <!-- <CSelect
               label="Select Gender"
               name="role"
               horizontal
               :options="options1"
               placeholder="Please select"
               :value.sync="user.gender"
-            />
-           
+            /> -->
 
-            <CSelect
+            <!-- <CSelect
               label="Select Role"
               name="role"
               horizontal
               :options="options"
               placeholder="Please select"
               :value.sync="user.role"
-            />
+            /> -->
             <CCardFooter>
               <CButton type="submit" class="btn btn btn-success"
                 ><CIcon name="cil-check-circle" /> Submit</CButton
@@ -387,8 +410,8 @@ export default {
         },
       },
       options: ["superadmin", "admin", "hr", "teamlead", "manager", "employee"],
-      options1:["male","female","other"],
-      options2:["unmarried","married"],
+      options1: ["male", "female", "other"],
+      options2: ["unmarried", "married"],
       submitted: false,
     };
   },
@@ -466,3 +489,8 @@ export default {
   },
 };
 </script>
+<style>
+.changeWidth select{
+  width: 465px!important;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container" style="background-color: white">
-    <h1 class="text-center">All Leaves List</h1>
+    <h1 class="text-center">My Leaves List</h1>
     <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
       ><select

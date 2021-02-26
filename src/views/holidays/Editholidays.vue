@@ -52,28 +52,7 @@
               </CCol>
             </CRow>
 
-            <CRow>
-              <CCol class="col-sm-3">Note</CCol>
-              <CCol sm="9">
-                <div class="form-group">
-                  <textarea
-                    type="password"
-                    placeholder="write note....."
-                    v-model="holidays.note"
-                    class="form-control"
-                  :class="{
-                      'is-invalid': validationStatus($v.holidays.note),
-                    }"
-                  />
-                      <div
-                    v-if="!$v.holidays.note.required"
-                    class="invalid-feedback"
-                  >
-                    Note field is required.
-                  </div>
-                </div>
-              </CCol>
-            </CRow>
+            
             <CCardFooter>
               <CButton type="submit" class="btn btn btn-success"
                 ><CIcon name="cil-check-circle" /> Submit</CButton
@@ -99,7 +78,6 @@ export default {
       holidays: {
         occasion_date: "",
         occasion_name: "",
-        note: "",
       },
       submitted: false,
     };
@@ -108,7 +86,6 @@ export default {
     holidays: {
       occasion_date: { required },
       occasion_name: { required },
-      note: { required },
     },
   },
   created() {
@@ -130,7 +107,6 @@ export default {
         holiday_id: this.$route.params.id,
         occasionDate: this.holidays.occasion_date,
         occasion: this.holidays.occasion_name,
-        note: this.holidays.note,
       };
       this.submittoserver(holidays);
     },
@@ -138,7 +114,7 @@ export default {
       axios
         .post("http://192.168.1.20:4000/holidays/update_holiday", data)
         .then((res) => {
-          router.go(-1);
+          router.go(-2);
         });
     },
     getholiday() {

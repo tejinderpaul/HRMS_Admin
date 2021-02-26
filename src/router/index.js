@@ -64,6 +64,8 @@ const Attendence = () =>
     import('@/views/Attendence')
 const Employeeattendance = () =>
     import('@/views/Employeeattendance')
+    const Allholidaylist = () =>
+    import('@/views/Allholidaylist')
 const Typography = () =>
     import('@/views/theme/Typography')
 
@@ -324,6 +326,11 @@ function configRoutes() {
                     path: 'employeeattendance',
                     name: 'employeeattendance',
                     component: Employeeattendance
+                },
+                {
+                    path: 'allholidaylist',
+                    name: 'allholidaylist',
+                    component: Allholidaylist
                 },
 
 
