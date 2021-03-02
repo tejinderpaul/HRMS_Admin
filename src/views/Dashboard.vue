@@ -126,3 +126,11 @@ export default {
     },
   };
 </script>
+<style>
+.bg-info  {
+    height : 158px;
+}
+.bg-warning {
+height : 158px;
+}
+</style>

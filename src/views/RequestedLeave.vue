@@ -1,6 +1,6 @@
 <template>
   <div class="container" style="background-color: white">
-    <h1 class="text-center">All Leaves List</h1>
+    <h1 class="text-center">All Requested Leaves List</h1>
     <!-- <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
       ><select
@@ -48,6 +48,18 @@
           </div>
         </div>
       </span>
+      <span slot="fromDate" slot-scope="{row}">
+        <td>
+          <p>{{row.fromDate.slice(0,10)}}</p>
+            
+        </td>
+      </span>
+        <span slot="toDate" slot-scope="{row}">
+        <td>
+          <p>{{row.toDate.slice(0,10)}}</p>
+            
+        </td>
+      </span>
     </v-client-table>
   </div>
 </template>
@@ -58,8 +70,9 @@ import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
-import router from "../router";
+import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
 
+Vue.use(VueFilterDateParse);
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -122,7 +135,6 @@ export default {
   },
   methods: {
     approve(id) {
-      console.log("sdvkfvkjd",id);
       if (confirm("Are you sure you want to Approve this leave?"))
         axios
           .post(

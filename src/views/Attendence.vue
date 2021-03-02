@@ -43,29 +43,36 @@
             </CCol>
           </CRow>
 
-          <CRow>
-            <CCol>
-              <CButton
-             
-              v-if="user.role=='employee'||user.role=='teamlead'||user.role=='manager'"
-                type="submit"
-                class="btn btn btn-success"
-                style="margin-left: 50%"
-                >Submit</CButton
-              >   
-              <CButton
-            v-if="user.role=='superadmin'||user.role=='admin'||user.role=='hr'"
-                type="submit"
-                :to="{
-                      name: 'employeeattendance',
-                      params: {from:date.fromDate, to:date.toDate},
-                    }"
-                class="btn btn btn-success"
-                style="margin-left: 50%"
-                >Submit</CButton
-              >
-            </CCol>
-          </CRow>
+          <CCardFooter>
+            <CButton
+              v-if="
+                user.role == 'employee' ||
+                user.role == 'teamlead' ||
+                user.role == 'manager'
+              "
+              type="submit"
+              class="btn btn btn-success"
+              style="margin-left: 50%"
+            >
+              Submit</CButton
+            >
+            <CButton
+              v-if="
+                user.role == 'superadmin' ||
+                user.role == 'admin' ||
+                user.role == 'hr'
+              "
+              type="submit"
+              :to="{
+                name: 'employeeattendance',
+                params: { from: date.fromDate, to: date.toDate },
+              }"
+              class="btn btn btn-success"
+              style="margin-left: 50%"
+            >
+              Submit</CButton
+            >
+          </CCardFooter>
         </CForm>
       </CCardBody>
     </CCard>
@@ -79,7 +86,7 @@
         id="w0"
         class="table table-striped table-bordered detail-view"
       >
-        <tbody >
+        <tbody>
           <tr>
             <th>Employee Id</th>
             <td>{{ user._id }}</td>
@@ -116,6 +123,7 @@ import Vue from "vue";
 import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import router from "../router";
+import config from "@/config";
 import { required, email, numeric, minLength } from "vuelidate/lib/validators";
 Vue.use(ClientTable);
 export default {
@@ -161,12 +169,10 @@ export default {
       this.submittoserver(date);
     },
     submittoserver(data) {
-      axios
-        .post("http://192.168.1.20:4000/user/attendence", data)
-        .then((res) => {
-          this.time = res.data.data.time;
-          this.user = res.data.data.user;
-        });
+      axios.post(`${config.apiUrl}/user/attendence`, data).then((res) => {
+        this.time = res.data.data.time;
+        this.user = res.data.data.user;
+      });
     },
   },
 };

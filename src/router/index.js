@@ -23,6 +23,8 @@ const Bookingview = () =>
     import('@/views/booking/Bookingview')
 const Holidays = () =>
     import('@/views/Holidays')
+const Holidaysview = () =>
+        import('@/views/users/Holidaysview')
 const Customerdataview = () =>
     import('@/views/customers/Customerview')
 const Addemployee = () =>
@@ -241,6 +243,11 @@ function configRoutes() {
                     path: 'holidays',
                     name: 'holidays',
                     component: Holidays
+                },
+                {
+                    path: 'holidaysview',
+                    name: 'holidaysview',
+                    component: Holidaysview
                 },
                 {
                     path: 'add-employee',

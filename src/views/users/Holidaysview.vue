@@ -1,14 +1,6 @@
 
     <template>
   <div class="text-center">
-   
-    <router-link
-      :to="{
-        name: 'allholidaylist',
-      }"
-      class="btn btn-md btn-primary"
-      style="float: left; margin-left: 18.5%"
-      >Holidays List</router-link>
     <full-calendar :events="event" />
   </div>
 </template>

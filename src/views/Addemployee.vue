@@ -52,7 +52,6 @@
                   </div>
                 </div>
               </CCol>
-              
             </CRow>
 
             <CRow>
@@ -100,7 +99,6 @@
                   </div>
                 </div>
               </CCol>
-             
             </CRow>
 
             <CRow>
@@ -137,7 +135,7 @@
                   </div>
                 </div>
               </CCol>
-               <CCol class="col-sm-2" style="display: flex"
+              <CCol class="col-sm-2" style="display: flex"
                 >Email<span class="text-danger">*</span></CCol
               >
               <CCol sm="4">
@@ -236,7 +234,6 @@
               />
             </CRow>
 
-           
             <!-- <CSelect
               label="Select Marital Status"
               name="role"
@@ -259,19 +256,19 @@
               />
 
               <CCol class="col-sm-2 ml-2" style="display: flex"
-                >Select Role<span class="text-danger ">*</span></CCol
+                >Select Role<span class="text-danger">*</span></CCol
               >
 
-               <CSelect
-               class="col-sm-4 pt-0 changeWidth "
-              name="role"
-              horizontal
-              :options="options"
-              placeholder="Please select"
-              :value.sync="user.role"
-            />
+              <CSelect
+                class="col-sm-4 pt-0 changeWidth"
+                name="role"
+                horizontal
+                :options="options"
+                placeholder="Please select"
+                :value.sync="user.role"
+              />
             </CRow>
-             <CRow>
+            <CRow>
               <CCol class="col-sm-2" style="display: flex"
                 >Address<span class="text-danger">*</span></CCol
               >
@@ -490,7 +487,7 @@ export default {
 };
 </script>
 <style>
-.changeWidth select{
-  width: 465px!important;
+.changeWidth select {
+  width: 465px !important;
 }
 </style>

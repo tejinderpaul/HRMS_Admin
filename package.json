@@ -41,6 +41,7 @@
         "@fullcalendar/vue": "^5.5.0",
         "@syncfusion/ej2-base": "^18.4.44",
         "@syncfusion/ej2-vue-schedule": "^18.4.44",
+        "@vuejs-community/vue-filter-date-parse": "^1.1.6",
         "axios": "^0.21.1",
         "dayspan-vuetify": "^0.4.0",
         "devextreme-vue": "^20.2.5",

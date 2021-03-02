@@ -22,8 +22,8 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Holidays',
-            to: '/holidays',
+            name: 'Holidaysview',
+            to: '/holidaysview',
             icon: 'cil-lightbulb'
         },
        
