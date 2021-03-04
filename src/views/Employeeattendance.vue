@@ -40,13 +40,13 @@ export default {
       options: {
         headings: {
           firstname: "Name",
-          phonenumber: "Phonenumber",
+          phonenumber: "Phone number",
           time: "Time",
         },
-        sortable: ["title", "description"],
-        filterable: ["title", "description"],
+           sortable: ["user.firstname", "user.phonenumber", "date"],
+        filterable: ["user.firstname", "user.phonenumber", "date"],
         texts: {
-          filterPlaceholder: "Enter Title/ Description",
+          filterPlaceholder: "Enter date",
         },
       },
     };
@@ -75,6 +75,7 @@ export default {
         to: this.to,
       })
       .then((res) => {
+        console.log(res.data.data);
         this.tableData = res.data.data;
       });
   },

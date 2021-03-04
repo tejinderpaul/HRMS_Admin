@@ -9,6 +9,9 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import Vuelidate from "vuelidate";
 import LunarFullCalendar from "vue-lunar-full-calendar";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+Vue.component('loading-overlay', Loading)
 Vue.use(LunarFullCalendar);
 
 Vue.use(Vuelidate);

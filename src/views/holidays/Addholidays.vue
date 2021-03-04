@@ -72,6 +72,11 @@ import axios from "axios";
 import router from "../../router";
 import { required } from "vuelidate/lib/validators";
 import config from "@/config";
+import VueSweetalert2 from "vue-sweetalert2";
+import Vue from "vue";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
 export default {
   name: "create-admin-user",
   data() {
@@ -122,6 +127,15 @@ export default {
             }
         )
         .then((res) => {
+            Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Holiday added successfully",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
           router.go(-2);
         });
     },

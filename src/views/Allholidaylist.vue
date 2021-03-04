@@ -49,6 +49,10 @@ import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
+import VueSweetalert2 from "vue-sweetalert2";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -102,6 +106,15 @@ export default {
             }
          )
          .then((res) => {
+           Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Holiday deleted successfully",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
            this.$router.go(-1);
           })
           .catch((error) => {

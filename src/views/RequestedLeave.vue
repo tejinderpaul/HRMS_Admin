@@ -71,7 +71,11 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
 import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
+import VueSweetalert2 from 'vue-sweetalert2';
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
 
+Vue.use(VueSweetalert2);
 Vue.use(VueFilterDateParse);
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
@@ -117,13 +121,6 @@ export default {
     }
   },
   mounted() {
-    let options = {
-      method: "post",
-      url: `${config.apiUrl}/leaves/myall_leaves`,
-      headers: {
-        token: this.token,
-      },
-    };
     this.axios.post(`${config.apiUrl}/leaves/requested_leaves`,{"userId":this.user._id}, {
       headers: {
         token: this.token,

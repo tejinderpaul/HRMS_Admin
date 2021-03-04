@@ -14,7 +14,7 @@
               <div class="form-group">
                 <input
                   type="text"
-                  placeholder="Enter leave subject"
+                  placeholder="  Enter leave subject"
                   class="form-control"
                   v-model="user.leaveType"
                   :class="{
@@ -38,8 +38,8 @@
               <span>from<span class="text-danger">*</span></span>
               <div class="form-group">
                 <datepicker
-                  placeholder="Select Date"
-                  class="form-control"
+                  placeholder="  Select date"
+                  class="form-control format-datapicker"
                   :format="DatePickerFormat"
                   :disabledDates="disabledDates"
                   v-model="user.fromDate"
@@ -57,8 +57,8 @@
               <span>To<span class="text-danger">*</span></span>
               <div class="form-group">
                 <datepicker
-                  placeholder="Select Date"
-                  class="form-control"
+                  placeholder="   Select date"
+                  class="form-control format-datapicker"
                   :format="DatePickerFormat"
                   :disabledDates="disabledDates"
                   v-model="user.toDate"
@@ -67,8 +67,8 @@
                   }"
                 />
                 <div v-if="!$v.user.toDate.required" class="invalid-feedback">
-                  To date is required.vdp-datepicker form-control
-                  </div>
+                  To date is required.
+                </div>
               </div>
             </CCol>
           </CRow>
@@ -81,8 +81,8 @@
             <CCol sm="9">
               <div class="form-group">
                 <textarea
-                  placeholder="Enter reason....."
-                  class="form-control"
+                  placeholder="  Enter reason....."
+                  class="form-control reason"
                   v-model="user.note"
                   :class="{
                     'is-invalid': validationStatus($v.user.note),
@@ -121,7 +121,7 @@
                 </option>
               </select>
               <div v-if="!$v.user.mangername.required" class="invalid-feedback">
-                Reason is required.
+                Manger name is required.
               </div>
             </CCol>
           </CRow>
@@ -200,9 +200,11 @@ export default {
         token: this.token,
       },
     };
-    axios.post(`${config.apiUrl}/leaves/adminlist`,{id:this.userId}).then((res) => {
-      this.options = res.data.data;
-    });
+    axios
+      .post(`${config.apiUrl}/leaves/adminlist`, { id: this.userId })
+      .then((res) => {
+        this.options = res.data.data;
+      });
   },
   methods: {
     validationStatus: function (validation) {
@@ -230,16 +232,34 @@ export default {
           },
         })
         .then((res) => {
-          Vue.swal("Registerd Success!");
-         this.$router.push("/dashboard");
+           Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Leave Applied successfully",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
+          this.$router.push("/dashboard");
         });
     },
   },
 };
 </script>
 <style>
-input{
-  width:100%
+input {
+  width: 100%;
+  height: 28px;
+  margin-top: -5px;
 }
 
+.reason {
+  max-height: 350px;
+}
+.format-datapicker {
+  /* height: 28px; */
+  /* margin-top: -5px; */
+  padding: 7px;
+}
 </style>

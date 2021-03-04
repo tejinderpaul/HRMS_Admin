@@ -22,6 +22,9 @@
           <p v-if="row.status == 2">Rejected</p>
         </td>
       </span>
+      <span slot="mangerName" slot-scope="{row}">
+        <p>{{row.mangerName}} ({{row.managerEmail}})</p>
+      </span>
 
       <span slot="action" slot-scope="{ row }" >
         <div class="d-flex justify-content-between align-items-center">
@@ -79,7 +82,7 @@ export default {
           leaveType: "Subject",
           fromDate: "From",
           toDate: "To",
-          mangerName: "Email TO",
+          mangerName: "Assign To",
         },
         sortable: ["name", "leaveType", "phone_number"],
         filterable: ["name", "leaveType", "mangerName"],
@@ -120,13 +123,6 @@ export default {
     }
   },
   mounted() {
-    let options = {
-      method: "post",
-      url: `${config.apiUrl}/leaves/myall_leaves`,
-      headers: {
-        token: this.token,
-      },
-    };
     this.axios.post(`${config.apiUrl}/leaves/myall_leaves`,{"userId":this.user._id}, {
       headers: {
         token: this.token,
@@ -137,6 +133,23 @@ export default {
     });
   },
   methods: {
+    onChange(event) {
+      axios
+        .post(
+          `${config.apiUrl}/leaves/filtermyleave`,
+          { status: event, "userId":this.user._id },
+          {
+            headers: {
+              token: this.token,
+            },
+          }
+        )
+        .then((res) => (
+          this.tableData = res.data.data))
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     approve(id) {
       if (confirm("Are you sure you want to Approve this leave?"))
         axios
@@ -171,22 +184,7 @@ export default {
           })
           .catch((error) => {});
     },
-    onChange(event) {
-      axios
-        .post(
-          `${config.apiUrl}/leaves/filterleave`,
-          { status: event },
-          {
-            headers: {
-              token: this.token,
-            },
-          }
-        )
-        .then((res) => (this.tableData = res.data.data))
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    
   },
 };
 </script>

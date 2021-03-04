@@ -85,6 +85,11 @@ import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
+import VueSweetalert2 from "vue-sweetalert2";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
+
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
@@ -142,7 +147,7 @@ export default {
   },
   methods: {
     BlockUser(id, index) {
-      if (confirm("Are you sure you want to Block this customer?"))
+      if (confirm("Are you sure you want to Block this employee?"))
         axios
           .post(
             `${config.apiUrl}/user/blockuser`,
@@ -161,7 +166,7 @@ export default {
           });
     },
     UnblockUser(id, index) {
-      if (confirm("Are you sure you want to activate this customer?"))
+      if (confirm("Are you sure you want to unblock this employee?"))
         axios
           .post(
             `${config.apiUrl}/user/Unblock`,
@@ -173,7 +178,7 @@ export default {
             }
           )
           .then((resp) => {
-            window.location.reload();
+             window.location.reload();
           })
           .catch((error) => {
             console.log(error);

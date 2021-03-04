@@ -36,25 +36,40 @@
 
 <script>
 import axios from "axios";
+import VueSweetalert2 from "vue-sweetalert2";
+import Vue from "vue";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
+
 export default {
   name: "TheHeaderDropdownAccnt",
   data() {
     return {
-      id:"",   
+      id: "",
       itemsCount: 42,
     };
   },
   created() {
     this.id = JSON.parse(localStorage.getItem("data"))._id;
-    
   },
   methods: {
     logout(id) {
-      axios.post("http://192.168.1.20:4000/user/logout", {id:this.id}).then((res) => {
-    
-        localStorage.clear();
-        this.$router.push("/login");
-      });
+      axios
+        .post("http://192.168.1.20:4000/user/logout", { id: this.id })
+        .then((res) => {
+          Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Logout successfully",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
+          localStorage.clear();
+          this.$router.push("/login");
+        });
     },
   },
 };

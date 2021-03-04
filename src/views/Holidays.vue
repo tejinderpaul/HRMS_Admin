@@ -7,7 +7,7 @@
         name: 'allholidaylist',
       }"
       class="btn btn-md btn-primary"
-      style="float: left; margin-left: 18.5%"
+      style="float: left; margin-left: 6%, margin-top: 1%"
       >Holidays List</router-link>
     <full-calendar :events="event" />
   </div>

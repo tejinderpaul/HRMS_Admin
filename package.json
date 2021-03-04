@@ -60,6 +60,7 @@
         "vue-fullcalendar": "^1.0.9",
         "vue-gallery-slideshow": "^1.5.2",
         "vue-google-calendar": "^0.3.4",
+        "vue-loading-overlay": "^3.4.2",
         "vue-lunar-full-calendar": "^1.3.2",
         "vue-my-photos": "^3.0.1",
         "vue-property-decorator": "^9.1.2",

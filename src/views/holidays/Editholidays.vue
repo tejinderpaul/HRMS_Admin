@@ -69,6 +69,12 @@
 import axios from "axios";
 import router from "../../router";
 import { required } from "vuelidate/lib/validators";
+import config from "@/config";
+import VueSweetalert2 from "vue-sweetalert2";
+import Vue from "vue";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
 export default {
   name: "create-admin-user",
   data() {
@@ -112,14 +118,23 @@ export default {
     },
     submittoserver(data) {
       axios
-        .post("http://192.168.1.20:4000/holidays/update_holiday", data)
+        .post(`${config.apiUrl}/holidays/update_holiday`, data)
         .then((res) => {
+           Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Holiday updated successfully",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
           router.go(-2);
         });
     },
     getholiday() {
       axios
-        .post("http://192.168.1.20:4000/holidays/holiday", { id: this.id })
+        .post(`${config.apiUrl}/holidays/holiday`, { id: this.id })
         .then((data) => (this.holidays = data.data.data));
     },
   },

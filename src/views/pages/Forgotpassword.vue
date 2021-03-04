@@ -48,6 +48,7 @@
 <script>
 import axios from "axios";
 import { required } from "vuelidate/lib/validators";
+import config from "@/config";
 export default {
   name: "Forgotpassword",
   data() {
@@ -79,7 +80,7 @@ export default {
       };
 
       axios
-        .post("http://192.168.1.20:4000/user/forgotpassword", user, {
+        .post(`${config.apiUrl}/user/forgotpassword`, user, {
           "Content-Type": "application/json",
         })
         .then((res) => {

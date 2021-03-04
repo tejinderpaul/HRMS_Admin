@@ -87,7 +87,7 @@ export default {
           leaveType: "Subject",
           fromDate: "From",
           toDate: "To",
-          mangerName: "Email TO",
+          mangerName: "Assign To",
         },
         sortable: ["name", "leaveType", "phone_number"],
         filterable: ["name", "leaveType", "mangerName"],

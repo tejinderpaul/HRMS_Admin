@@ -198,7 +198,7 @@ function configRoutes() {
                 },
                 {
                     path: 'user',
-                    name: 'user',
+                    name: 'employees',
                     component: Userlist
                 },
                 {
@@ -331,7 +331,7 @@ function configRoutes() {
                 },
                 {
                     path: 'employeeattendance',
-                    name: 'employeeattendance',
+                    name: 'employee-attendance',
                     component: Employeeattendance
                 },
                 {

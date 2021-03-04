@@ -27,7 +27,7 @@
                       class="invalid-feedback"
                     >
                       <span v-if="!$v.user.email.required"
-                        >Email is required</span
+                        ><b>Email is required</b></span
                       >
                     </div>
                   </div>
@@ -48,7 +48,7 @@
                       class="invalid-feedback"
                     >
                       <span v-if="!$v.user.password.required"
-                        >Password is required</span
+                        ><b>Password is required</b></span
                       >
                     </div>
                   </div>
@@ -84,6 +84,11 @@
 <script>
 import axios from "axios";
 import { required } from "vuelidate/lib/validators";
+import VueSweetalert2 from "vue-sweetalert2";
+import Vue from "vue";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
 export default {
   name: "Login",
   data() {
@@ -124,7 +129,7 @@ export default {
       };
 
       axios
-        .post("http://192.168.1.20:4000/user/login", user, {
+        .post("http://192.168.1.13:4000/user/login", user, {
           "Content-Type": "application/json",
         })
         .then((res) => {
@@ -132,6 +137,15 @@ export default {
             this.error = "Invalid username/password";
           }
            else if (res.data.statusCode == 200) {
+               Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Login successfully",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
               this.$router.push({ path: "/dashboard" });
             localStorage.setItem("data", JSON.stringify(res.data.data));
            

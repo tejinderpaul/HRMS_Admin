@@ -37,7 +37,7 @@
                 <div class="form-group">
                   <input
                     type="number"
-                    placeholder="Enter phonenumber"
+                    placeholder="Enter phone number"
                     v-model="user.phonenumber"
                     :class="{
                       'is-invalid': validationStatus($v.user.phonenumber),
@@ -117,7 +117,7 @@
                     class="form-control"
                   />
                   <div v-if="!$v.user.email.required" class="invalid-feedback">
-                    Email is required.
+                    Password is required.
                   </div>
                   <div
                     v-if="!$v.user.password.minLength"
@@ -375,6 +375,10 @@ import {
   email,
   minLength,
   maxLength,
+  alphaNum,
+  alpha,
+  numeric,
+
 } from "vuelidate/lib/validators";
 import VueSweetalert2 from "vue-sweetalert2";
 import Vue from "vue";
@@ -414,12 +418,12 @@ export default {
   },
   validations: {
     user: {
-      employeeId: { required },
-      firstname: { required },
-      lastname: { required },
+      employeeId: { required, alphaNum },
+      firstname: { required , alpha},
+      lastname: { required , alpha },
       email: { required, email },
       password: { required, minLength: minLength(6), maxLength: maxLength(18) },
-      phonenumber: { required },
+      phonenumber: { required , numeric},
       role: { required },
       gender: { required },
       dob: { required },
@@ -427,10 +431,10 @@ export default {
       department: { required },
       designation: { required },
       address: {
-        city: { required },
-        state: { required },
-        country: { required },
-        pincode: { required },
+        city: { required , alphaNum},
+        state: { required , alpha},
+        country: { required , alpha},
+        pincode: { required, numeric, minLength: minLength(6), maxLength: maxLength(6) },
       },
     },
   },
@@ -479,7 +483,15 @@ export default {
           },
         })
         .then((res) => {
-          Vue.swal("Registerd Success!");
+             Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Employee added successfully",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
           this.$router.push("/user");
         });
     },
@@ -488,6 +500,6 @@ export default {
 </script>
 <style>
 .changeWidth select {
-  width: 465px !important;
+  width: 137% !important;
 }
 </style>

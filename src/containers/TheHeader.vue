@@ -42,3 +42,8 @@ export default {
   },
 };
 </script>
+<style>
+.breadcrumb-item {
+  text-transform: capitalize !important;;
+}
+</style>
