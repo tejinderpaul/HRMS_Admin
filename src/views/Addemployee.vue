@@ -3,7 +3,7 @@
     <div class="text-center">
       <CCard>
         <CCardHeader>
-          <strong><h2>Add User</h2></strong>
+          <strong><h2>Add Employee</h2></strong>
         </CCardHeader>
         <CCardBody>
           <CForm @submit.prevent="submitForm">
@@ -28,6 +28,12 @@
                   >
                     Employee Id field is required.
                   </div>
+                  <div
+                    v-if="!$v.user.employeeId.alphaNum"
+                    class="invalid-feedback"
+                  >
+                    Special characters are not allowed.
+                  </div>
                 </div>
               </CCol>
               <CCol class="col-sm-2" style="display: flex"
@@ -50,6 +56,28 @@
                   >
                     Phone number is required.
                   </div>
+                  <div
+                    v-if="!$v.user.phonenumber.numeric"
+                    class="invalid-feedback"
+                  >
+                    Only numbers are allowed.
+                  </div>
+                  <div
+                    v-if="!$v.user.phonenumber.minLength"
+                    class="invalid-feedback"
+                  >
+                    You must have at least
+                    {{ $v.user.phonenumber.$params.minLength.min }} digit phone
+                    number.
+                  </div>
+                  <div
+                    v-if="!$v.user.phonenumber.maxLength"
+                    class="invalid-feedback"
+                  >
+                    You must not have greater then
+                    {{ $v.user.phonenumber.$params.maxLength.max }} digit phone
+                    number.
+                  </div>
                 </div>
               </CCol>
             </CRow>
@@ -62,7 +90,7 @@
                 <div class="form-group">
                   <input
                     type="text"
-                    placeholder="Enter firstname"
+                    placeholder="Enter first name"
                     v-model="user.firstname"
                     :class="{
                       'is-invalid': validationStatus($v.user.firstname),
@@ -75,6 +103,9 @@
                   >
                     First name field is required.
                   </div>
+                  <div v-if="!$v.user.firstname.alpha" class="invalid-feedback">
+                    Only alphabets are allowed.
+                  </div>
                 </div>
               </CCol>
               <CCol class="col-sm-2" style="display: flex"
@@ -84,7 +115,7 @@
                 <div class="form-group">
                   <input
                     type="text"
-                    placeholder="Enter lastname"
+                    placeholder="Enter last name"
                     v-model="user.lastname"
                     :class="{
                       'is-invalid': validationStatus($v.user.lastname),
@@ -96,6 +127,9 @@
                     class="invalid-feedback"
                   >
                     Last name field is required.
+                  </div>
+                  <div v-if="!$v.user.lastname.alpha" class="invalid-feedback">
+                    Only alphabets are allowed.
                   </div>
                 </div>
               </CCol>
@@ -131,7 +165,7 @@
                     class="invalid-feedback"
                   >
                     You must not have greater then
-                    {{ $v.user.password.$params.maxLength.min }} letters.
+                    {{ $v.user.password.$params.maxLength.max }} letters.
                   </div>
                 </div>
               </CCol>
@@ -165,6 +199,7 @@
                 <div class="form-group">
                   <input
                     type="date"
+                    max="9999-01-01"
                     v-model="user.dob"
                     class="form-control"
                     :class="{ 'is-invalid': validationStatus($v.user.dob) }"
@@ -283,8 +318,17 @@
                       'is-invalid': validationStatus($v.user.address.city),
                     }"
                   />
-                  <div v-if="!$v.user.address.city" class="invalid-feedback">
+                  <div
+                    v-if="!$v.user.address.city.required"
+                    class="invalid-feedback"
+                  >
                     City is required.
+                  </div>
+                  <div
+                    v-if="!$v.user.address.city.alphaNum"
+                    class="invalid-feedback"
+                  >
+                    Special characters are not allowed.
                   </div>
                 </div>
               </CCol>
@@ -299,8 +343,17 @@
                       'is-invalid': validationStatus($v.user.address.state),
                     }"
                   />
-                  <div v-if="!$v.user.address.state" class="invalid-feedback">
+                  <div
+                    v-if="!$v.user.address.state.required"
+                    class="invalid-feedback"
+                  >
                     State is required.
+                  </div>
+                  <div
+                    v-if="!$v.user.address.state.alpha"
+                    class="invalid-feedback"
+                  >
+                    Only alphabets are allowed.
                   </div>
                 </div>
               </CCol>
@@ -315,8 +368,18 @@
                       'is-invalid': validationStatus($v.user.address.country),
                     }"
                   />
-                  <div v-if="!$v.user.address.country" class="invalid-feedback">
+                  <div
+                    v-if="!$v.user.address.country.required"
+                    class="invalid-feedback"
+                  >
                     Country is required.
+                  </div>
+
+                  <div
+                    v-if="!$v.user.address.country.alpha"
+                    class="invalid-feedback"
+                  >
+                    Only alphabets are allowed.
                   </div>
                 </div>
               </CCol>
@@ -331,8 +394,34 @@
                       'is-invalid': validationStatus($v.user.address.pincode),
                     }"
                   />
-                  <div v-if="!$v.user.address.pincode" class="invalid-feedback">
+                  <div
+                    v-if="!$v.user.address.pincode.required"
+                    class="invalid-feedback"
+                  >
                     Pincode is required.
+                  </div>
+
+                  <div
+                    v-if="!$v.user.address.pincode.numeric"
+                    class="invalid-feedback"
+                  >
+                    Only numbers are allowed.
+                  </div>
+                  <div
+                    v-if="!$v.user.address.pincode.minLength"
+                    class="invalid-feedback"
+                  >
+                    You must have at least
+                    {{ $v.user.phonenumber.$params.minLength.min }} digit
+                    pincode.
+                  </div>
+                  <div
+                    v-if="!$v.user.address.pincode.maxLength"
+                    class="invalid-feedback"
+                  >
+                    You must not have greater then
+                    {{ $v.user.address.pincode.$params.maxLength.max }} digit
+                    pincode.
                   </div>
                 </div>
               </CCol>
@@ -378,7 +467,6 @@ import {
   alphaNum,
   alpha,
   numeric,
-
 } from "vuelidate/lib/validators";
 import VueSweetalert2 from "vue-sweetalert2";
 import Vue from "vue";
@@ -419,11 +507,16 @@ export default {
   validations: {
     user: {
       employeeId: { required, alphaNum },
-      firstname: { required , alpha},
-      lastname: { required , alpha },
+      firstname: { required, alpha },
+      lastname: { required, alpha },
       email: { required, email },
       password: { required, minLength: minLength(6), maxLength: maxLength(18) },
-      phonenumber: { required , numeric},
+      phonenumber: {
+        required,
+        numeric,
+        minLength: minLength(10),
+        maxLength: maxLength(10),
+      },
       role: { required },
       gender: { required },
       dob: { required },
@@ -431,10 +524,15 @@ export default {
       department: { required },
       designation: { required },
       address: {
-        city: { required , alphaNum},
-        state: { required , alpha},
-        country: { required , alpha},
-        pincode: { required, numeric, minLength: minLength(6), maxLength: maxLength(6) },
+        city: { required, alphaNum },
+        state: { required, alpha },
+        country: { required, alpha },
+        pincode: {
+          required,
+          numeric,
+          minLength: minLength(6),
+          maxLength: maxLength(6),
+        },
       },
     },
   },
@@ -483,7 +581,7 @@ export default {
           },
         })
         .then((res) => {
-             Vue.swal.fire({
+          Vue.swal.fire({
             toast: true,
             position: "top",
             icon: "success",
@@ -501,5 +599,10 @@ export default {
 <style>
 .changeWidth select {
   width: 137% !important;
+}
+
+.invalid-feedback {
+  text-align: left;
+  font-weight: 750;
 }
 </style>

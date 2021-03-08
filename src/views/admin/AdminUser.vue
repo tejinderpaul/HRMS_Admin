@@ -40,6 +40,7 @@
 
 <script>
 import Vue from "vue";
+import config from "@/config";
 import router from "../../router";
 import { ClientTable } from "vue-tables-2";
 import axios from "axios";
@@ -58,7 +59,7 @@ export default {
         sortable: ["name", "email", "phone", "role"],
         filterable: ["name", "email", "phone", "role"],
         texts: {
-          filterPlaceholder: "Enter Name/ Number/ Email",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };
@@ -70,7 +71,7 @@ export default {
   },
   mounted() {
     this.axios
-      .post("http://192.168.1.20:3000/adminuser/getalladminuser")
+      .post(`${config.apiUrl}/adminuser/getalladminuser`)
       .then((res) => {
         this.tableData = res.data.data;
       });
@@ -85,7 +86,7 @@ export default {
     deleteadminuser(id, index) {
       if (confirm("Are you sure you want to delete this admin?"))
         axios
-          .get("http://192.168.1.20:3000/adminuser/deleteadminuser/" + id)
+          .get(`${config.apiUrl}/adminuser/deleteadminuser/` + id)
           .then((resp) => {
             router.go("/");
           })

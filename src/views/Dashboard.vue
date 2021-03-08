@@ -24,7 +24,8 @@
             }"
             block
             variant="outline"
-            >Click Here
+            class="btn1"
+            ><strong>View Details</strong>
           </CButton>
           <template #footer>
             <CChartLineSimple
@@ -63,7 +64,8 @@
             }"
             block
             variant="outline"
-            >Click Here
+            class="btn1"
+            ><strong>View Details</strong>
           </CButton>
           <template #footer>
             <CChartBarSimple
@@ -132,5 +134,9 @@ export default {
 }
 .bg-warning {
 height : 158px;
+}
+.btn1 {
+  color: #fff;
+  text-align: right;
 }
 </style>

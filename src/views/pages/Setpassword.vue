@@ -93,8 +93,13 @@
 
 <script>
 import axios from "axios";
+import config from "@/config";
 import { required, sameAs } from "vuelidate/lib/validators";
-
+import VueSweetalert2 from "vue-sweetalert2";
+import Vue from "vue";
+// If you don't need the styles, do not connect
+import "sweetalert2/dist/sweetalert2.min.css";
+Vue.use(VueSweetalert2);
 export default {
   name: "Login",
   data() {
@@ -134,11 +139,20 @@ export default {
       };
 
       axios
-        .post("http://192.168.1.20:4000/user/setnewpassword", user, {
+        .post(`${config.apiUrl}/user/setnewpassword`, user, {
           "Content-Type": "application/json",
         })
         .then((res) => {
           if (res.data.statusCode === 200) {
+              Vue.swal.fire({
+            toast: true,
+            position: "top",
+            icon: "success",
+            title: "Password changed successfully",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+          });
             localStorage.setItem("token", res.data.data.email);
             this.$router.push({ path: "/login" });
           } else if (res.data.statusCode === 404) {

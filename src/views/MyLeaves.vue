@@ -87,7 +87,7 @@ export default {
         sortable: ["name", "leaveType", "phone_number"],
         filterable: ["name", "leaveType", "mangerName"],
         texts: {
-          filterPlaceholder: "Enter Name/ Number/ MangerName",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };

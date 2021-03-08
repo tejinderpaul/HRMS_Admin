@@ -46,6 +46,7 @@
           </CRow>
 
           <CCardFooter>
+            <loading :active='isLoading' :is-full-page="fullPage" :loader='loader' />
             <CButton
               v-if="
                 user.role == 'employee' ||
@@ -58,17 +59,16 @@
             >
               Submit</CButton
             >
-           <loading :active='isLoading' :is-full-page="fullPage" :loader='loader' />
+             <loading :active='isLoading' :is-full-page="fullPage" :loader='loader' />
             <CButton
               v-if="
                 user.role == 'superadmin' ||
                 user.role == 'admin' ||
                 user.role == 'hr'
               "
-              
               type="submit"
               :to="{
-                name: 'employeeattendance',
+                name: 'employee-attendance',
                 params: { from: date.fromDate, to: date.toDate },
               }"
               class="btn btn btn-success"
@@ -93,7 +93,7 @@
         <tbody>
           <tr>
             <th>Employee Id</th>
-            <td>{{ user._id }}</td>
+            <td>{{ user.employeeId }}</td>
           </tr>
           <tr>
             <th>Name</th>
@@ -139,7 +139,7 @@ export default {
     return {
       loader: 'bars',
        isLoading: false,
-                fullPage: true,
+       fullPage: true,
       time: "",
       user: "",
       errors: "",
@@ -171,13 +171,7 @@ export default {
     validationStatus: function (validation) {
       return typeof validation != "undefined" ? validation.$error : false;
     },
-    //  open() {
-    //          this.isLoading = true;
-    //   setTimeout(() => {
-    //     this.isLoading = false
-    //   }, 3000);
     
-    //     },
     submitForm() {
       this.$v.$touch();
       if (this.$v.$pendding || this.$v.$error) return;
@@ -191,7 +185,6 @@ export default {
     submittoserver(data) {
       this.isLoading = true;
       setTimeout(() => {
-        console.log("1213123123123123");
         this.isLoading = false
       }, 3000);
       axios.post(`${config.apiUrl}/user/attendence`, data).then((res) => {

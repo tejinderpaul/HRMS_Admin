@@ -71,7 +71,7 @@ export default {
         sortable: ["title", "description"],
         filterable: ["occasion_date", "occasion_name"],
         texts: {
-          filterPlaceholder: "Enter Date/ Occasion Name",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };

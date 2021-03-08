@@ -25,7 +25,7 @@
                       class="invalid-feedback"
                     >
                       <span v-if="!$v.user.password.required"
-                        ><b>OTP is required</b></span
+                        ><b>Password is required</b></span
                       >
                     </div>
                   </div>

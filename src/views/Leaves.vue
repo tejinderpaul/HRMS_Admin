@@ -92,7 +92,7 @@ export default {
         sortable: ["name", "leaveType", "phone_number"],
         filterable: ["name", "leaveType", "mangerName"],
         texts: {
-          filterPlaceholder: "Enter Name/ Number/ MangerName",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };
@@ -259,5 +259,10 @@ th:nth-child(3) {
 }
 select {
   -webkit-appearance: menulist;
+}
+.VueTables__row td {
+  max-width: 100px!important;
+  white-space: pre-wrap!important;
+word-wrap: break-word!important;
 }
 </style>

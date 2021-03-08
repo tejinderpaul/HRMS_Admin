@@ -108,7 +108,7 @@ export default {
         sortable: ["name", "email", "phonenumber", "status"],
         filterable: ["firstname", "email", "phonenumber"],
         texts: {
-          filterPlaceholder: "Enter Name/ Number/ Email",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };

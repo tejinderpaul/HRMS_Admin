@@ -83,6 +83,7 @@
 
 <script>
 import axios from "axios";
+import config from "@/config";
 import { required } from "vuelidate/lib/validators";
 import VueSweetalert2 from "vue-sweetalert2";
 import Vue from "vue";
@@ -129,7 +130,7 @@ export default {
       };
 
       axios
-        .post("http://192.168.1.13:4000/user/login", user, {
+        .post(`${config.apiUrl}/user/login`, user, {
           "Content-Type": "application/json",
         })
         .then((res) => {

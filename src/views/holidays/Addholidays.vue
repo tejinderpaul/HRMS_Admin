@@ -15,6 +15,7 @@
                 <div class="form-group">
                   <input
                     type="date"
+                    max="9999-01-01"
                     v-model="holidays.occasion_date"
                     class="form-control"
                     :class="{

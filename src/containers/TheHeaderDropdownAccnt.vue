@@ -36,6 +36,7 @@
 
 <script>
 import axios from "axios";
+import config from "@/config";
 import VueSweetalert2 from "vue-sweetalert2";
 import Vue from "vue";
 // If you don't need the styles, do not connect
@@ -56,7 +57,7 @@ export default {
   methods: {
     logout(id) {
       axios
-        .post("http://192.168.1.20:4000/user/logout", { id: this.id })
+        .post(`${config.apiUrl}/user/logout`, { id: this.id })
         .then((res) => {
           Vue.swal.fire({
             toast: true,

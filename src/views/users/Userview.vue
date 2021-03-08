@@ -27,7 +27,7 @@
           <h4 style="text-transform: Uppercase">
             <CIcon name="cil-user" /><b> {{ user.firstname }}</b>
           </h4>
-          <h4><CIcon name="cil-user" /> {{ user.phonenumber }}2</h4>
+          <h4><CIcon name="cil-user" /> {{ user.phonenumber }}</h4>
           <h4><CIcon name="cil-user" /> {{ user.email }}</h4>
         </div>
         <!-- <div class="col-md-4">
@@ -133,7 +133,7 @@
             </tr>
             <tr>
               <th>Date of joining</th>
-              <td>{{ Date(user.dateOfRegistration) }}</td>
+              <td>{{ user.dateOfRegistration.slice(0,10 ) }}</td>
             </tr>
           </tbody>
         </table>
@@ -164,8 +164,8 @@
               <td>
                 {{ leave.name }}
               </td>
-              <td>{{ Date(leave.fromDate) }}</td>
-              <td>{{ Date(leave.toDate) }}</td>
+              <td>{{ leave.fromDate.slice(0,10) }}</td>
+              <td>{{ leave.toDate.slice(0, 10) }}</td>
               <td>{{ leave.leaveType }}</td>
               <td>{{ leave.mangerName }}</td>
               <td>{{ leave.note }}</td>
@@ -217,6 +217,7 @@ export default {
         .then((response) => {
           this.user = response.data.data;
           this.leave = response.data.leave;
+          console.log(this.user);
         })
         .catch((err) => {
           console.log(err);

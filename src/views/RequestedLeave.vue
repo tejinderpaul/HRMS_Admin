@@ -23,7 +23,7 @@
         </td>
       </span>
 
-      <span slot="action" slot-scope="{ row }" >
+      <span slot="action" slot-scope="{ row }">
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group" style="margin-bottom: 1px">
             <template>
@@ -48,16 +48,14 @@
           </div>
         </div>
       </span>
-      <span slot="fromDate" slot-scope="{row}">
+      <span slot="fromDate" slot-scope="{ row }">
         <td>
-          <p>{{row.fromDate.slice(0,10)}}</p>
-            
+          <p>{{ row.fromDate.slice(0, 10) }}</p>
         </td>
       </span>
-        <span slot="toDate" slot-scope="{row}">
+      <span slot="toDate" slot-scope="{ row }">
         <td>
-          <p>{{row.toDate.slice(0,10)}}</p>
-            
+          <p>{{ row.toDate.slice(0, 10) }}</p>
         </td>
       </span>
     </v-client-table>
@@ -70,10 +68,10 @@ import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
-import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
-import VueSweetalert2 from 'vue-sweetalert2';
+import VueFilterDateParse from "@vuejs-community/vue-filter-date-parse";
+import VueSweetalert2 from "vue-sweetalert2";
 // If you don't need the styles, do not connect
-import 'sweetalert2/dist/sweetalert2.min.css';
+import "sweetalert2/dist/sweetalert2.min.css";
 
 Vue.use(VueSweetalert2);
 Vue.use(VueFilterDateParse);
@@ -85,15 +83,15 @@ export default {
   },
   data() {
     return {
-      user:"",
-      columns:[
+      user: "",
+      columns: [
         "name",
         "leaveType",
         "fromDate",
         "toDate",
         "note",
         "status",
-       "action",
+        "action",
       ],
       tableData: [],
       options: {
@@ -106,14 +104,13 @@ export default {
         sortable: ["name", "leaveType", "phone_number"],
         filterable: ["name", "leaveType", "mangerName"],
         texts: {
-          filterPlaceholder: "Enter Name/ Number/ MangerName",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };
   },
   created() {
-   
-     // this.tableData = [];
+    // this.tableData = [];
     this.user = JSON.parse(localStorage.getItem("data"));
     this.token = this.user.token;
     if (localStorage.getItem("data") === null) {
@@ -121,14 +118,19 @@ export default {
     }
   },
   mounted() {
-    this.axios.post(`${config.apiUrl}/leaves/requested_leaves`,{"userId":this.user._id}, {
-      headers: {
-        token: this.token,
-      }
-    }
-    ).then((res) => {
-      this.tableData = res.data.data;
-    });
+    this.axios
+      .post(
+        `${config.apiUrl}/leaves/requested_leaves`,
+        { userId: this.user._id },
+        {
+          headers: {
+            token: this.token,
+          },
+        }
+      )
+      .then((res) => {
+        this.tableData = res.data.data;
+      });
   },
   methods: {
     approve(id) {
@@ -144,7 +146,16 @@ export default {
             }
           )
           .then((resp) => {
-            window.location.reload();
+            Vue.swal.fire({
+              toast: true,
+              position: "top",
+              icon: "success",
+              title: "Leave approved successfully",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            });
+            this.$router.push({ path: "/dashboard" });
           })
           .catch((error) => {});
     },
@@ -161,26 +172,35 @@ export default {
             }
           )
           .then((resp) => {
-            window.location.reload();
+            Vue.swal.fire({
+              toast: true,
+              position: "top",
+              icon: "success",
+              title: "Leave Rejected successfully",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            });
+            this.$router.push({ path: "/dashboard" });
           })
           .catch((error) => {});
     },
-  //   onChange(event) {
-  //     axios
-  //       .post(
-  //         `${config.apiUrl}/leaves/filterleave`,
-  //         { status: event },
-  //         {
-  //           headers: {
-  //             token: this.token,
-  //           },
-  //         }
-  //       )
-  //       .then((res) => (this.tableData = res.data.data))
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   },
+    //   onChange(event) {
+    //     axios
+    //       .post(
+    //         `${config.apiUrl}/leaves/filterleave`,
+    //         { status: event },
+    //         {
+    //           headers: {
+    //             token: this.token,
+    //           },
+    //         }
+    //       )
+    //       .then((res) => (this.tableData = res.data.data))
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   },
   },
 };
 </script>
@@ -259,5 +279,10 @@ th:nth-child(3) {
 }
 select {
   -webkit-appearance: menulist;
+}
+.VueTables__row td {
+  max-width: 100px!important;
+  white-space: pre-wrap!important;
+word-wrap: break-word!important;
 }
 </style>

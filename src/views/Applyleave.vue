@@ -27,6 +27,13 @@
                 >
                   Subject field is required.
                 </div>
+                <div
+                    v-if="!$v.user.leaveType.maxLength"
+                    class="invalid-feedback"
+                  >
+                    Subject must be
+                    {{ $v.user.leaveType.$params.maxLength.max }} characters.
+                  </div>
               </div>
             </CCol>
           </CRow>
@@ -145,7 +152,7 @@
 import axios from "axios";
 import router from "../router";
 import config from "@/config";
-import { required, email, numeric, minLength } from "vuelidate/lib/validators";
+import { required, email, numeric, maxLength } from "vuelidate/lib/validators";
 import VueSweetalert2 from "vue-sweetalert2";
 import Vue from "vue";
 import Datepicker from "vuejs-datepicker";
@@ -177,7 +184,7 @@ export default {
   },
   validations: {
     user: {
-      leaveType: { required },
+      leaveType: { required , maxLength: maxLength(100)},
       fromDate: { required },
       toDate: { required },
       note: { required },
@@ -207,6 +214,10 @@ export default {
       });
   },
   methods: {
+
+
+
+    // 
     validationStatus: function (validation) {
       return typeof validation != "undefined" ? validation.$error : false;
     },

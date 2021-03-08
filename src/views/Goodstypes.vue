@@ -63,7 +63,7 @@ export default {
         sortable: ["title", "description"],
         filterable: ["title", "description"],
         texts: {
-          filterPlaceholder: "Enter Title/ Description",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };

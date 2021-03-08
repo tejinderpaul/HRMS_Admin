@@ -28,12 +28,18 @@ import VueAxios from "vue-axios";
 import config from "@/config";
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
   components: {
     ClientTable,
+     Loading
   },
   data() {
     return {
+       loader: 'bars',
+       isLoading: false,
+       fullPage: true,
       columns: ["date", "firstname", "phonenumber", "time"],
       tableData: [],
 
@@ -46,7 +52,7 @@ export default {
            sortable: ["user.firstname", "user.phonenumber", "date"],
         filterable: ["user.firstname", "user.phonenumber", "date"],
         texts: {
-          filterPlaceholder: "Enter date",
+          filterPlaceholder: "Enter text to search",
         },
       },
     };
@@ -75,8 +81,11 @@ export default {
         to: this.to,
       })
       .then((res) => {
-        console.log(res.data.data);
         this.tableData = res.data.data;
+         this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false
+      }, 3000);
       });
   },
 };
