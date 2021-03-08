@@ -48,7 +48,7 @@
                   placeholder="  Select date"
                   class="form-control format-datapicker"
                   :format="DatePickerFormat"
-                  :disabledDates="disabledDates"
+                  :disabledDates="disabled_Dates"
                   v-model="user.fromDate"
                   :class="{
                     'is-invalid': validationStatus($v.user.fromDate),
@@ -67,7 +67,7 @@
                   placeholder="   Select date"
                   class="form-control format-datapicker"
                   :format="DatePickerFormat"
-                  :disabledDates="disabledDates"
+                  :disabledDates="kchbhhi"
                   v-model="user.toDate"
                   :class="{
                     'is-invalid': validationStatus($v.user.toDate),
@@ -150,9 +150,8 @@
 
 <script>
 import axios from "axios";
-import router from "../router";
 import config from "@/config";
-import { required, email, numeric, maxLength } from "vuelidate/lib/validators";
+import { required, maxLength } from "vuelidate/lib/validators";
 import VueSweetalert2 from "vue-sweetalert2";
 import Vue from "vue";
 import Datepicker from "vuejs-datepicker";
@@ -167,9 +166,7 @@ export default {
     return {
       errors: "",
       DatePickerFormat: "dd/MM/yyyy",
-      disabledDates: {
-        to: new Date(Date.now() - 8640000),
-      },
+      
       user: {
         mangername: "",
         userId: "",
@@ -177,6 +174,12 @@ export default {
         fromDate: "",
         toDate: "",
         note: "",
+      },
+      disabled_Dates: {
+        to: new Date(Date.now() - 8640000),
+      },
+      kchbhhi: { 
+     
       },
       options: [],
       submitted: false,

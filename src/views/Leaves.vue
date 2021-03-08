@@ -1,5 +1,6 @@
 <template>
   <div class="container" style="background-color: white">
+    <loading :active="isLoading" :is-full-page="fullPage" :loader="loader" />
     <h1 class="text-center">All Leaves List</h1>
     <div class="VueTables__limit-field w-25 float-right mt-0">
       <label for="VueTables__limit_6JR1w mb-0">Filter:</label
@@ -60,16 +61,21 @@ import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
-import router from "../router";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
 export default {
   components: {
     ClientTable,
+    Loading,
   },
   data() {
     return {
+            loader: "bars",
+      isLoading: false,
+      fullPage: true,
       user: "",
       columns: [
         "name",
@@ -106,13 +112,7 @@ export default {
     }
   },
   mounted() {
-    let options = {
-      method: "post",
-      url: `${config.apiUrl}/leaves/alleaves`,
-      headers: {
-        token: this.token,
-      },
-    };
+      this.isLoading = true;
     this.axios
       .post(
         `${config.apiUrl}/leaves/alleaves`,
@@ -128,6 +128,7 @@ export default {
           this.$router.push("/login");
         }
         this.tableData = res.data.data;
+        this.isLoading = false;
       });
   },
   methods: {

@@ -72,6 +72,7 @@
         "vue-simple-calendar": "^6.0.0-b3",
         "vue-sweetalert2": "^4.2.0",
         "vue-tables-2": "^2.1.73",
+        "vue2-daterange-picker": "^0.6.3",
         "vuejs-datatable": "^2.0.0-alpha.7",
         "vuejs-datepicker": "^1.6.2",
         "vuelidate": "^0.7.6",

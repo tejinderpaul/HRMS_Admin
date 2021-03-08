@@ -11,17 +11,17 @@
       <c-img 
        class="c-sidebar-brand-full" 
         size="custom-size" 
-        :height="55" 
-        :width="200"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwHPB-Xd_VZZPug-lL10OKkNRpdnKEfLHWTw&usqp=CAU"
+        :height="100" 
+        :width="100"
+      src="https://www.megasoftsol.com/hrhungary/images/hrms_icon.png"
       />
       
       <c-img 
        class="c-sidebar-brand-minimized" 
         size="custom-size" 
-        :height="55" 
-        :width="55"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwHPB-Xd_VZZPug-lL10OKkNRpdnKEfLHWTw&usqp=CAU"
+        :height="50" 
+        :width="50"
+      src="https://www.megasoftsol.com/hrhungary/images/hrms_icon.png"
       />
     </CSidebarBrand>
 

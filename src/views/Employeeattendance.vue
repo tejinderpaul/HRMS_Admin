@@ -1,6 +1,7 @@
 <template>
   <div class="container" style="background-color: white">
     <div class="text-center">
+      <loading :active="isLoading" :is-full-page="fullPage" :loader="loader" />
       <h1>All Employee Attendance List</h1>
     </div>
     <v-client-table :data="tableData" :columns="columns" :options="options">
@@ -14,7 +15,10 @@
         {{ row.user.phonenumber }}
       </span>
       <span slot="time" slot-scope="{ row }">
-       HH: {{ row.time.hours }}  MM:{{ row.time.minutes }}  SS:{{ row.time.seconds }}  MS:{{ row.time.milliseconds }}
+        HH: {{ row.time.hours }} MM:{{ row.time.minutes }} SS:{{
+          row.time.seconds
+        }}
+        MS:{{ row.time.milliseconds }}
       </span>
     </v-client-table>
   </div>
@@ -26,20 +30,21 @@ import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import config from "@/config";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 Vue.use(VueAxios, axios);
 Vue.use(ClientTable);
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
   components: {
     ClientTable,
-     Loading
+    Loading,
   },
   data() {
     return {
-       loader: 'bars',
-       isLoading: false,
-       fullPage: true,
+      loader: "bars",
+      isLoading: false,
+      fullPage: true,
       columns: ["date", "firstname", "phonenumber", "time"],
       tableData: [],
 
@@ -49,7 +54,7 @@ export default {
           phonenumber: "Phone number",
           time: "Time",
         },
-           sortable: ["user.firstname", "user.phonenumber", "date"],
+        sortable: ["user.firstname", "user.phonenumber", "date"],
         filterable: ["user.firstname", "user.phonenumber", "date"],
         texts: {
           filterPlaceholder: "Enter text to search",
@@ -68,13 +73,7 @@ export default {
     }
   },
   mounted() {
-    let options = {
-      method: "post",
-      url: `${config.apiUrl}/user/allattendence`,
-      headers: {
-        token: this.token,
-      },
-    };
+    this.isLoading = true;
     this.axios
       .post(`${config.apiUrl}/user/allattendence`, {
         from: this.from,
@@ -82,10 +81,7 @@ export default {
       })
       .then((res) => {
         this.tableData = res.data.data;
-         this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false
-      }, 3000);
+        this.isLoading = false;
       });
   },
 };

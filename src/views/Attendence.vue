@@ -2,6 +2,11 @@
   <div>
     <CCard>
       <CCardHeader>
+        <loading
+          :active="isLoading"
+          :is-full-page="fullPage"
+          :loader="loader"
+        />
         <strong><h2>Attendance Records</h2></strong>
       </CCardHeader>
       <CCardBody>
@@ -46,7 +51,6 @@
           </CRow>
 
           <CCardFooter>
-            <loading :active='isLoading' :is-full-page="fullPage" :loader='loader' />
             <CButton
               v-if="
                 user.role == 'employee' ||
@@ -59,13 +63,14 @@
             >
               Submit</CButton
             >
-             <loading :active='isLoading' :is-full-page="fullPage" :loader='loader' />
+
             <CButton
               v-if="
                 user.role == 'superadmin' ||
                 user.role == 'admin' ||
                 user.role == 'hr'
               "
+              :disabled="isDisabled"
               type="submit"
               :to="{
                 name: 'employee-attendance',
@@ -128,18 +133,18 @@ import { ClientTable } from "vue-tables-2";
 import axios from "axios";
 import config from "@/config";
 import { required } from "vuelidate/lib/validators";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+
 Vue.use(ClientTable);
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
-    
 export default {
   name: "apply-leave",
-  
+
   data() {
     return {
-      loader: 'bars',
-       isLoading: false,
-       fullPage: true,
+      loader: "bars",
+      isLoading: false,
+      fullPage: true,
       time: "",
       user: "",
       errors: "",
@@ -157,9 +162,14 @@ export default {
       toDate: { required },
     },
   },
-   components: {
-        Loading
+  computed: {
+    isDisabled() {
+      return !this.date.fromDate || !this.date.toDate;
     },
+  },
+  components: {
+    Loading,
+  },
   created() {
     this.user = JSON.parse(localStorage.getItem("data"));
     this.userId = this.user._id;
@@ -171,10 +181,11 @@ export default {
     validationStatus: function (validation) {
       return typeof validation != "undefined" ? validation.$error : false;
     },
-    
+
     submitForm() {
       this.$v.$touch();
       if (this.$v.$pendding || this.$v.$error) return;
+      this.$emit("submit", this.date);
       let date = {
         id: this.userId,
         from: this.date.fromDate,
@@ -185,7 +196,7 @@ export default {
     submittoserver(data) {
       this.isLoading = true;
       setTimeout(() => {
-        this.isLoading = false
+        this.isLoading = false;
       }, 3000);
       axios.post(`${config.apiUrl}/user/attendence`, data).then((res) => {
         this.time = res.data.data.time;
