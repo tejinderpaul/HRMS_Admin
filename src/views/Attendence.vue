@@ -77,7 +77,7 @@
                 params: { from: date.fromDate, to: date.toDate },
               }"
               class="btn btn btn-success"
-              style="margin-left: 50%"
+              style="margin-left: 48%"
             >
               Submit</CButton
             >
@@ -206,3 +206,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.disabled {
+  background-color: #d1d1d1;
+  border-color: #909090;
+  color: black;
+}
+</style>
